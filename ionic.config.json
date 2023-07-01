@@ -1,0 +1,7 @@
+{
+  "name": "Uniranks",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "vue"
+}

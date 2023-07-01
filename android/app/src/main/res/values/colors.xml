@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <color tools:ignore="UnusedResources" name="ic_launcher_background">#001736</color>
+    <color tools:ignore="UnusedResources" name="yellow6">#C8B70B</color>
+</resources>
