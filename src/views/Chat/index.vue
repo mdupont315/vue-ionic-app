@@ -53,7 +53,7 @@ import HeaderSection from "@/components/HeaderSection.vue";
 import FooterSection from "@/components/FooterSection.vue";
 
 export default defineComponent({
-  name: "LoginPage",
+  name: "ChatPage",
   components: {
     HeaderSection,
     FooterSection,

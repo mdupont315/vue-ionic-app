@@ -55,7 +55,7 @@ import FooterSection from "@/components/FooterSection.vue";
 import LoginModal from "@/components/modal/LoginModal.vue"
 
 export default defineComponent({
-  name: "LoginPage",
+  name: "ChatLoginPage",
   components: {
     HeaderSection,
     FooterSection,

@@ -3,55 +3,33 @@
     <header-section />
     <ion-content :fullscreen="true" class="ion-padding">
       <ion-grid style="display:flex; flex-flow: column; justify-content: center;">
+        <ion-row class="ion-padding-top">
+          <ion-col size="12" style="display: flex; width: 100%; justify-content: center">
+            <ion-text color="light">
+              <p class="ion-text-center txt-2">{{ $t('Beam ME up') }}</p>
+            </ion-text>
+          </ion-col>
+        </ion-row>
         <ion-row>
           <ion-col size="12" style="display: flex; width: 100%; justify-content: center">
-            <school-master-logo/>
+            <ion-img src='assets/images/beam.svg'/>
           </ion-col>
         </ion-row>
         <ion-row>
           <ion-col>
-            <ion-text color="primary">
-              <p class="ion-text-center"><small>{{ $t('Find The Best University Of Your Choice') }}</small></p>
+            <ion-text color="light">
+              <p class="ion-text-center txt-1">{{ $t('We\'re all set to make magic happen. So, buckle up, hold on tight, and let\'s launch your application adventure!') }}</p>
             </ion-text>
           </ion-col>
         </ion-row>
         <ion-row>
-          <ion-col>
-            <input-field v-model="email" label="Email" :icon-start="personOutline"/>
-            <!--            <ion-item lines="full" fill="outline" mode="md">-->
-            <!--              <ion-icon slot="start" :icon=""></ion-icon>-->
-            <!--              <ion-label position="floating">{{$t('Email')}}</ion-label>-->
-            <!--              <ion-input v-model="email" type="email" required autofocus-->
-            <!--                         :placeholder="`Enter Email eg. info@example.com`"></ion-input>-->
-            <!--            </ion-item>-->
-            <ion-text v-if="error?.email" color="danger"><p>{{ error?.email[0] }}</p></ion-text>
+          <ion-col size="12" style="display: flex; width: 100%; justify-content: center;">
+            <ion-button class="btn-get-start button-1"  @click="doLogin">{{ $t('Step-by-Step Application') }}</ion-button>
           </ion-col>
         </ion-row>
         <ion-row>
-          <ion-col>
-            <input-password v-model="password"/>
-            <ion-text v-if="error?.password" class="ion-margin-top" color="danger"><p>{{ error?.password[0] }}</p>
-            </ion-text>
-          </ion-col>
-        </ion-row>
-        <ion-row>
-          <ion-col size="12">
-            <ion-text class="ion-float-end" color="secondary">
-              <a href="/forget-password">{{ $t('Forgot Password') }}</a>
-            </ion-text>
-          </ion-col>
-          <ion-col size="12">
-            <ion-button expand="block" @click="doLogin">{{ $t('Login') }}</ion-button>
-          </ion-col>
-        </ion-row>
-        <ion-row>
-          <ion-col size="12" class="ion-text-center">
-            <ion-text color="medium">
-              <p>
-                <span>{{ $t("Don't have an account?") }} &nbsp;</span>
-                <a href="/register" class="ion-color-secondary">{{ $t('Signup') }}</a>
-              </p>
-            </ion-text>
+          <ion-col size="12" style="display: flex; width: 100%; justify-content: center;">
+            <ion-button class="btn-get-start button-1"  @click="openModal">{{ $t('OR Explore Courses') }}</ion-button>
           </ion-col>
         </ion-row>
       </ion-grid>
@@ -60,19 +38,17 @@
   </ion-page>
 </template>
 
-<script lang="ts">
+<script>
 import {useAuthStore} from "@/store";
 import {
   IonButton,
   IonCol,
   IonContent,
   IonGrid,
-  IonHeader,
   IonPage,
   IonRow,
   IonText,
-  IonTitle,
-  IonToolbar,
+  modalController
 } from "@ionic/vue";
 import {computed, defineComponent, ref} from "vue";
 import {useRouter} from "vue-router";
@@ -80,21 +56,16 @@ import {useFormErrorAlert} from "@/shared/userError";
 import {useLoadingStore} from "@/store/loading";
 import {useComingSoonAlert} from "@/shared/comingSoonAlert";
 import SchoolMasterLogo from "@/components/SchoolMasterLogo.vue";
-import InputPassword from "@/components/InputPassword.vue";
-import InputField from "@/components/InputField.vue";
-import LanguageSwitch from "@/components/LanguageSwitch.vue";
 import HeaderSection from "@/components/HeaderSection.vue";
 import FooterSection from "@/components/FooterSection.vue";
 import { personOutline } from 'ionicons/icons';
+import SignupModal from "@/components/modal/SignupModal.vue"
 
 export default defineComponent({
-  name: "LoginPage",
+  name: "ApplicationPage",
   components: {
     HeaderSection,
     FooterSection,
-    InputField,
-    InputPassword,
-    SchoolMasterLogo,
     IonButton,
     IonContent,
     IonPage,
@@ -121,16 +92,24 @@ export default defineComponent({
       }).finally(() => hideLoading());
 
     };
+    const openModal = async () => {
+      const modal = await modalController.create({
+        component: SignupModal,
+        initialBreakpoint: 0.95,
+        breakpoints: [0, 0.95],
+      });
+      modal.present();
+    };
     return {
-      email,
-      password,
       doLogin,
       comingSoon,
-      error,
-      personOutline,
+      openModal
     };
   },
 });
 </script>
 <style scoped>
+ion-content {
+  --background: #1C345A;
+}
 </style>

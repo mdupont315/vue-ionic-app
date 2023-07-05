@@ -28,13 +28,11 @@ const routes: Array<RouteRecordRaw> = [
         path: '/application',
         name: 'Application',
         component: () => import('../views/Application/index.vue'),
-        children: [
-            {
-                path: '/application/login',
-                name: 'ApplicationLogin',
-                component: () => import('../views/Application/Login.vue'),
-            },
-        ],
+    },
+    {
+        path: '/application/login',
+        name: 'ApplicationLogin',
+        component: () => import('../views/Application/Login.vue'),
     },
     {
         path: '/home',
@@ -184,21 +182,21 @@ router.beforeEach((to) => {
         '/rest-password',
         '/get-start',
         '/home',
-        // '/chat',
-        // '/application',
+        '/chat',
+        '/application',
         '/chat/login',
         '/application/login',
     ];
     const authRequired = !publicPages.includes(to.path);
     const {isLoggedIn, isVerified, currentStep, profileCompleted, roleId} = useAuthStore();
 
-    if (authRequired && !isLoggedIn && to.path == '/chat') {
-        return '/chat/login';
-    }
+    // if (authRequired && !isLoggedIn && to.path == '/chat') {
+    //     return '/chat/login';
+    // }
 
-    if (authRequired && !isLoggedIn && to.path == '/application') {
-        return '/application/login';
-    }
+    // if (authRequired && !isLoggedIn && to.path == '/application') {
+    //     return '/application/login';
+    // }
 
     if (authRequired && !isLoggedIn) {
         return '/login';

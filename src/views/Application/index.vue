@@ -63,7 +63,7 @@ import FooterSection from "@/components/FooterSection.vue";
 import { personOutline } from 'ionicons/icons';
 
 export default defineComponent({
-  name: "LoginPage",
+  name: "ApplicationPage",
   components: {
     HeaderSection,
     FooterSection,

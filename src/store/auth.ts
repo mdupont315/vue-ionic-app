@@ -140,7 +140,7 @@ export const useAuthStore = defineStore({
         },
         async register(form:any) {
             this.resetErrors();
-            const response = await fetchWrapper.post(`${BASE_URL}/register`, form);
+            const response = await fetchWrapper.post(`${BASE_URL}/user/register`, form);
 
             if (!response.ok) {
                 return response.json().then((res) => {
