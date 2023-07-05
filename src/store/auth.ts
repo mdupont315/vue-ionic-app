@@ -55,7 +55,7 @@ export const useAuthStore = defineStore({
     actions: {
         async login(email: string, password: string) {
             this.resetErrors();
-            const response = await fetchWrapper.post(`${BASE_URL}/login`, {email, password});
+            const response = await fetchWrapper.post(`${BASE_URL}/user/login`, {email, password});
             if (!response.ok) {
                 return response.json().then((res) => {
                     this.error = res;
@@ -409,6 +409,29 @@ export const useAuthStore = defineStore({
         updateCanSendCodeIn(secs:number){
             this.can_resend_code_in = secs;
             localStorage.setItem(USER_RESEND_CODE_IN, secs.toString());
+        },
+        async checkAccount(email: string) {
+            this.resetErrors();
+            // https://uniranks.com/ranking/api/app/v2/user/check-account?apikey={API_SECRET}
+            const response = await fetchWrapper.post(`${BASE_URL}/user/check-account`, {email: email});
+            if (!response.ok) {
+                return response.json().then((res) => {
+                    this.error = res;
+                    return false;
+                });
+            }
+            return response.json().then(data => {
+                try {
+                    console.log(data);
+                    // this.setUserData(data);
+                    // this.updateCanSendCodeIn(60);
+                    //TODO: get can send verification in time
+                    return data;
+                } catch (e: any) {
+                    //showToast({message: 'Something Went Wrong!', color: 'danger'});
+                    return false;
+                }
+            })
         }
     }
 });

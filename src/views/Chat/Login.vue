@@ -25,7 +25,7 @@
         </ion-row>
         <ion-row>
           <ion-col size="12" style="display: flex; width: 100%; justify-content: center;">
-            <ion-button class="btn-get-start button-1"  @click="doLogin">{{ $t('Log in or Sign up') }}</ion-button>
+            <ion-button class="btn-get-start button-1" @click="openModal">{{ $t('Log in or Sign up') }}</ion-button>
           </ion-col>
         </ion-row>
       </ion-grid>
@@ -44,6 +44,7 @@ import {
   IonPage,
   IonRow,
   IonText,
+  modalController
 } from "@ionic/vue";
 import {computed, defineComponent, ref} from "vue";
 import {useRouter} from "vue-router";
@@ -51,6 +52,7 @@ import {useLoadingStore} from "@/store/loading";
 import {useComingSoonAlert} from "@/shared/comingSoonAlert";
 import HeaderSection from "@/components/HeaderSection.vue";
 import FooterSection from "@/components/FooterSection.vue";
+import LoginModal from "@/components/modal/LoginModal.vue"
 
 export default defineComponent({
   name: "LoginPage",
@@ -63,20 +65,24 @@ export default defineComponent({
     IonGrid,
     IonRow,
     IonCol,
-    IonText
+    IonText,
   },
   setup() {
     const store = useAuthStore();
     const {login} = store;
-    const {showLoading, hideLoading} = useLoadingStore();
     const {comingSoon} = useComingSoonAlert();
     const router = useRouter();
-    const doLogin = async () => {
-      showLoading();
+    const openModal = async () => {
+      const modal = await modalController.create({
+        component: LoginModal,
+        initialBreakpoint: 0.5,
+        breakpoints: [0, 0.5, 0.6],
+      });
+      modal.present();
     };
     return {
-      doLogin,
       comingSoon,
+      openModal
     };
   },
 });
@@ -85,4 +91,5 @@ export default defineComponent({
 ion-content {
   --background: #1C345A;
 }
+
 </style>

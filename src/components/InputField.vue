@@ -97,5 +97,10 @@ export default defineComponent({
 </script>
 
 <style scoped>
-
+ion-item {
+  width: 100%;
+  /* border: 2px solid #7fc4fd;
+  --border-color: #7fc4fd;
+  border-radius: 25px; */
+}
 </style>

@@ -72,7 +72,8 @@ export default defineComponent({
     const {comingSoon} = useComingSoonAlert();
     const router = useRouter();
     const doLogin = async () => {
-      showLoading();
+      // showLoading();
+      router.replace('/application');
     };
     return {
       doLogin,

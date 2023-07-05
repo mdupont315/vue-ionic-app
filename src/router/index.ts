@@ -18,13 +18,11 @@ const routes: Array<RouteRecordRaw> = [
         path: '/chat',
         name: 'Chat',
         component: () => import('../views/Chat/index.vue'),
-        children: [
-            {
-                path: '/chat/login',
-                name: 'ChatLogin',
-                component: () => import('../views/Chat/Login.vue'),
-            },
-        ],
+    },
+    {
+        path: '/chat/login',
+        name: 'ChatLogin',
+        component: () => import('../views/Chat/Login.vue'),
     },
     {
         path: '/application',
@@ -196,6 +194,10 @@ router.beforeEach((to) => {
 
     if (authRequired && !isLoggedIn && to.path == '/chat') {
         return '/chat/login';
+    }
+
+    if (authRequired && !isLoggedIn && to.path == '/application') {
+        return '/application/login';
     }
 
     if (authRequired && !isLoggedIn) {

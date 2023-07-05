@@ -21,7 +21,7 @@
             <ion-loading :is-open="loading" @ionLoadingDidDismiss="loadingDismissed"/>
         </ion-split-pane>
     </ion-app>
-    <div class="scanner-ui">
+    <!-- <div class="scanner-ui">
         <ion-app style="background: transparent">
             <ion-toolbar mode="ios">
                 <ion-buttons slot="start">
@@ -35,7 +35,7 @@
                 <img src="assets/images/guide-frame.svg" style="width: 300px; height: 300px">
             </div>
         </ion-app>
-    </div>
+    </div> -->
 </template>
 
 <script lang="ts">
@@ -70,17 +70,17 @@ export default defineComponent({
     name: 'App',
     components: {
         MenuItem,
-        IonButtons,
-        IonButton,
-        IonTitle,
-        IonToolbar,
+        // IonButtons,
+        // IonButton,
+        // IonTitle,
+        // IonToolbar,
         IonText,
         RepMenu,
         StudentMenu,
         IonLoading,
         IonApp,
         IonContent,
-        IonIcon,
+        // IonIcon,
         IonList,
         IonListHeader,
         IonMenu,
