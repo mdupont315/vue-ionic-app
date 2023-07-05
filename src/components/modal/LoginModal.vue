@@ -11,7 +11,6 @@
       <ion-row>
         <ion-col size="12" class="d-flex">
           <input-field v-model="email" label="Email" :icon-start="personOutline"/>
-          <!-- <ion-input label-placement="stacked" placeholder="Email ID" v-model="email"  @keyup="changeInput"></ion-input> -->
         </ion-col>
         <ion-col size="12">
           <ion-text v-if="error?.email" color="danger"><p class="ion-no-margin">{{ error?.email[0] }}</p></ion-text>
@@ -20,7 +19,6 @@
       <ion-row v-if="status == 3">
         <ion-col size="12" class="d-flex">
           <input-password v-model="password"/>
-          <!-- <ion-input label-placement="stacked" placeholder="Password" v-model="password"  @keyup="changePassword"></ion-input> -->
         </ion-col>
         <ion-col size="12">
           <ion-text v-if="error?.password" color="danger"><p class="ion-no-margin">{{ error?.password[0] }}</p></ion-text>
@@ -99,15 +97,8 @@
   import {useAuthStore} from "@/store";
   import {
     IonContent,
-    IonHeader,
-    IonTitle,
-    IonToolbar,
-    IonButtons,
     IonButton,
-    IonItem,
-    IonInput,
     modalController,
-    IonLabel,
     IonGrid,
     IonRow,
     IonCol,
@@ -123,14 +114,7 @@
   export default defineComponent({
     name: 'LoginModal',
     components: { IonContent,
-      //  IonHeader,
-      //  IonTitle,
-      //  IonToolbar,
-      //  IonButtons,
-        IonButton,
-      //  IonItem,
-        // IonInput ,
-      //  IonLabel
+      IonButton,
       IonGrid,
       IonRow,
       IonCol,
@@ -153,10 +137,6 @@
         return modalController.dismiss(null, 'cancel');
       };
       const confirmEmail = async () => {
-        // if (email.value == '') {
-        //   errorEmail.value = true;
-        //   return;
-        // }
         showLoading();
         if (status.value == 1) {
           await checkAccount(email.value).then(res => {
@@ -164,15 +144,10 @@
             if (res.has_account) {
               status.value = 2;
             }
-            // return !res ? showFormUserFormError() : setTimeout(() => router.replace('/home'), 300);
           }).finally(() => hideLoading());
         } else {
           await login(email.value, password.value).then(res => {
             console.log(res);
-            // if (res.has_account) {
-            //   status.value = 2;
-            // }
-            // return !res ? showFormUserFormError() : setTimeout(() => router.replace('/home'), 300);
           }).finally(() => hideLoading());
         }
       };
