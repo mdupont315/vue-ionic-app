@@ -4,7 +4,7 @@
       <ion-tabs>
         <ion-router-outlet></ion-router-outlet>
         <ion-tab-bar slot="bottom">
-          <ion-tab-button tab="search" href="/home">
+          <ion-tab-button tab="search" href="/explore">
             <ion-icon :icon="searchOutline" />
             <ion-label>{{ $t("Explore") }}</ion-label>
           </ion-tab-button>

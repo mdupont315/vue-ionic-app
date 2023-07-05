@@ -4,22 +4,22 @@
       <ion-tabs>
         <ion-router-outlet></ion-router-outlet>
         <ion-tab-bar slot="bottom">
-          <ion-tab-button tab="search" class="tab-selected">
+          <ion-tab-button tab="search" href="/explore">
             <ion-icon :icon="searchOutline" />
             <ion-label>{{ $t("Explore") }}</ion-label>
           </ion-tab-button>
 
-          <ion-tab-button tab="logoWechat">
+          <ion-tab-button tab="logoWechat" href="/chat">
             <ion-icon :icon="logoWechat" />
             <ion-label>{{ $t("Chat") }}</ion-label>
           </ion-tab-button>
 
-          <ion-tab-button tab="appsSharp">
+          <ion-tab-button tab="appsSharp" href="/application">
             <ion-icon :icon="appsSharp" />
             <ion-label>{{ $t("Application") }}</ion-label>
           </ion-tab-button>
 
-          <ion-tab-button tab="person">
+          <ion-tab-button tab="person" href="/search">
             <ion-icon :icon="person" />
             <ion-label>{{ $t("Profile") }}</ion-label>
           </ion-tab-button>
