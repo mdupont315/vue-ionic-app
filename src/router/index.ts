@@ -27,6 +27,68 @@ const routes: Array<RouteRecordRaw> = [
         ],
     },
     {
+        path: '/explore',
+        name: 'Explore',
+        component: () => import('../views/Explore/index.vue'),
+        // children: [
+        //     {
+        //         path: 'universitymore',
+        //         name: 'UniversityMore',
+        //         component: () => import('../views/Explore/UniversityMore.vue'),
+        //     },
+        //     {
+        //         path: 'studydestination',
+        //         name: 'StudyDestination',
+        //         component: () => import('../views/Explore/StudyDestination.vue'),
+        //     },
+        // ],
+    },
+    {
+        path: '/explore/universitymore',
+        name: 'UniversityMore',
+        component: () => import('../views/Explore/UniversityMore.vue'),
+    },
+    {
+        path: '/explore/studydestination',
+        name: 'StudyDestination',
+        component: () => import('../views/Explore/StudyDestination.vue'),
+    },
+    {
+        path: '/explore/studydestination/:id',
+        name: 'StudyDestinationRegion',
+        component: () => import('../views/Explore/StudyDestinationRegion.vue'),
+    },
+    {
+        path: '/explore/studydestinationcountry/:id',
+        name: 'StudyDestinationCountry',
+        component: () => import('../views/Explore/StudyDestinationCountry.vue'),
+    },
+    {
+        path: '/explore/getinspired',
+        name: 'GetInspired',
+        component: () => import('../views/Explore/GetInspired.vue'),
+    },
+    {
+        path: '/explore/unlockingsec',
+        name: 'UnlockingSec',
+        component: () => import('../views/Explore/UnlockingSec.vue'),
+    },
+    {
+        path: '/explore/searchpage/:keyword',
+        name: 'Search',
+        component: () => import('../views/Explore/SearchPage.vue'),
+    },
+    {
+        path: '/explore/searchdetailpage/:keyword',
+        name: 'SearchDetail',
+        component: () => import('../views/Explore/SearchDetailPage.vue'),
+    },
+    {
+        path: '/explore/toparticles',
+        name: 'TopArticles',
+        component: () => import('../views/Explore/TopArticles.vue'),
+    },
+    {
         path: '/application',
         name: 'Application',
         component: () => import('../views/Application/index.vue'),
@@ -180,6 +242,12 @@ router.beforeEach((to) => {
     // redirect to login page if not logged in and trying to access a restricted page
     const publicPages = [
         '/login',
+        '/explore',
+        '/explore/universitymore',
+        '/explore/studydestination',
+        '/explore/studydestination/:id',
+        '/explore/studydestinationcountry/:id',
+
         '/register',
         '/forget-password',
         '/verify-code',
@@ -191,7 +259,8 @@ router.beforeEach((to) => {
         '/chat/login',
         '/application/login',
     ];
-    const authRequired = !publicPages.includes(to.path);
+    // const authRequired = !publicPages.includes(to.path);
+    const authRequired=false;
     const {isLoggedIn, isVerified, currentStep, profileCompleted, roleId} = useAuthStore();
 
     if (authRequired && !isLoggedIn && to.path == '/chat') {
