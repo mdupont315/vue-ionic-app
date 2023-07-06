@@ -15,6 +15,10 @@ export const useExploreDataStore = defineStore({
 
         elite_dataLoaded:false,
         elite_datas:[],
+        world_top_datas:[],
+        region_top_datas:[],
+        country_top_datas:[],
+        verified_datas:[],
 
         study_dest_datas:[],
         study_dest_dataLoaded:false,
@@ -28,6 +32,13 @@ export const useExploreDataStore = defineStore({
         search_programs_data:[],
         search_institutes_data:[],
         search_dataLoaded:false,
+        search_program_detail_datas:[],
+        
+        university_detail_dataLoaded: false,
+        university_detail_datas:[],
+
+        unipro_detail_dataLoaded: false,
+        unipro_detail_datas:[],
     }),
     actions: {
         async loadData(loadWithoutCheck = false) {
@@ -66,6 +77,59 @@ export const useExploreDataStore = defineStore({
                     return response.json()
                 }).then((data) => {
                     this.elite_datas = data["data"];
+                    console.log(data["data"])
+                    // this.elite_dataLoaded = true;
+                }).catch(()=>{
+                    return;
+                })
+            await fetchWrapper.get(`${BASE_URL}/universities/world-top?apikey=${GOOGLE_API_KEY}`)
+                .then((response) => {
+                    if (!response.ok){
+                        return Promise.reject();
+                    }
+                    return response.json()
+                }).then((data) => {
+                    this.world_top_datas = data["data"];
+                    console.log(data["data"])
+                    // this.world_top_data_dataLoaded = true;
+                }).catch(()=>{
+                    return;
+                })
+            await fetchWrapper.get(`${BASE_URL}/universities/region-top?apikey=${GOOGLE_API_KEY}`)
+                .then((response) => {
+                    if (!response.ok){
+                        return Promise.reject();
+                    }
+                    return response.json()
+                }).then((data) => {
+                    this.region_top_datas = data["data"];
+                    console.log(data["data"])
+                    // this.world_top_data_dataLoaded = true;
+                }).catch(()=>{
+                    return;
+                })
+            await fetchWrapper.get(`${BASE_URL}/universities/country-top?apikey=${GOOGLE_API_KEY}`)
+                .then((response) => {
+                    if (!response.ok){
+                        return Promise.reject();
+                    }
+                    return response.json()
+                }).then((data) => {
+                    this.country_top_datas = data["data"];
+                    console.log(data["data"])
+                    // this.world_top_data_dataLoaded = true;
+                }).catch(()=>{
+                    return;
+                })
+            await fetchWrapper.get(`${BASE_URL}/universities/verfied-top?apikey=${GOOGLE_API_KEY}`)
+                .then((response) => {
+                    if (!response.ok){
+                        return Promise.reject();
+                    }
+                    return response.json()
+                }).then((data) => {
+                    this.verified_datas = data["data"];
+                    console.log(data["data"])
                     this.elite_dataLoaded = true;
                 }).catch(()=>{
                     return;
@@ -152,6 +216,67 @@ export const useExploreDataStore = defineStore({
             this.region_detail_dataLoaded = false;
             this.study_dest_dataLoaded = false;
             this.search_dataLoaded = false;
-        }
+            this.university_detail_dataLoaded = false;
+            this.unipro_detail_dataLoaded = false;
+
+        },
+
+        async loadProgramDetailSearch(keyword="") {
+            await fetchWrapper.get(`${BASE_URL}/program-universities/${keyword}?apikey=${GOOGLE_API_KEY}`)
+                .then((response) => {
+                    if (!response.ok){
+                        return Promise.reject();
+                    }
+                    return response.json()
+                }).then((data) => {
+                    console.log("program-university", data);
+                    // this.search_programs_data = data["programs"];
+                    // this.search_institutes_data = data["institutes"];
+                    // this.search_dataLoaded = true;
+                    this.search_program_detail_datas = data["data"];
+                }).catch(()=>{
+                    return;
+                })
+            return  Promise.resolve();   
+        },
+
+        async loadUniversityDetailSearch(id="") {
+            await fetchWrapper.get(`${BASE_URL}/university-details/${id}?apikey=${GOOGLE_API_KEY}`)
+                .then((response) => {
+                    if (!response.ok){
+                        return Promise.reject();
+                    }
+                    return response.json()
+                }).then((data) => {
+                    console.log("program-university", data);
+                    // this.search_programs_data = data["programs"];
+                    // this.search_institutes_data = data["institutes"];
+                    this.university_detail_dataLoaded = true;
+                    this.university_detail_datas = data["data"];
+                }).catch(()=>{
+                    return;
+                })
+            return  Promise.resolve();   
+        },
+
+        async loadUniProDetailSearch(id="") {
+            console.log("UnitProdetail:------------:", id)
+            await fetchWrapper.get(`${BASE_URL}/university-programs/${id}?apikey=${GOOGLE_API_KEY}`)
+                .then((response) => {
+                    if (!response.ok){
+                        return Promise.reject();
+                    }
+                    return response.json()
+                }).then((data) => {
+                    console.log("UNIPROuniversity", data);
+                    // this.search_programs_data = data["programs"];
+                    // this.search_institutes_data = data["institutes"];
+                    this.unipro_detail_dataLoaded = true;
+                    this.unipro_detail_datas = data["data"];
+                }).catch(()=>{
+                    return;
+                })
+            return  Promise.resolve();   
+        },
     }
 });

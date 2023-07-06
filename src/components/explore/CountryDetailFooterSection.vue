@@ -15,7 +15,7 @@
             </ion-tab-button>
 
             <ion-tab-button style="width: 50%;">
-                <ion-button>View All Programs</ion-button>
+                <ion-button @click="openModal">View All Programs</ion-button>
             </ion-tab-button>
           </ion-tab-bar>
         </ion-tabs>
@@ -35,9 +35,11 @@
     IonLabel, 
     IonIcon,
     IonButton, 
+    modalController
   } from '@ionic/vue';
   import { searchOutline, logoWechat, appsSharp, person } from 'ionicons/icons';
   import {userDarkModeStore} from "@/store";
+  import UniProDetailModal from "@/components/modal/UniProDetailModal.vue";
   
   export default defineComponent({
     components: {
@@ -51,14 +53,29 @@
       IonIcon,
       IonButton 
     },
-    setup() {
+    props: {
+      id: Number
+    },
+    setup(props) {
+      // console.log("Props", props.id)
         const bookmark = 'assets/images/bookmarg.svg';
       const darkMode = userDarkModeStore();
       const is_dark_mode = computed(() => darkMode.prefersDark);
       const imgUrl = computed(() => {
         return is_dark_mode.value ? 'assets/images/header.svg' : `assets/images/header.svg`;
       });
-      return {imgUrl, bookmark, logoWechat};
+      const openModal = async () => {
+        const modal = await modalController.create({
+          component: UniProDetailModal,
+          componentProps: {
+              id:props.id
+          },
+          initialBreakpoint: 0.95,
+          // breakpoints: [0, 0.5, 1],
+        });
+        modal.present();
+      }
+      return {imgUrl, bookmark, logoWechat, openModal};
     }
   });
   </script>
@@ -93,7 +110,7 @@
 
     --color: white;
 
-    --border-radius: 15px;
+    border-radius: 15px;
     --border-color: #000;
     --border-style: solid;
     --border-width: 1px;

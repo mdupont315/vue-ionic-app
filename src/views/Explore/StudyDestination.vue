@@ -1,12 +1,13 @@
 <template>
     <ion-page>
-        <ion-header class="ion-no-border" mode="ios" collapse="fade" :translucent="true">
+        <!-- <ion-header class="ion-no-border" mode="ios" collapse="fade" :translucent="true">
             <ion-toolbar>
                 <ion-title class="ion-text-center" color="primary"></ion-title>
                 <ion-img :src='imgUrl'/>
                 <ion-searchbar></ion-searchbar>
             </ion-toolbar>
-        </ion-header>
+        </ion-header> -->
+        <header-section />
         <ion-content :fullscreen="true" class="ion-padding-top">
             <ion-grid style="display:flex; flex-flow: column; justify-content: center;">
                 <ion-row class="ion-padding-top">
@@ -16,14 +17,19 @@
                     </ion-text>
                     <p class="ion-text-center study-middle-title" style="margin-bottom: 0;margin-top: 0%;">{{ $t('Find your own ideal study destination') }}</p>
                 </ion-col>
+                </ion-row>
+                <ion-row>
                 <div v-for="study_dest_data in study_dest_datas" :key="study_dest_data.id">
+                    <ion-row>
                     <ion-col size="12" style="display: flex; flex-flow: row;">
                         <ion-text class="mid-title">
                             <p class="ion-text-left" style="margin:0px">{{ $t(`${study_dest_data.name} | ${study_dest_data.number_of_universities} Universities`) }}</p>
                         </ion-text>
                         <ion-img :src='nextImgUrl' class="rightImg" @click="()=>toDetailRegion(study_dest_data.id)"/>
                     </ion-col>
-                    <ion-col  style="display: flex; flex-flow: row;">
+                    </ion-row>
+                    <ion-row>
+                    <ion-col  class=" scrolling">
                     <div v-for="country in study_dest_data.countries" :key="country.id">
                         <div class="div-size" @click="()=>toDetailCountry(country.id)">
                             <ion-img :src='country.flag_url' class="leftImg"/>
@@ -33,6 +39,7 @@
                     </div>
                     </ion-col>
                     <hr class="under_line"/>
+                    </ion-row>
                 </div>
                 </ion-row>
             </ion-grid>
@@ -56,6 +63,7 @@ import {
     IonToolbar,
     IonImg,
     IonSearchbar,
+    modalController
 } from "@ionic/vue";
 import {computed, defineComponent, ref, onBeforeMount} from "vue";
 import {useRouter} from "vue-router";
@@ -63,18 +71,19 @@ import {useLoadingStore} from "@/store/loading";
 import {useComingSoonAlert} from "@/shared/comingSoonAlert";
 import HeaderSection from "@/components/explore/HeaderSection.vue";
 import FooterSection from "@/components/explore/FooterSection.vue";
+import StudyDestinationCountryModal from "@/components/modal/StudyDestinationCountry.vue"
 
 export default defineComponent({
   name: "StudyDestination",
   components: {
-    // HeaderSection,
+    HeaderSection,
     FooterSection,
     // IonButton,
-    IonHeader,
-    IonTitle,
-    IonToolbar,
+    // IonHeader,
+    // IonTitle,
+    // IonToolbar,
     IonImg,
-    IonSearchbar,
+    // IonSearchbar,
     IonContent,
     IonPage,
     IonGrid,
@@ -99,9 +108,17 @@ export default defineComponent({
         console.log(id)
         router.push(`/explore/studydestination/${id}`)
     }
-    const toDetailCountry = (id) => {
+    const toDetailCountry = async(id) => {
         console.log(id)
-        router.push(`/explore/studydestinationcountry/${id}`)
+        const modal = await modalController.create({
+          component: StudyDestinationCountryModal,
+          componentProps: {
+              id: id,
+          },
+          initialBreakpoint: 0.96,
+          // breakpoints: [0, 0.5, 1],
+        });
+        modal.present();
     }
 
     onBeforeMount(() => {
@@ -233,5 +250,14 @@ ion-searchbar {
     margin-top:0px;
     margin-bottom:0px;
     margin-left:35px;
+}
+.scrolling {
+  display: flex; 
+  flex-flow: row;
+  overflow-x: scroll;
+  overflow-y: hidden;
+}
+.scrolling::-webkit-scrollbar {
+  display: none;
 }
 </style>

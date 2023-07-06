@@ -1,12 +1,14 @@
 <template>
     <ion-page>
-        <ion-header class="ion-no-border" mode="ios" collapse="fade" :translucent="true">
+        <!-- <ion-header class="ion-no-border" mode="ios" collapse="fade" :translucent="true">
             <ion-toolbar>
                 <ion-title class="ion-text-center" color="primary"></ion-title>
                 <ion-img :src='imgUrl'/>
                 <ion-searchbar></ion-searchbar>
             </ion-toolbar>
-        </ion-header>
+        </ion-header> -->
+        <header-section />
+
         <ion-content :fullscreen="true" class="ion-padding-top">
             <ion-grid style="display:flex; flex-flow: column; justify-content: center;">
                 <ion-row class="ion-padding-top">
@@ -92,6 +94,7 @@ import {
     IonToolbar,
     IonImg,
     IonSearchbar,
+    modalController,
 } from "@ionic/vue";
 import {computed, defineComponent, ref, onBeforeMount} from "vue";
 // import {useRouter} from "vue-router";
@@ -100,26 +103,26 @@ import {useComingSoonAlert} from "@/shared/comingSoonAlert";
 import HeaderSection from "@/components/explore/HeaderSection.vue";
 import FooterSection from "@/components/explore/FooterSection.vue";
 import {useRoute, useRouter} from "vue-router";
-
+import StudyDestinationCountryModal from "@/components/modal/StudyDestinationCountry.vue"
 
 export default defineComponent({
   name: "StudyDestinationRegion",
   props:['id'],
   components: {
-    // HeaderSection,
+    HeaderSection,
     FooterSection,
     // IonButton,
-    IonHeader,
-    IonTitle,
-    IonToolbar,
+    // IonHeader,
+    // IonTitle,
+    // IonToolbar,
     IonImg,
-    IonSearchbar,
+    // IonSearchbar,
     IonContent,
     IonPage,
     IonGrid,
     IonRow,
     // IonCol,
-    IonText
+    IonText,
   },
   setup() {
     const store = useExploreDataStore();
@@ -140,9 +143,19 @@ export default defineComponent({
     const unlock_sec = 'assets/images/Icon-awesome-globe-a.svg';
     const firstHalf = ref([]);
     const secondHalf = ref([]);
-    const toDetailCountry = (id) => {
+    const toDetailCountry = async (id) => {
         console.log(id)
-        router.push(`/explore/studydestinationcountry/${id}`)
+        // router.push(`/explore/studydestinationcountry/${id}`)
+        const modal = await modalController.create({
+          component: StudyDestinationCountryModal,
+          componentProps: {
+              id: id,
+          },
+          initialBreakpoint: 0.96,
+          // breakpoints: [0, 0.5, 1],
+        });
+        modal.present();
+
     }
 
     onBeforeMount(() => {
