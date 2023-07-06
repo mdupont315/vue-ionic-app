@@ -1,13 +1,12 @@
 <template>
   <input-field :value="modelValue" :type="passwordInputType" @input="getValue"
-               required :label="placeholder"  :icon-start="lockClosedOutline"
-               :icon-end="showPassIcon"
+               required :label="placeholder" :icon-end="showPassIcon"
                @clickIconEnd="showPassword = !showPassword"/>
 </template>
 
 <script lang="ts">
 import {computed, defineComponent, ref} from 'vue';
-import {eyeOffOutline, eyeOutline, lockClosedOutline, personOutline} from "ionicons/icons";
+import {eyeOffOutline, eyeOutline, personOutline} from "ionicons/icons";
 import InputField from "@/components/InputField.vue";
 
 export default defineComponent({
@@ -38,7 +37,7 @@ export default defineComponent({
       emit('update:modelValue', value)
     }
 
-    return {showPassword, showPassIcon, passwordInputType, personOutline, lockClosedOutline, getValue};
+    return {showPassword, showPassIcon, passwordInputType, personOutline, getValue};
   }
 });
 </script>

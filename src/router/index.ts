@@ -245,22 +245,22 @@ router.beforeEach((to) => {
         '/rest-password',
         '/get-start',
         '/home',
-        '/chat',
-        '/application',
+        // '/chat',
+        // '/application',
         '/chat/login',
         '/application/login',
     ];
-    // const authRequired = !publicPages.includes(to.path);
-    const authRequired = false;
+    const authRequired = !publicPages.includes(to.path);
+    // const authRequired = false;
     const {isLoggedIn, isVerified, currentStep, profileCompleted, roleId} = useAuthStore();
 
-    // if (authRequired && !isLoggedIn && to.path == '/chat') {
-    //     return '/chat/login';
-    // }
+    if (authRequired && !isLoggedIn && to.path == '/chat') {
+        return '/chat/login';
+    }
 
-    // if (authRequired && !isLoggedIn && to.path == '/application') {
-    //     return '/application/login';
-    // }
+    if (authRequired && !isLoggedIn && to.path == '/application') {
+        return '/application/login';
+    }
 
     if (authRequired && !isLoggedIn) {
         return '/login';
