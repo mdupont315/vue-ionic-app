@@ -272,20 +272,15 @@ http://ionicframework.com/docs/theming/ */
 /*.sc-ion-alert-ios {*/
 /*    max-height: 450px;*/
 /*}*/
-ion-searchbar {
-    border-color: #7fc4fd;
-    border-width: 1px;
-    border-style: solid;
-    border-radius: 15px;
-
-    background: #ffffff;
-    /* width: 350px; */
-    margin: 15px 10px;
-    text-align: left;
-}
 ion-searchbar ion-icon {
-    right: 10px !important;
+    right: 5px !important;
     left: auto !important;
+}
+ion-searchbar input {
+    padding-left: 5px !important;
+}
+ion-searchbar .searchbar-input-container {
+    height: 100% !important;
 }
 
 ion-button {
