@@ -1,12 +1,13 @@
 <template>
     <ion-page>
-        <ion-header class="ion-no-border" mode="ios" collapse="fade" :translucent="true">
+        <!-- <ion-header class="ion-no-border" mode="ios" collapse="fade" :translucent="true">
             <ion-toolbar>
                 <ion-title class="ion-text-center" color="primary"></ion-title>
                 <ion-img :src='imgUrl'/>
                 <ion-searchbar></ion-searchbar>
             </ion-toolbar>
-        </ion-header>
+        </ion-header> -->
+        <header-section />
         <ion-content :fullscreen="true" class="ion-padding-top">
             <ion-grid style="display:flex; flex-flow: column; justify-content: center;">
                 <ion-row v-if="search_result" class="ion-padding-top" style="margin-top: 65px;">
@@ -43,7 +44,7 @@
                       <ion-text class="mid-title">
                           <p class="ion-text-left" style="margin:0px">{{ $t(`Recommended Programs`) }}</p>
                       </ion-text>
-                      <ion-text class="mid-small-title">
+                      <ion-text class="mid-small-title" @click="toSearchDetail">
                           <p class="ion-text-right" style="margin:0px">{{ $t(`View all`) }}</p>
                       </ion-text>
                       <!-- <ion-img :src='nextImgUrl' class="rightImg" @click="toUniversityMore"/> -->
@@ -67,7 +68,7 @@
                       <ion-text class="mid-title">
                           <p class="ion-text-left" style="margin:0px">{{ $t(`Recommended Institutions`) }}</p>
                       </ion-text>
-                      <ion-text class="mid-small-title">
+                      <ion-text class="mid-small-title" @click="toSearchDetail">
                           <p class="ion-text-right" style="margin:0px">{{ $t(`View all`) }}</p>
                       </ion-text>
                       <!-- <ion-img :src='nextImgUrl' class="rightImg" @click="toUniversityMore"/> -->
@@ -138,14 +139,14 @@ import { timeOutline } from 'ionicons/icons';
 export default defineComponent({
   name: "SearchPage",
   components: {
-    // HeaderSection,
+    HeaderSection,
     // FooterSection,
     // IonButton,
-    IonHeader,
-    IonTitle,
-    IonToolbar,
+    // IonHeader,
+    // IonTitle,
+    // IonToolbar,
     IonImg,
-    IonSearchbar,
+    // IonSearchbar,
     IonContent,
     IonPage,
     IonGrid,
@@ -183,6 +184,10 @@ export default defineComponent({
         return newname;
     }
     
+    const toSearchDetail = () => {
+      router.push(`/explore/searchdetailpage/${route.params.keyword}`);
+    }
+
     onBeforeMount(() => {
       const keyword = route.params.keyword
       if (!dataLoaded.value) {
@@ -216,6 +221,7 @@ export default defineComponent({
       timeOutline,
 
       short_name,
+      toSearchDetail
     };
   },
 });

@@ -57,11 +57,6 @@ const routes: Array<RouteRecordRaw> = [
         component: () => import('../views/Explore/StudyDestinationRegion.vue'),
     },
     {
-        path: '/explore/studydestinationcountry/:id',
-        name: 'StudyDestinationCountry',
-        component: () => import('../views/Explore/StudyDestinationCountry.vue'),
-    },
-    {
         path: '/explore/getinspired',
         name: 'GetInspired',
         component: () => import('../views/Explore/GetInspired.vue'),
@@ -242,7 +237,7 @@ router.beforeEach((to) => {
         '/explore/universitymore',
         '/explore/studydestination',
         '/explore/studydestination/:id',
-        '/explore/studydestinationcountry/:id',
+        // '/explore/studydestinationcountry/:id',
 
         '/register',
         '/forget-password',
@@ -255,7 +250,8 @@ router.beforeEach((to) => {
         '/chat/login',
         '/application/login',
     ];
-    const authRequired = !publicPages.includes(to.path);
+    // const authRequired = !publicPages.includes(to.path);
+    const authRequired = false;
     const {isLoggedIn, isVerified, currentStep, profileCompleted, roleId} = useAuthStore();
 
     // if (authRequired && !isLoggedIn && to.path == '/chat') {
