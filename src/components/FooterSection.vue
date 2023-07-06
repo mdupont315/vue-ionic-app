@@ -19,7 +19,7 @@
             <ion-label>{{ $t("Application") }}</ion-label>
           </ion-tab-button>
 
-          <ion-tab-button tab="person" href="/search">
+          <ion-tab-button tab="person" href="/profile">
             <ion-icon :icon="person" />
             <ion-label>{{ $t("Profile") }}</ion-label>
           </ion-tab-button>
@@ -68,10 +68,9 @@ export default defineComponent({
 
 <style scoped>
 ion-toolbar {
-  --background: #1c345a;
+  --background: transparent;
 }
 ion-tab-bar {
-  border-top: 2px solid #1c345a;
   border-top-left-radius: 35px;
   border-top-right-radius: 35px;
 }
