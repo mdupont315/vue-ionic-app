@@ -25,21 +25,19 @@ const routes: Array<RouteRecordRaw> = [
         component: () => import('../views/Chat/Login.vue'),
     },
     {
+        path: '/profile',
+        name: 'Profile',
+        component: () => import('../views/Profile/index.vue'),
+    },
+    {
+        path: '/profile/login',
+        name: 'ProfileLogin',
+        component: () => import('../views/Profile/Login.vue'),
+    },
+    {
         path: '/explore',
         name: 'Explore',
         component: () => import('../views/Explore/index.vue'),
-        // children: [
-        //     {
-        //         path: 'universitymore',
-        //         name: 'UniversityMore',
-        //         component: () => import('../views/Explore/UniversityMore.vue'),
-        //     },
-        //     {
-        //         path: 'studydestination',
-        //         name: 'StudyDestination',
-        //         component: () => import('../views/Explore/StudyDestination.vue'),
-        //     },
-        // ],
     },
     {
         path: '/explore/universitymore',
@@ -249,6 +247,7 @@ router.beforeEach((to) => {
         // '/application',
         '/chat/login',
         '/application/login',
+        '/profile/login',
     ];
     const authRequired = !publicPages.includes(to.path);
     // const authRequired = false;
@@ -260,6 +259,10 @@ router.beforeEach((to) => {
 
     if (authRequired && !isLoggedIn && to.path == '/application') {
         return '/application/login';
+    }
+
+    if (authRequired && !isLoggedIn && to.path == '/profile') {
+        return '/profile/login';
     }
 
     if (authRequired && !isLoggedIn) {

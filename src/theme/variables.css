@@ -347,10 +347,24 @@ body.qrscanner .scanner-hide {
     width: 75%;
 }
 
+.button-2 {
+    --background: #fff;
+    color: #203456;
+    --border-radius: 5px;
+    width: 90%;
+    filter: drop-shadow(0px 3px 3px rgba(0,0,0,0.16 ));
+}
+
 .d-flex {
     display: flex;
     width: 100%;
     justify-content: center;
+}
+
+.d-flex-start {
+    display: flex;
+    width: 100%;
+    text-align: left;
 }
 
 .top-border {

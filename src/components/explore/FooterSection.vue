@@ -19,7 +19,7 @@
             <ion-label>{{ $t("Application") }}</ion-label>
           </ion-tab-button>
 
-          <ion-tab-button tab="person" href="/search">
+          <ion-tab-button tab="person" href="/profile">
             <ion-icon :icon="person" />
             <ion-label>{{ $t("Profile") }}</ion-label>
           </ion-tab-button>
