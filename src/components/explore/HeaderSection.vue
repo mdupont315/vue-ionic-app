@@ -1,14 +1,14 @@
 <template>
-    <ion-header class="ion-no-border" mode="ios" collapse="fade" :translucent="true">
-      <ion-toolbar>
-        <ion-title class="ion-text-center" color="primary"></ion-title>
-        <ion-img :src='imgUrl'/>
-        <ion-searchbar  :debounce="1000" @ionInput="handleInput($event)"></ion-searchbar>
-      </ion-toolbar>
-    </ion-header>
-  </template>
+  <ion-header class="ion-no-border" mode="ios" collapse="fade" :translucent="true">
+    <ion-toolbar>
+      <ion-title class="ion-text-center" color="primary"></ion-title>
+      <ion-img :src='imgUrl'/>
+      <ion-searchbar  :debounce="1000" @ionInput="handleInput($event)"></ion-searchbar>
+    </ion-toolbar>
+  </ion-header>
+</template>
   
-  <script lang="ts">
+<script lang="ts">
   import {computed, defineComponent} from 'vue';
   import {useRouter} from "vue-router";
   import {
@@ -41,9 +41,9 @@
       return {imgUrl, handleInput};
     }
   });
-  </script>
-  
-  <style scoped>
+</script>
+
+<style scoped>
   ion-toolbar {
     position: absolute;
     background: #1c345a;
@@ -67,5 +67,23 @@
     margin-bottom: 15px;
     text-align: center;
   } */
+
+  ion-searchbar {
+    border-color: #7fc4fd;
+    border-width: 1px;
+    border-style: solid;
+    border-radius: 15px;
+
+    background: #ffffff;
+    text-align: left;
+
+    width: calc(100% - 20px) !important;
+    margin: 15px 10px !important;
+    padding: 0 !important;
+  }
+  ion-searchbar ion-icon {
+      right: 5px !important;
+      left: auto !important;
+  }
   
-  </style>
+</style>
