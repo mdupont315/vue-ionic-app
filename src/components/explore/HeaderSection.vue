@@ -3,13 +3,14 @@
       <ion-toolbar>
         <ion-title class="ion-text-center" color="primary"></ion-title>
         <ion-img :src='imgUrl'/>
-        <ion-searchbar></ion-searchbar>
+        <ion-searchbar  :debounce="1000" @ionInput="handleInput($event)"></ion-searchbar>
       </ion-toolbar>
     </ion-header>
   </template>
   
   <script lang="ts">
   import {computed, defineComponent} from 'vue';
+  import {useRouter} from "vue-router";
   import {
     IonHeader,
     IonTitle,
@@ -28,12 +29,16 @@
       IonSearchbar,
     },
     setup() {
+      const router = useRouter();
       const darkMode = userDarkModeStore();
       const is_dark_mode = computed(() => darkMode.prefersDark);
       const imgUrl = computed(() => {
         return is_dark_mode.value ? 'assets/images/header.svg' : `assets/images/header.svg`;
       });
-      return {imgUrl};
+    const handleInput = (event:any) => {
+      router.push(`/explore/searchpage/${event.target.value}`);
+    }
+      return {imgUrl, handleInput};
     }
   });
   </script>
@@ -46,7 +51,7 @@
     border-bottom-left-radius: 25px;
     border-bottom-right-radius: 25px;
   }
-  ion-searchbar {
+  /* ion-searchbar {
 
     width: 346px;
     height: 49.6px;
@@ -61,5 +66,6 @@
     margin-top: 15px;
     margin-bottom: 15px;
     text-align: center;
-  }
+  } */
+  
   </style>
