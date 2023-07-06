@@ -1,12 +1,13 @@
 <template>
     <ion-page>
-        <ion-header class="ion-no-border" mode="ios" collapse="fade" :translucent="true">
+        <header-section />
+        <!-- <ion-header class="ion-no-border" mode="ios" collapse="fade" :translucent="true">
             <ion-toolbar>
                 <ion-title class="ion-text-center" color="primary"></ion-title>
                 <ion-img :src='imgUrl'/>
                 <ion-searchbar></ion-searchbar>
             </ion-toolbar>
-        </ion-header>
+        </ion-header> -->
         <ion-content :fullscreen="true" class="ion-padding-top">
             <ion-grid style="display:flex; flex-flow: column; justify-content: center;">
                 <ion-row class="ion-padding-top">
@@ -17,17 +18,28 @@
                             </ion-card>
                         </div>
                     </ion-col>
+                </ion-row>
+                <ion-row>
                     <ion-col style=" display: flex; flex-flow: row; ">
                         <ion-text v-if="btpos === tabTitles[0]">
                             <p class="title-name" style="margin:0px">{{ $t(`${total} Results Found`) }}</p>
                         </ion-text>
-                        <ion-text v-if="btpos === tabTitles[1]">
+                        <ion-text v-if="btpos === tabTitles[1] && !program_detail_visible">
                             <p class="title-name" style="margin:0px">{{ $t(`${programs.data.length} Programs has been Found`) }}</p>
                         </ion-text>
-                        <ion-text v-if="btpos === tabTitles[2]">
+                        <ion-text v-if="btpos === tabTitles[1] && program_detail_visible">
+                            <p class="title-name" style="margin:0px">{{ $t(`${program_detail_count} Results ${program_detail_title}`) }}</p>
+                        </ion-text>
+                        <ion-text v-if="btpos === tabTitles[2] && !institute_detail_visible">
                             <p class="title-name" style="margin:0px">{{ $t(`${institutes.data.length} Institutions has been Found`) }}</p>
                         </ion-text>
+                        <ion-text v-if="btpos === tabTitles[2] && institute_detail_visible">
+                            <p class="title-name" style="margin:0px">{{ $t(`2 Programs has been Found`) }}</p>
+                        </ion-text>
                     </ion-col>
+                </ion-row>
+                <ion-row style="margin-left: 8px;">
+                    <div v-if="!institute_detail_visible">
                     <ion-col v-if="btpos === tabTitles[0] || btpos === tabTitles[2]" style="display: flex; flex-flow: column;">
                         <ion-card v-for="institute in institutes.data" :key="institute.id" class="institute-card">
                             <ion-card-content style="display: flex; flex-flow: column; margin-top: 4px;">
@@ -36,7 +48,7 @@
                                     <div style="display: flex; flex-flow: column; margin-top: 3%; margin-left:1px; width: 85%;">
                                         <div>
                                             <p class="university-name" style="float:left;">{{ short_name(institute.university_name) }}</p>
-                                            <ion-img :src='nextImgUrl' class="next-img" style="float:right;  margin-top: 6px;"></ion-img>
+                                            <ion-img :src='nextImgUrl' class="next-img" style="float:right;  margin-top: 6px;" @click="instituteDetail"></ion-img>
                                         </div>
                                         <p class="university-ranking">{{ `Local #${institute.local_position} | Global #${institute.global_position} | Score ${institute.score}` }}</p>
                                         <div>
@@ -48,8 +60,26 @@
                             </ion-card-content>
                         </ion-card>
                     </ion-col>
-                    
-                    <ion-col v-if="btpos === tabTitles[0] || btpos === tabTitles[1]"  style="display: flex; flex-flow: column;">
+                    </div>
+                    <div v-else>
+                        <ion-card class="institute-card" style="margin-left: 8px;">
+                            <ion-card-content style="display: flex; flex-flow: column; margin-top: 4px;">
+                                <div style="display: flex; flex-flow: row;">
+                                    <ion-img :src='institutes.data[0].logo_url' class="leftImg" style="width: 15%;"/>
+                                    <div style="display: flex; flex-flow: column; margin-top: 3%; margin-left:1px; width: 85%;">
+                                        <div>
+                                            <p class="university-name" style="float:left;">{{ short_name(institutes.data[0].university_name) }}</p>
+                                            <ion-img :src='nextImgUrl' class="next-img" style="float:right;  margin-top: 6px;"></ion-img>
+                                        </div>
+                                        <p class="university-ranking">{{ `Local #${institutes.data[0].local_position} | Global #${institutes.data[0].global_position} | Score ${institutes.data[0].score}` }}</p>
+                                        <div>
+                                            <p class="university-country" style="float: left;">{{ institutes.data[0].country }}</p>
+                                            <p class="university-status" style="float: right">{{ institutes.data[0].status }}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </ion-card-content>
+                        </ion-card>
                         <ion-card v-for="program in programs.data" :key="program.id" class="program-card">
                             <ion-card-content style="display: flex; flex-flow: column; margin-top: 4px;">
                                 <ion-text>
@@ -59,11 +89,56 @@
                                 <ion-text>
                                     <p class="program-count">{{ `Match with ${program.matched_with_institutes} institutions` }}</p>
                                 </ion-text>
-                                <ion-img :src='nextImgUrl' class="rightImg"/>
+                                <ion-img :src='nextImgUrl' class="rightImg"  @click="programmesDetail(program.matched_with_institutes, program.title)"/>
                                 </div>
                             </ion-card-content>
                         </ion-card>
+                    </div>
+                </ion-row>
+                <ion-row>
+                    <ion-col v-if="btpos === tabTitles[0] || btpos === tabTitles[1] "  style="display: flex; flex-flow: column;">
+                        <div v-if="!program_detail_visible" >
+                        <ion-card v-for="program in programs.data" :key="program.id" class="program-card">
+                            <ion-card-content style="display: flex; flex-flow: column; margin-top: 4px;">
+                                <ion-text>
+                                <p class="program-title">{{ `${program.title}` }}</p>
+                                </ion-text>
+                                <div style="display: flex; flex-flow: row;">
+                                <ion-text>
+                                    <p class="program-count">{{ `Match with ${program.matched_with_institutes} institutions` }}</p>
+                                </ion-text>
+                                <ion-img :src='nextImgUrl' class="rightImg"  @click="programmesDetail(program.matched_with_institutes, program.title)"/>
+                                </div>
+                            </ion-card-content>
+                        </ion-card>
+                        </div>
+                        <div v-else>
+                        <ion-card  v-for="search_program_detail_data in search_program_detail_datas" :key="search_program_detail_data.id" class="program-detail-card">
+                            <ion-card-content style="display: flex; flex-flow: column; margin: 4px;">
+                                <ion-text>
+                                    <p class="program-title-name" style="margin:0px">{{ $t(`${program_detail_title}`) }}</p>
+                                </ion-text>
+                                <div style="display: flex; flex-flow: row;">
+                                    <ion-img :src='search_program_detail_data.logo_url' class="leftImg" style="width: 15%;"/>
+                                    <div style="display: flex; flex-flow: column; margin-top: 3%; margin-left:1px; width: 85%;">
+                                        <div>
+                                            <p class="university-name" style="float:left;">{{ short_name(search_program_detail_data.university_name) }}</p>
+                                            <ion-img :src='nextImgUrl' class="next-img" style="float:right;  margin-top: 6px;" @click="openProgramDetailModal(search_program_detail_data.logo_url, search_program_detail_data.university_name)"></ion-img>
+                                        </div>
+                                        <p class="university-ranking">{{ `Local #${search_program_detail_data.local_position} | Global #${search_program_detail_data.global_position} | Score ${search_program_detail_data.score}` }}</p>
+                                        <div>
+                                            <p class="university-country" style="float: left;">{{ search_program_detail_data.country }}</p>
+                                            <p class="university-status" style="float: right">{{ search_program_detail_data.status }}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </ion-card-content>
+                        </ion-card>
+                        </div>
                     </ion-col>  
+                    <!-- <ion-col v-if="btpos === (tabTitles[0] || btpos === tabTitles[1]) && program_detail_visible" style="display: flex; flex-flow: column;">
+                                            
+                    </ion-col> -->
                 </ion-row>
             </ion-grid>
         </ion-content>
@@ -86,6 +161,7 @@ import {
     IonToolbar,
     IonImg,
     IonSearchbar,
+    modalController,
 } from "@ionic/vue";
 import {computed, defineComponent, ref, onBeforeMount} from "vue";
 import {useRouter, useRoute} from "vue-router";
@@ -93,18 +169,19 @@ import {useLoadingStore} from "@/store/loading";
 import {useComingSoonAlert} from "@/shared/comingSoonAlert";
 import HeaderSection from "@/components/explore/HeaderSection.vue";
 import FilterFooterSection from "@/components/explore/FilterFooterSection.vue";
+import ProgramDetailModal from "@/components/modal/ProgramDetailModal.vue"
 
 export default defineComponent({
   name: "UniversityMore",
   components: {
-    // HeaderSection,
+    HeaderSection,
     FilterFooterSection,
     // IonButton,
-    IonHeader,
-    IonTitle,
-    IonToolbar,
+    // IonHeader,
+    // IonTitle,
+    // IonToolbar,
     IonImg,
-    IonSearchbar,
+    // IonSearchbar,
     IonContent,
     IonPage,
     IonGrid,
@@ -115,10 +192,11 @@ export default defineComponent({
   setup() {
     const store = useExploreDataStore();
     const route = useRoute();
-    const {loadSearchData, changeLoadedVal} = store;
+    const {loadSearchData, changeLoadedVal, loadProgramDetailSearch} = store;
     const dataLoaded = computed(() => store.search_dataLoaded);
     const institutes = computed(() => store.search_institutes_data);
     const programs = computed(() => store.search_programs_data);
+    const search_program_detail_datas = computed(() => store.search_program_detail_datas);
     // console.log(dataLoaded.value)
     const {showLoading, hideLoading} = useLoadingStore();
     const router = useRouter();
@@ -133,6 +211,10 @@ export default defineComponent({
 
     const btpos = ref(tabTitles[0]);
     const total = ref(0);
+    const program_detail_visible = ref(false);
+    const institute_detail_visible = ref(false);
+    const program_detail_count = ref(0);
+    const program_detail_title = ref("");
 
     onBeforeMount(() => {
       const keyword = route.params.keyword
@@ -159,7 +241,45 @@ export default defineComponent({
     }
 
     const changeTabColor = (title) => {
+        program_detail_visible.value = false;
+        institute_detail_visible.value = false;
         btpos.value = title;
+        console.log(title)
+    }
+
+    const programmesDetail = (program_count, program_title) => {
+        // alert(program_title);
+        // alert(program_count+program_title)
+        program_detail_visible.value = true;
+        program_detail_count.value = program_count;
+        program_detail_title.value = program_title;
+        showLoading();
+        Promise.all([loadProgramDetailSearch(program_title)]).then(() => {
+            // console.log(elite_datas.value);
+            // console.log(dataLoaded.value);
+            // total.value = programs.value.data.length + institutes.value.data.length;
+            // changeLoadedVal();
+            // console.log(universities.value[0]);
+            console.log(search_program_detail_datas.value);
+          hideLoading();
+        })
+    }
+
+    const instituteDetail = () => {
+        institute_detail_visible.value = true;
+    }
+
+    const openProgramDetailModal = async(url, name) => {
+        const modal = await modalController.create({
+          component: ProgramDetailModal,
+          componentProps: {
+              url: url,
+              name:name
+          },
+          initialBreakpoint: 0.75,
+          // breakpoints: [0, 0.5, 1],
+        });
+        modal.present();
     }
 
     return {
@@ -173,9 +293,17 @@ export default defineComponent({
         programs,
         btpos,
         total,
+        program_detail_visible,
+        program_detail_count,
+        program_detail_title,
+        search_program_detail_datas,
+        institute_detail_visible,
 
         short_name,
-        changeTabColor
+        changeTabColor,
+        programmesDetail,
+        instituteDetail,
+        openProgramDetailModal
     };
   },
 });
@@ -362,5 +490,23 @@ ion-card {
     font-style: normal;
     text-align: center;
     color: #ffffff;
+}
+.program-detail-card {
+    width: 346px;
+    height: 99px;
+
+    border-radius: 6px;
+
+    filter: drop-shadow(0px 3px 3px rgba(0,0,0,0.16 ));
+
+    background: #ffffff
+}
+.program-title-name {
+    font-family: "Calibri";
+    font-size: 16px;
+    font-weight: bold;
+    font-style: normal;
+    text-align: left;
+    color: #203456;
 }
 </style>

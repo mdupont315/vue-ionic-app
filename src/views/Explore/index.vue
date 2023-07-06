@@ -1,12 +1,13 @@
 <template>
     <ion-page>
-        <ion-header class="ion-no-border" mode="ios" collapse="fade" :translucent="true">
+        <header-section />
+        <!-- <ion-header class="ion-no-border" mode="ios" collapse="fade" :translucent="true">
             <ion-toolbar>
                 <ion-title class="ion-text-center" color="primary"></ion-title>
                 <ion-img :src='imgUrl'/>
                 <ion-searchbar :debounce="1000" @ionInput="handleInput($event)" showClearButton="focus"></ion-searchbar>
             </ion-toolbar>
-        </ion-header>
+        </ion-header> -->
         <ion-content :fullscreen="true" class="ion-padding-top">
             <ion-grid style="display:flex; flex-flow: column; justify-content: center;">
                 <ion-row class="ion-padding-top">
@@ -22,9 +23,9 @@
                     </ion-text>
                     <ion-img :src='nextImgUrl' class="rightImg" @click="toUniversityMore"/>
                 </ion-col>
-                <ion-col  style="display: flex; flex-flow: row;">
+                <ion-col class="scrolling">
                   <div v-for="university in universities" :key="university.id">
-                    <ion-card>
+                    <ion-card @click="toUniversityDetailModal(university.id)">
                         <ion-card-content>
                             <!-- <ion-label>{universities.value}</ion-label> -->
                             <div style="display: flex; flex-flow: row;">
@@ -52,15 +53,15 @@
                     </ion-text>
                     <ion-img :src='nextImgUrl' class="rightImg"/>
                 </ion-col>
-                <ion-col  style="display: flex; flex-flow: row;">
+                <ion-col class="scrolling">
                   <div v-for="program in programs" :key="program.id">
-                    <ion-card>
+                    <ion-card @click="toProgramDetail(uni_url, program.university.university_name)">
                         <ion-card-content>
                             <!-- <ion-label>{universities.value}</ion-label> -->
                             <p class="program-name" style="height:42px">{{ program.title }}</p>
                             <hr style="border-top: 1px solid #606060;"/>
                             <div style="display: flex; flex-flow: row;">
-                              <!-- <ion-img :src='university.logo_url' class="leftImg"/>                                <p>{{`Local #${university.local_position} | Global #${university.global_position}`}}</p> -->
+                              <ion-img :src="uni_url" class="leftImg"/>                                
                               <p class="program-university-name">{{ program.university.university_name }}</p>
                             </div>
                             <hr style="border-top: 1px solid #606060;"/>
@@ -157,6 +158,7 @@ import {
     IonToolbar,
     IonImg,
     IonSearchbar,
+    modalController,
 } from "@ionic/vue";
 import {computed, defineComponent, ref, onBeforeMount} from "vue";
 import {useRouter} from "vue-router";
@@ -164,18 +166,20 @@ import {useLoadingStore} from "@/store/loading";
 import {useComingSoonAlert} from "@/shared/comingSoonAlert";
 import HeaderSection from "@/components/explore/HeaderSection.vue";
 import FooterSection from "@/components/explore/FooterSection.vue";
+import ProgramDetailModal from "@/components/modal/ProgramDetailModal.vue";
+import UniversityDetailModal from "@/components/modal/UniversityDetailModal.vue";
 
 export default defineComponent({
   name: "ExplorePage",
   components: {
-    // HeaderSection,
+    HeaderSection,
     FooterSection,
     // IonButton,
-    IonHeader,
-    IonTitle,
-    IonToolbar,
+    // IonHeader,
+    // IonTitle,
+    // IonToolbar,
     IonImg,
-    IonSearchbar,
+    // IonSearchbar,
     IonContent,
     IonPage,
     IonGrid,
@@ -206,6 +210,7 @@ export default defineComponent({
     const top_unis= 'assets/images/top-unis.png';
     const inspiration = 'assets/images/inspiration2.png';
     const news = 'assets/images/news.png';
+    const uni_url = 'https://d73ojsnoesnuw.cloudfront.net/images/universities-logos/university-of-washington-logo.png'
 
     const toStudyDestination = () => {
       router.push("/explore/studydestination");
@@ -228,6 +233,29 @@ export default defineComponent({
       router.push(`/explore/searchpage/${event.target.value}`);
     }
 
+    const toProgramDetail = async(url, name) => {
+      const modal = await modalController.create({
+          component: ProgramDetailModal,
+          componentProps: {
+              url: url,
+              name:name
+          },
+          initialBreakpoint: 0.75,
+          // breakpoints: [0, 0.5, 1],
+        });
+        modal.present();
+    }
+    const toUniversityDetailModal = async(id) => {
+      const modal = await modalController.create({
+          component: UniversityDetailModal,
+          componentProps: {
+              id:id
+          },
+          initialBreakpoint: 0.95,
+          // breakpoints: [0, 0.5, 1],
+        });
+        modal.present();
+    }
     onBeforeMount(() => {
       if (!dataLoaded.value) {
         showLoading();
@@ -251,6 +279,7 @@ export default defineComponent({
       top_unis,
       inspiration,
       news,
+      uni_url,
 
       total_universities,
       universities,
@@ -264,6 +293,8 @@ export default defineComponent({
       toUnlockingSec,
       toUniversityMore,
       handleInput,
+      toProgramDetail,
+      toUniversityDetailModal,
     };
   },
 });
@@ -454,4 +485,22 @@ height: 187px;
     height: 36px;
     margin-top: 16px !important;
 } */
+.scrolling {
+  display: flex; 
+  flex-flow: row;
+  overflow-x: scroll;
+  overflow-y: hidden;
+}
+.scrolling::-webkit-scrollbar {
+  display: none;
+}
+ion-searchbar ion-icon {
+  right: 16px !important;
+  left: auto !important;
+}
+.sc-ion-searchbar-md .searchbar-search-icon.sc-ion-searchbar-md {
+  left: unset;
+  right: unset;
+  right: 16px;
+}
 </style>
