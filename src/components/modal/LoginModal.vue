@@ -10,10 +10,10 @@
       </ion-row>
       <ion-row>
         <ion-col size="12" class="d-flex">
-          <input-field v-model="email" label="Email" :icon-start="personOutline"/>
+          <input-field v-model="email" label="Email ID" />
         </ion-col>
         <ion-col size="12">
-          <ion-text v-if="error?.email" color="danger"><p class="ion-no-margin">{{ error?.email[0] }}</p></ion-text>
+          <ion-text v-if="error?.message" color="danger"><p class="ion-no-margin">{{ error?.message }}</p></ion-text>
         </ion-col>
       </ion-row>
       <ion-row v-if="status == 3">
@@ -21,7 +21,7 @@
           <input-password v-model="password"/>
         </ion-col>
         <ion-col size="12">
-          <ion-text v-if="error?.password" color="danger"><p class="ion-no-margin">{{ error?.password[0] }}</p></ion-text>
+          <ion-text v-if="error?.message" color="danger"><p class="ion-no-margin">{{ error?.message }}</p></ion-text>
         </ion-col>
       </ion-row>
       <ion-row>
@@ -93,7 +93,7 @@
   </ion-content>
 </template>
 
-<script>
+<script lang="ts">
   import {useAuthStore} from "@/store";
   import {
     IonContent,

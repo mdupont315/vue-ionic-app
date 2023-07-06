@@ -68,11 +68,10 @@ export default defineComponent({
     IonImg
   },
   setup() {
-    const {showLoading, hideLoading} = useLoadingStore();
     const {comingSoon} = useComingSoonAlert();
     const router = useRouter();
     const getStart = async () => {
-      showLoading();
+      router.replace('/explore');
     };
     const {locale} = useI18n();
     const darkMode = userDarkModeStore();

@@ -99,8 +99,17 @@ export default defineComponent({
 <style scoped>
 ion-item {
   width: 100%;
-  /* border: 2px solid #7fc4fd;
-  --border-color: #7fc4fd;
-  border-radius: 25px; */
+  --border-color: #029ae4;
+  --ion-color-base: #029ae4 !important;
+}
+ion-item::part(native) {
+  border-radius: 25px;
+}
+.item-fill-outline.item-has-value .label-floating.sc-ion-label-md-h,
+.item-fill-outline.item-has-focus .label-floating.sc-ion-label-md-h {
+  transform: translateY(6px) scale(0.75);
+}
+.sc-ion-input-md-h.has-value, .sc-ion-input-md-h.has-focus {
+  top: 10px;
 }
 </style>
