@@ -78,9 +78,9 @@ ion-tab-bar {
   --background: "white";
 
 }
-.tab-selected {
+/* .tab-selected {
   color: #00aeef;
-}
+} */
 
 ion-tab-button {
   color: #ffffff;

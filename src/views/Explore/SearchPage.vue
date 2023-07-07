@@ -10,7 +10,7 @@
         <header-section />
         <ion-content :fullscreen="true" class="ion-padding-top">
             <ion-grid style="display:flex; flex-flow: column; justify-content: center;">
-                <ion-row v-if="search_result" class="ion-padding-top" style="margin-top: 65px;">
+                <ion-row v-if="programs?.data?.length || institutes?.data?.length" class="ion-padding-top" style="margin-top: 65px;">
                   <ion-col size="12" style="display: flex; flex-flow: row; ">
                       <ion-text class="mid-title">
                           <p class="ion-text-left" style="margin:0px">{{ $t(`Recent Searches`) }}</p>
@@ -162,6 +162,7 @@ export default defineComponent({
     const dataLoaded = computed(() => store.search_dataLoaded);
     const institutes = computed(() => store.search_institutes_data);
     const programs = computed(() => store.search_programs_data);
+    // const search_result = computed(() => store.search_value);
     // console.log(dataLoaded.value)
     const {showLoading, hideLoading} = useLoadingStore();
     const router = useRouter();
@@ -173,7 +174,7 @@ export default defineComponent({
     const nextImgUrl = 'assets/images/Chevron.svg';
     const noSearchData = 'assets/images/NoSearchResult.png'
 
-    let search_result = ref(true);
+    // let search_result = ref(true);
     
     const short_name = (name) => {
         let newname = name;
@@ -194,11 +195,11 @@ export default defineComponent({
         showLoading();
         Promise.all([loadSearchData(keyword)]).then(() => {
             // console.log(total_universities.value);
-            console.log(programs.value)
-            console.log(dataLoaded.value);
-            if(!programs.value.data.length && !institutes.value.data.length) {
-              search_result.value = false;
-            }
+            // console.log(programs.value)
+            // console.log(dataLoaded.value);
+            // if(!programs.value.data.length && !institutes.value.data.length) {
+            //   search_result.value = false;
+            // }
             // console.log(universities.value[0]);
             changeLoadedVal();
           hideLoading();
@@ -216,7 +217,6 @@ export default defineComponent({
 
       institutes,
       programs,
-      search_result,
 
       timeOutline,
 
