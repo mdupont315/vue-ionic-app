@@ -3,7 +3,7 @@
     <ion-toolbar>
       <ion-title class="ion-text-center" color="primary"></ion-title>
       <ion-img :src='imgUrl'/>
-      <ion-searchbar  :debounce="1000" @ionInput="handleInput($event)"></ion-searchbar>
+      <ion-searchbar  :debounce="1000" @ionInput="handleInput($event)" :value="search_keyword" ></ion-searchbar>
     </ion-toolbar>
   </ion-header>
 </template>
@@ -18,7 +18,7 @@
     IonImg,
     IonSearchbar,
   } from "@ionic/vue";
-  import {userDarkModeStore} from "@/store";
+  import {userDarkModeStore, useExploreDataStore} from "@/store";
   
   export default defineComponent({
     components: {
@@ -31,15 +31,26 @@
     setup() {
       const router = useRouter();
       const darkMode = userDarkModeStore();
+      const store = useExploreDataStore();
+
+      const {changeSearchKeyword} = store;
       const is_dark_mode = computed(() => darkMode.prefersDark);
+      const search_keyword = computed(() => store.search_keyword);
       const imgUrl = computed(() => {
         return is_dark_mode.value ? 'assets/images/header.svg' : `assets/images/header.svg`;
       });
     const handleInput = (event:any) => {
+      const url = window.location.href;
+      if(!url.includes("searchpage"))
       router.push(`/explore/searchpage/${event.target.value}`);
+      else {
+        if(event.target.value.length)
+        changeSearchKeyword(event.target.value);
+      }
+      
     }
-      return {imgUrl, handleInput};
-    }
+      return {imgUrl, handleInput, search_keyword};
+    },
   });
 </script>
 
