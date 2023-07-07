@@ -7,7 +7,7 @@ export function useCountries(){
     const loading_countries = ref(false);
     const loadCountries = async ()=> {
         loading_countries.value  = true;
-        await fetchWrapper.get(`${BASE_URL}/countries`)
+        await fetchWrapper.get(`${BASE_URL}/dialCodes`)
             .then((response)=> {
                 loading_countries.value = false;
                 return response.json()
