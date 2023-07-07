@@ -45,7 +45,7 @@ export const useExploreDataStore = defineStore({
             console.log("loading explore Data...");
             // const {isLoggedIn} = useAuthStore();
             // if ((!isLoggedIn || this.dataLoaded) && !loadWithoutCheck) return ;
-            await fetchWrapper.get(`${BASE_URL}/homepage?apikey=${GOOGLE_API_KEY}`)
+            await fetchWrapper.get(`${BASE_URL}/homepage`)
                 .then((response) => {
                     if (!response.ok){
                         return Promise.reject();
@@ -69,7 +69,7 @@ export const useExploreDataStore = defineStore({
             console.log("loading explore Data...");
             // const {isLoggedIn} = useAuthStore();
             // if ((!isLoggedIn || this.dataLoaded) && !loadWithoutCheck) return ;
-            await fetchWrapper.get(`${BASE_URL}/universities/elite?apikey=${GOOGLE_API_KEY}`)
+            await fetchWrapper.get(`${BASE_URL}/universities/elite`)
                 .then((response) => {
                     if (!response.ok){
                         return Promise.reject();
@@ -82,7 +82,7 @@ export const useExploreDataStore = defineStore({
                 }).catch(()=>{
                     return;
                 })
-            await fetchWrapper.get(`${BASE_URL}/universities/world-top?apikey=${GOOGLE_API_KEY}`)
+            await fetchWrapper.get(`${BASE_URL}/universities/world-top`)
                 .then((response) => {
                     if (!response.ok){
                         return Promise.reject();
@@ -95,7 +95,7 @@ export const useExploreDataStore = defineStore({
                 }).catch(()=>{
                     return;
                 })
-            await fetchWrapper.get(`${BASE_URL}/universities/region-top?apikey=${GOOGLE_API_KEY}`)
+            await fetchWrapper.get(`${BASE_URL}/universities/region-top`)
                 .then((response) => {
                     if (!response.ok){
                         return Promise.reject();
@@ -108,7 +108,7 @@ export const useExploreDataStore = defineStore({
                 }).catch(()=>{
                     return;
                 })
-            await fetchWrapper.get(`${BASE_URL}/universities/country-top?apikey=${GOOGLE_API_KEY}`)
+            await fetchWrapper.get(`${BASE_URL}/universities/country-top`)
                 .then((response) => {
                     if (!response.ok){
                         return Promise.reject();
@@ -121,7 +121,7 @@ export const useExploreDataStore = defineStore({
                 }).catch(()=>{
                     return;
                 })
-            await fetchWrapper.get(`${BASE_URL}/universities/verfied-top?apikey=${GOOGLE_API_KEY}`)
+            await fetchWrapper.get(`${BASE_URL}/universities/verfied-top`)
                 .then((response) => {
                     if (!response.ok){
                         return Promise.reject();
@@ -141,7 +141,7 @@ export const useExploreDataStore = defineStore({
             console.log("loading explore Data...");
             // const {isLoggedIn} = useAuthStore();
             // if ((!isLoggedIn || this.dataLoaded) && !loadWithoutCheck) return ;
-            await fetchWrapper.get(`${BASE_URL}/regions?apikey=${GOOGLE_API_KEY}`)
+            await fetchWrapper.get(`${BASE_URL}/regions`)
                 .then((response) => {
                     if (!response.ok){
                         return Promise.reject();
@@ -160,7 +160,7 @@ export const useExploreDataStore = defineStore({
             console.log("loading region ID... ", id);
             // const {isLoggedIn} = useAuthStore();
             // if ((!isLoggedIn || this.dataLoaded) && !loadWithoutCheck) return ;
-            await fetchWrapper.get(`${BASE_URL}/region-details/${id}?apikey=${GOOGLE_API_KEY}`)
+            await fetchWrapper.get(`${BASE_URL}/region-details/${id}`)
                 .then((response) => {
                     if (!response.ok){
                         return Promise.reject();
@@ -178,7 +178,7 @@ export const useExploreDataStore = defineStore({
             console.log("loading region ID... ", id);
             // const {isLoggedIn} = useAuthStore();
             // if ((!isLoggedIn || this.dataLoaded) && !loadWithoutCheck) return ;
-            await fetchWrapper.get(`${BASE_URL}/country-details/${id}?apikey=${GOOGLE_API_KEY}`)
+            await fetchWrapper.get(`${BASE_URL}/country-details/${id}`)
                 .then((response) => {
                     if (!response.ok){
                         return Promise.reject();
@@ -195,7 +195,7 @@ export const useExploreDataStore = defineStore({
 
         async loadSearchData(keyword="") {
             console.log("loading region ID... ", keyword);
-            await fetchWrapper.get(`${BASE_URL}/search/${keyword}?apikey=${GOOGLE_API_KEY}`)
+            await fetchWrapper.get(`${BASE_URL}/search/${keyword}`)
                 .then((response) => {
                     if (!response.ok){
                         return Promise.reject();
@@ -222,7 +222,7 @@ export const useExploreDataStore = defineStore({
         },
 
         async loadProgramDetailSearch(keyword="") {
-            await fetchWrapper.get(`${BASE_URL}/program-universities/${keyword}?apikey=${GOOGLE_API_KEY}`)
+            await fetchWrapper.get(`${BASE_URL}/program-universities/${keyword}`)
                 .then((response) => {
                     if (!response.ok){
                         return Promise.reject();
@@ -241,7 +241,7 @@ export const useExploreDataStore = defineStore({
         },
 
         async loadUniversityDetailSearch(id="") {
-            await fetchWrapper.get(`${BASE_URL}/university-details/${id}?apikey=${GOOGLE_API_KEY}`)
+            await fetchWrapper.get(`${BASE_URL}/university-details/${id}`)
                 .then((response) => {
                     if (!response.ok){
                         return Promise.reject();
@@ -261,7 +261,7 @@ export const useExploreDataStore = defineStore({
 
         async loadUniProDetailSearch(id="") {
             console.log("UnitProdetail:------------:", id)
-            await fetchWrapper.get(`${BASE_URL}/university-programs/${id}?apikey=${GOOGLE_API_KEY}`)
+            await fetchWrapper.get(`${BASE_URL}/university-programs/${id}`)
                 .then((response) => {
                     if (!response.ok){
                         return Promise.reject();

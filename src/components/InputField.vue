@@ -3,12 +3,11 @@
     <ion-label :position="labelPosition" :color="labelColor">{{ $t(label) }}</ion-label>
     <ion-icon v-if="iconStart" slot="start" :icon="iconStart" @click="$emit('clickIconStart')"></ion-icon>
     <ion-icon v-if="iconEnd" slot="end" :icon="iconEnd" @click="$emit('clickIconEnd')"></ion-icon>
-    <ion-input v-model="myValue" :type="type" :required="required" :autofocus="autofocus">
-    </ion-input>
+    <ion-input v-model="myValue" :type="type" :required="required" :autofocus="autofocus" />
   </ion-item>
 </template>
 
-<script lang="ts">
+<script>
 import {computed, defineComponent} from "vue";
 import {IonIcon, IonInput, IonItem, IonLabel} from "@ionic/vue";
 import {useI18n} from "vue-i18n";

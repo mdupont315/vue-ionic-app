@@ -56,7 +56,6 @@ export default defineComponent({
             text: 'عربي',
             data: "ar"
           },
-
           {
             text: 'Türk',
             data: 'tr'

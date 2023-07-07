@@ -7,6 +7,7 @@ export const useCommonDataStore = defineStore({
     state: () => ({
         dataLoaded:false,
         countries: [],
+        nationalities: [],
         curriculums: [],
         fee_ranges: [],
         funding_sources: [],
@@ -16,13 +17,14 @@ export const useCommonDataStore = defineStore({
         majors: [],
         schools: [],
         universities: [],
+        dialCodes: [],
         study_statuses:[{id:0,title:'I have graduated'},{id:1,title:'I am still studying'}]
     }),
     actions: {
         async loadData(loadWithoutCheck = false) {
             // console.log("loading common Data...");
             const {isLoggedIn} = useAuthStore();
-            if ((!isLoggedIn || this.dataLoaded) && !loadWithoutCheck) return ;
+            // if ((!isLoggedIn || this.dataLoaded) && !loadWithoutCheck) return ;
             await fetchWrapper.get(`${BASE_URL}/get-all-required-data`)
                 .then((response) => {
                     if (!response.ok){
@@ -31,6 +33,7 @@ export const useCommonDataStore = defineStore({
                     return response.json()
                 }).then(({data}) => {
                     this.countries = data.countries;
+                    this.nationalities = data.nationalities;
                     this.curriculums = Object.values(data.curriculums);
                     this.fee_ranges = data.ranges;
                     this.funding_sources = data.studyFunding;
@@ -42,6 +45,7 @@ export const useCommonDataStore = defineStore({
                     this.universities = data.universities;
                     this.schools = data.schools;
                     this.dataLoaded = true;
+                    this.dialCodes = data.dialCodes;
                 }).catch(()=>{
                     return;
                 })
@@ -121,6 +125,15 @@ export const useCommonDataStore = defineStore({
         },
         async loadSchools() {
             await fetchWrapper.get(`${BASE_URL}/schools`)
+                .then((response) => {
+                    return response.json()
+                }).then(({data}) => this.schools = data)
+                .catch(() => {
+                    //TODO:Add ERROR TOAST
+                });
+        },
+        async loadDialCodes() {
+            await fetchWrapper.get(`${BASE_URL}/dialCodes`)
                 .then((response) => {
                     return response.json()
                 }).then(({data}) => this.schools = data)

@@ -11,11 +11,15 @@ export function useLocation(){
     const cities = ref([]);
     const loading_countries = ref(false);
     const loading_cities = ref(false);
+    const national_id = ref('');
+    const nationalities = computed(()=>commonDataStore.nationalities);
+    const loading_nationalities = ref(false);
+    const dialCodes = computed(()=>commonDataStore.dialCodes);
     const loadCities = async ()=> {
         if(!country_id.value) return;
         loading_cities.value  = true;
         cities.value = [];
-        await fetchWrapper.get(`${BASE_URL}/cities?country_id=${country_id.value}`)
+        await fetchWrapper.get(`${BASE_URL}/cities/${country_id.value}`)
             .then((response)=> {
                 loading_cities.value = false;
                 return response.json()
@@ -24,5 +28,5 @@ export function useLocation(){
                 //TODO:Add ERROR TOAST
             });
     }
-    return {country_id,city_id,countries,cities,loading_cities,loading_countries,loadCities}
+    return {country_id,city_id,countries,cities,loading_cities,loading_countries,loadCities,national_id,nationalities,loading_nationalities,dialCodes}
 }

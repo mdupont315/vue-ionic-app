@@ -282,7 +282,18 @@ ion-searchbar input {
 ion-searchbar .searchbar-input-container {
     height: 100% !important;
 }
-
+.c-search .c-back-icon {
+    position: absolute;
+    left: 22px;
+    top: 10px;
+    z-index: 1;
+}
+.c-search .searchbar-search-icon {
+    display: none;
+}
+.c-search input {
+    padding-left: 25px !important;
+}
 ion-button {
   --box-shadow: 0;
 }
@@ -327,6 +338,9 @@ body.qrscanner .scanner-hide {
     visibility: hidden;
 }
 
+.txt-09 {
+    font-size: 0.9rem;
+}
 
 .txt-1 {
     font-size: 1rem;
