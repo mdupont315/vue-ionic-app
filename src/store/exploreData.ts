@@ -33,12 +33,15 @@ export const useExploreDataStore = defineStore({
         search_institutes_data:[],
         search_dataLoaded:false,
         search_program_detail_datas:[],
+        search_value:true,
         
         university_detail_dataLoaded: false,
         university_detail_datas:[],
 
         unipro_detail_dataLoaded: false,
         unipro_detail_datas:[],
+
+        search_keyword:"",
     }),
     actions: {
         async loadData(loadWithoutCheck = false) {
@@ -204,6 +207,11 @@ export const useExploreDataStore = defineStore({
                 }).then((data) => {
                     this.search_programs_data = data["programs"];
                     this.search_institutes_data = data["institutes"];
+                    // console.log("search_value: ",this.search_programs_data)
+                    // if(this.search_programs_data.length + this.search_institutes_data.length >0)
+                    //     this.search_value = true;
+                    // else
+                    //     this.search_value = false;
                     this.search_dataLoaded = true;
                 }).catch(()=>{
                     return;
@@ -212,6 +220,7 @@ export const useExploreDataStore = defineStore({
         },
 
         changeLoadedVal() {
+            this.elite_dataLoaded = false;
             this.country_detail_dataLoaded=false;
             this.region_detail_dataLoaded = false;
             this.study_dest_dataLoaded = false;
@@ -219,6 +228,11 @@ export const useExploreDataStore = defineStore({
             this.university_detail_dataLoaded = false;
             this.unipro_detail_dataLoaded = false;
 
+        },
+
+        async changeSearchKeyword(val="") {
+            this.search_keyword = val;
+            await this.loadSearchData(val);
         },
 
         async loadProgramDetailSearch(keyword="") {

@@ -16,12 +16,12 @@
                     <p class="ion-text-left" style="margin-bottom: 0;">{{ $t('Design Your Future') }}</p>
                     </ion-text>
                 </ion-col>
-                <ion-col size="12" style="display: flex; flex-flow: row;">
+                <ion-col size="12" style="display: flex; flex-flow: row;"  @click="toUniversityMore">
                     <ion-img :src='uniImgUrl' class="leftImg"/>
                     <ion-text class="mid-title">
                         <p class="ion-text-left" style="margin:0px">{{ $t(`University Rankings | ${total_universities}`) }}</p>
                     </ion-text>
-                    <ion-img :src='nextImgUrl' class="rightImg" @click="toUniversityMore"/>
+                    <ion-img :src='nextImgUrl' class="rightImg" style="margin-right:10px"/>
                 </ion-col>
                 <ion-col class="scrolling">
                   <div v-for="university in universities" :key="university.id">
@@ -51,7 +51,7 @@
                     <ion-text class="mid-title">
                         <p class="ion-text-left" style="margin:0px">{{ $t(`Programs | ${total_programs}`) }}</p>
                     </ion-text>
-                    <ion-img :src='nextImgUrl' class="rightImg"/>
+                    <ion-img :src='nextImgUrl' class="rightImg" style="margin-right:10px"/>
                 </ion-col>
                 <ion-col class="scrolling">
                   <div v-for="program in programs" :key="program.id">
