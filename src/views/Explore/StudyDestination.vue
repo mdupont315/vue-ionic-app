@@ -20,12 +20,12 @@
                 </ion-row>
                 <ion-row>
                 <div v-for="study_dest_data in study_dest_datas" :key="study_dest_data.id">
-                    <ion-row>
-                    <ion-col size="12" style="display: flex; flex-flow: row;">
-                        <ion-text class="mid-title">
-                            <p class="ion-text-left" style="margin:0px">{{ $t(`${study_dest_data.name} | ${study_dest_data.number_of_universities} Universities`) }}</p>
-                        </ion-text>
-                        <ion-img :src='nextImgUrl' class="rightImg" @click="()=>toDetailRegion(study_dest_data.id)"/>
+                    <ion-row style="width: 384px;">
+                    <ion-col>
+                      <ion-text class="mid-title" style="float: left;">
+                          <p class="ion-text-left" style="margin:0px">{{ $t(`${study_dest_data.name} | ${study_dest_data.number_of_universities} Universities`) }}</p>
+                      </ion-text>
+                      <ion-img :src='nextImgUrl' class="rightImg" style="float: right; margin-right: 10px;" @click="()=>toDetailRegion(study_dest_data.id)"/>
                     </ion-col>
                     </ion-row>
                     <ion-row>
@@ -210,7 +210,6 @@ ion-searchbar {
 }
 .rightImg {
     width: 7.7px;
-    margin-left: 75px;
 }
 .university-header{
   font-family: "Calibri";

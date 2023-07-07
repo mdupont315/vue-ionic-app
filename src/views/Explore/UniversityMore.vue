@@ -100,7 +100,7 @@ export default defineComponent({
   },
   setup() {
     const store = useExploreDataStore();
-    const {loadEliteData} = store;
+    const {loadEliteData, changeLoadedVal} = store;
     const dataLoaded = computed(() => store.elite_dataLoaded);
     const elite_datas = computed(() => store.elite_datas);
     const world_top_datas = computed(() => store.world_top_datas);
@@ -131,6 +131,7 @@ export default defineComponent({
             datas.value = elite_datas.value;
             // console.log(universities.value[0]);
           hideLoading();
+          changeLoadedVal();
         })
       }
     });
