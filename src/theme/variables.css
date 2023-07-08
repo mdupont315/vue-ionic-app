@@ -385,7 +385,6 @@ body.qrscanner .scanner-hide {
     position: absolute;
     bottom: 3rem;
     left: 0;
-    width: 100%;
 }
 
 .top-border {
@@ -395,4 +394,8 @@ body.qrscanner .scanner-hide {
 .border-20 {
     border-radius: 20px;
     --border-radius: 20px;
+}
+
+.w-100 {
+    width: 100%;
 }

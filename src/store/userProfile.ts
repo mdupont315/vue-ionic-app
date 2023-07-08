@@ -22,7 +22,7 @@ export const useSetupProfileStore = defineStore({
 
         async submitFrom(step:string,formData:any) {
             this.resetErrors();
-            const response = await fetchWrapper.post(`${BASE_URL}/user/profile/setup/${step}`, formData);
+            const response = await fetchWrapper.post(`${BASE_URL}/user/setup-profile/${step}`, formData);
 
             if (!response.ok) {
                 return response.json().then((res) => {

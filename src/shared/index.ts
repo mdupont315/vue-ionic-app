@@ -11,4 +11,5 @@ export * from './scanQR';
 export * from './countries';
 export * from './i18nHelpers';
 export * from './leads';
+export * from './cities';
 // export * from './darkMode';
