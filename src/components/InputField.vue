@@ -1,9 +1,9 @@
 <template>
-  <ion-item lines="full" :fill="fill" :mode="mode">
+  <ion-item lines="full" :fill="fill" :mode="mode" @click="$emit('clickItem')">
     <ion-label :position="labelPosition" :color="labelColor">{{ $t(label) }}</ion-label>
     <ion-icon v-if="iconStart" slot="start" :icon="iconStart" @click="$emit('clickIconStart')"></ion-icon>
     <ion-icon v-if="iconEnd" slot="end" :icon="iconEnd" @click="$emit('clickIconEnd')"></ion-icon>
-    <ion-input v-model="myValue" :type="type" :required="required" :autofocus="autofocus" />
+    <ion-input v-model="myValue" :type="type" :required="required" :autofocus="autofocus" :readonly="readonly" />
   </ion-item>
 </template>
 
@@ -33,6 +33,10 @@ export default defineComponent({
     placeholder: {
       type: String,
       default: () => "",
+    },
+    readonly: {
+      type: Boolean,
+      default: () => false
     },
     autofocus: {
       type: Boolean,

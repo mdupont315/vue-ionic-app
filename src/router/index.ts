@@ -157,47 +157,47 @@ const routes: Array<RouteRecordRaw> = [
         name: 'user.delete',
     },
     {
-        path: "/user/profile/setup/step/1",
+        path: "/profile/setup/step/1",
         component: () => import("../views/User/SetupProfile/ProfileStep1.vue"),
         name: 'user.profile.setup1',
     },
     {
-        path: "/user/profile/setup/step/2",
+        path: "/profile/setup/step/2",
         component: () => import("../views/User/SetupProfile/ProfileStep2.vue"),
         name: 'user.profile.setup2',
     },
     {
-        path: "/user/profile/setup/step/3",
+        path: "/profile/setup/step/3",
         component: () => import("../views/User/SetupProfile/ProfileStep3.vue"),
         name: 'user.profile.setup3',
     },
     {
-        path: "/user/profile/setup/step/4",
+        path: "/profile/setup/step/4",
         component: () => import("../views/User/SetupProfile/ProfileStep4.vue"),
         name: 'user.profile.setup4',
     },
     {
-        path: "/user/profile/setup/step/5",
+        path: "/profile/setup/step/5",
         component: () => import("../views/User/SetupProfile/ProfileStep5.vue"),
         name: 'user.profile.setup5',
     },
     {
-        path: "/user/profile/setup/step/6",
+        path: "/profile/setup/step/6",
         component: () => import("../views/User/SetupProfile/ProfileStep6.vue"),
         name: 'user.profile.setup6',
     },
     {
-        path: "/user/profile/setup/step/7",
+        path: "/profile/setup/step/7",
         component: () => import("../views/User/SetupProfile/ProfileStep7.vue"),
         name: 'user.profile.setup7',
     },
     {
-        path: "/user/profile/setup/step/8",
+        path: "/profile/setup/step/8",
         component: () => import("../views/User/SetupProfile/ProfileStep8.vue"),
         name: 'user.profile.setup8',
     },
     {
-        path: "/user/profile/setup/step/9",
+        path: "/profile/setup/step/9",
         component: () => import("../views/User/SetupProfile/ProfileStep9.vue"),
         name: 'user.profile.setup9',
     },
@@ -249,8 +249,8 @@ router.beforeEach((to) => {
         '/application/login',
         '/profile/login',
     ];
-    const authRequired = !publicPages.includes(to.path);
-    // const authRequired = false;
+    // const authRequired = !publicPages.includes(to.path);
+    const authRequired = false;
     const {isLoggedIn, isVerified, currentStep, profileCompleted, roleId} = useAuthStore();
 
     if (authRequired && !isLoggedIn && to.path == '/chat') {

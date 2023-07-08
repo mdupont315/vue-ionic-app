@@ -76,14 +76,12 @@ ion-toolbar {
 }
 ion-tab-bar {
   --background: "white";
-
 }
-/* .tab-selected {
-  color: #00aeef;
-} */
-
 ion-tab-button {
   color: #ffffff;
+}
+.tab-selected {
+  color: #00aeef;
 }
 
 </style>
