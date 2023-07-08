@@ -151,7 +151,7 @@ export const useAuthStore = defineStore({
             }
             return response.json().then(data => {
                 try {
-                    this.setUserData(data);
+                    this.setUserData(data.data);
                     this.updateCanSendCodeIn(60);
                     return true;
                 } catch (e: any) {
@@ -324,8 +324,11 @@ export const useAuthStore = defineStore({
                 } else {
                     this.user = user;
                 }
-                this.setUserProfileCompleted(this.user.user_bio.profile_completion_status);
+                // this.setUserProfileCompleted(this.user.user_bio.profile_completion_status);
+                this.setUserProfileCompleted(true);
+
             } catch (e: any) {
+                console.log(e);
                 throw new Error();
                 // //showToast({message: 'Something Went Wrong!', color: 'danger'});
             }
@@ -363,7 +366,8 @@ export const useAuthStore = defineStore({
                 this.setProfileData(user);
                 this.setUserToken(user.token);
                 this.setUserVerification(user.email_verified_at);
-                this.setUserProfileCompleted(user.user_bio.profile_completion_status);
+                // this.setUserProfileCompleted(user.user_bio.profile_completion_status);
+                this.setUserProfileCompleted(true);
                 this.setUserRoleId(user.role_id);
             } catch (e: any) {
                 const {hideLoading} = useLoadingStore();
@@ -375,6 +379,8 @@ export const useAuthStore = defineStore({
         setUserToken(token: string) {
             try {
                 this.token = token;
+                console.log(token)
+                console.log(this.token)
                 localStorage.setItem(USER_TOKEN_STORAGE_KEY, token);
             } catch (e: any) {
                 const {hideLoading} = useLoadingStore();
