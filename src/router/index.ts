@@ -80,6 +80,21 @@ const routes: Array<RouteRecordRaw> = [
         component: () => import('../views/Explore/TopArticles.vue'),
     },
     {
+        path: '/profile/qrmain',
+        name: 'QrMain',
+        component: () => import('../views/Profile/QrMainPage.vue'),
+    },
+    {
+        path: '/profile/qrindv',
+        name: 'QrIndv',
+        component: () => import('../views/Profile/QrIndvPage.vue'),
+    },
+    {
+        path: '/profile/qrscanned',
+        name: 'QrScanned',
+        component: () => import('../views/Profile/QrScannedPage.vue'),
+    },
+    {
         path: '/application',
         name: 'Application',
         component: () => import('../views/Application/index.vue'),
@@ -249,8 +264,8 @@ router.beforeEach((to) => {
         '/application/login',
         '/profile/login',
     ];
-    const authRequired = !publicPages.includes(to.path);
-    // const authRequired = false;
+    // const authRequired = !publicPages.includes(to.path);
+    const authRequired = false;
     const {isLoggedIn, isVerified, currentStep, profileCompleted, roleId} = useAuthStore();
 
     if (authRequired && !isLoggedIn && to.path == '/chat') {
