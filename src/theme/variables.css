@@ -381,6 +381,18 @@ body.qrscanner .scanner-hide {
     text-align: left;
 }
 
+.d-bottom {
+    position: absolute;
+    bottom: 3rem;
+    left: 0;
+    width: 100%;
+}
+
 .top-border {
     border-top: 1px solid #92949c;
+}
+
+.border-20 {
+    border-radius: 20px;
+    --border-radius: 20px;
 }

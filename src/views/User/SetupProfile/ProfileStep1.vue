@@ -1,32 +1,59 @@
 <template>
   <setup-profile-layout step="1">
-    <template #header>{{ $t('Personal Information') }}</template>
     <ion-grid>
       <ion-row>
-        <ion-col>
-          <input-field v-model="form.first_name" label="First Name" required autofocus placeholder="Your First Name"/>
-          <input-error :message="error?.errors?.first_name"/>
-        </ion-col>
-      </ion-row>
-      <ion-row>
-        <ion-col>
-          <input-field v-model="form.last_name" label="Last Name" required placeholder="Your Last Name"/>
-          <input-error :message="error?.errors?.last_name"/>
-        </ion-col>
-      </ion-row>
-      <ion-row>
-        <ion-col>
+        <ion-col size="12">
           <input-field v-model="form.birthday" label="Date of Birth" placeholder="Example: 1995-09-13"
-                       :icon-end="calendarOutline" @clickIconEnd="openModel"/>
+                       :icon-start="calendarOutline" @clickIconStart="openModel"/>
           <input-error :message="error?.errors?.birthday"/>
         </ion-col>
       </ion-row>
       <ion-row>
+        <ion-col size="12" v-if="!selectedStudyStatus">
+          <input-field label="Select study Status" :icon-end="chevronDownOutline" required :readonly="true" @clickItem="selectStudyStatus"/>
+        </ion-col>
+        <ion-col size="12" v-if="selectedStudyStatus">
+          <input-field v-model="form.study_status_id" label="Select study Status" :icon-end="chevronDownOutline" required/>
+          <input-error :message="error?.errors?.study_status_id"/>
+        </ion-col>
+      </ion-row>
+      <ion-row v-if="selectedStudyStatus">
         <ion-col size="12">
-          <ion-button expand="block" @click="next">{{ $t('Next') }}</ion-button>
+          <input-field v-model="form.school_id" label="Select your school" :icon-end="chevronDownOutline" required/>
+          <input-error :message="error?.errors?.school_id"/>
+        </ion-col>
+      </ion-row>
+      <ion-row v-if="selectedStudyStatus">
+        <ion-col size="12">
+          <input-field v-model="form.curriculum_id" label="Select your Curriculm" :icon-end="chevronDownOutline" required/>
+          <input-error :message="error?.errors?.curriculum_id"/>
+        </ion-col>
+      </ion-row>
+      <ion-row v-if="selectedStudyStatus">
+        <ion-col size="12">
+          <input-field v-model="Study_level_id" label="Select study level" :icon-end="chevronDownOutline" required/>
+          <input-error :message="error?.errors?.Study_level_id"/>
+        </ion-col>
+      </ion-row>
+      <ion-row v-if="selectedStudyStatus">
+        <ion-col size="12">
+          <input-field v-model="form.grade_scale_id" label="Select your Grade Scale" :icon-end="chevronDownOutline" required/>
+          <input-error :message="error?.errors?.grade_scale_id"/>
+        </ion-col>
+      </ion-row>
+      <ion-row v-if="selectedStudyStatus">
+        <ion-col size="12">
+          <input-field v-model="form.grades" label="Your Last Grades" required/>
+          <input-error :message="error?.errors?.grades"/>
+        </ion-col>
+      </ion-row>
+      <ion-row class="d-bottom">
+        <ion-col size="12" class="ion-padding">
+          <ion-button class="border-20" expand="block" @click="next">{{ $t('Step 2 select Program') }}</ion-button>
         </ion-col>
       </ion-row>
     </ion-grid>
+
     <ion-modal :is-open="isOpen" ref="modal" :keep-contents-mounted="true" @didDismiss="closeModel">
       <ion-datetime id="datetime" :locale="`${$root.$i18n.locale == 'ar'?'ar-ae': $root.$i18n.locale}`"
                     presentation="date" mode="ios"
@@ -48,7 +75,7 @@ import {computed, defineComponent, onBeforeMount, reactive, ref, watch} from "vu
 import {useLoadingStore} from "@/store/loading";
 import InputError from "@/components/InputError.vue";
 import {usePages, useToast} from "@/shared";
-import {calendarOutline} from 'ionicons/icons';
+import {calendarOutline, chevronDownOutline} from 'ionicons/icons';
 import InputField from "@/components/InputField.vue";
 import SetupProfileLayout from "@/views/User/SetupProfile/layout/SetupProfileLayout.vue";
 
@@ -83,10 +110,18 @@ export default defineComponent({
       isOpen.value = false;
     }
     const form = reactive({
-      first_name: "",
-      last_name: "",
-      birthday: ""
+      birthday: "",
+      study_status_id: "",
+      grade_scale_id: "",
+      grades: "",
+      school_id: "",
+      curriculum_id: ""
     })
+    const Study_level_id = ref('');
+    const selectedStudyStatus = ref(false);
+    const selectStudyStatus = () => {
+      selectedStudyStatus.value = true;
+    }
     const next = async () => {
       showLoading();
       await store.submitStepOne(form).then((res) => {
@@ -101,8 +136,6 @@ export default defineComponent({
       });
     };
     onBeforeMount(async () => {
-      form.first_name = user.value?.user_bio?.first_name
-      form.last_name = user.value?.user_bio?.last_name
       form.birthday = user.value?.user_bio?.birthday
       selectedDate.value = user.value?.user_bio?.birthday !== null ? user.value?.user_bio?.birthday : '';
     })
@@ -111,20 +144,22 @@ export default defineComponent({
       form.birthday = format(parseISO(new_date), 'yyyy-MM-dd')
     });
     watch(user, () => {
-      form.first_name = user.value?.user_bio?.first_name
-      form.last_name = user.value?.user_bio?.last_name
       form.birthday = user.value?.user_bio?.birthday
       selectedDate.value = user.value?.user_bio?.birthday !== null ? user.value?.user_bio?.birthday : '';
     })
     return {
       calendarOutline,
+      chevronDownOutline,
       form,
       selectedDate,
       next,
       error,
       openModel,
       isOpen,
-      closeModel
+      closeModel,
+      selectStudyStatus,
+      selectedStudyStatus,
+      Study_level_id
     };
   },
 });
@@ -140,4 +175,14 @@ ion-modal ion-datetime {
   height: 382px;
 }
 
+ion-item {
+  width: 100%;
+  --border-color: #92949c;
+  --ion-color-base: #92949c !important;
+}
+ion-item::part(native) {
+  border-radius: 15px;
+  filter: drop-shadow(0px 3px 3px rgba(0,0,0,0.16 ));
+  border-color: #bcbcbc;
+}
 </style>
