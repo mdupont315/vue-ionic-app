@@ -1,13 +1,6 @@
 <template>
     <ion-page>
         <header-section />
-        <!-- <ion-header class="ion-no-border" mode="ios" collapse="fade" :translucent="true">
-            <ion-toolbar>
-                <ion-title class="ion-text-center" color="primary"></ion-title>
-                <ion-img :src='imgUrl'/>
-                <ion-searchbar :debounce="1000" @ionInput="handleInput($event)" showClearButton="focus"></ion-searchbar>
-            </ion-toolbar>
-        </ion-header> -->
         <ion-content :fullscreen="true" class="ion-padding-top">
             <ion-grid style="display:flex; flex-flow: column; justify-content: center;">
                 <ion-row class="ion-padding-top">
