@@ -1,34 +1,84 @@
 <template>
   <setup-profile-layout step="2">
-    <template #header>{{ $t('Which country do you live in?') }}</template>
     <ion-grid>
       <ion-row>
-        <ion-col>
-          <searchable-select v-model="country_id" label="Your Country" :items="countries"
-                             text-property="country_name" value-property="id"
-                             :loading="!countries" @change="loadCities"/>
-          <input-error :message="error?.errors?.country_id"/>
-        </ion-col>
-      </ion-row>
-      <ion-row>
-        <ion-col>
-          <searchable-select v-model="city_id" label="Your City" :items="cities"
-                             text-property="city_name" value-property="id"
-                             :loading="(loading_cities || !cities.length)"/>
-          <input-error :message="error?.errors?.city_id"/>
-        </ion-col>
-      </ion-row>
-      <ion-row>
-        <ion-col>
-          <ion-button color="secondary" fill="outline" shape="round" mode="ios" size="small" @click="findMyLocation">
-            <ion-icon :icon="locate"/>
-            {{ $t('Detect My Country') }}
-          </ion-button>
+        <ion-col size="12">
+          <ion-text>{{  $t('Select up to 5 countries where you would like to study in.') }}</ion-text>
         </ion-col>
       </ion-row>
       <ion-row>
         <ion-col size="12">
-          <ion-button expand="block" @click="next">{{ $t('Next') }}</ion-button>
+          <ion-text class="d-optoin"><p>{{  $t('1st Description Option') }}</p></ion-text>
+          <searchable-select sClass="f-item" v-model="form[0].country_id" :items="countries"
+                             text-property="country_name" value-property="id" 
+                             label="Country of residence" stitle="Select Country"
+                             :loading="!countries" :icon-end="chevronDownOutline" @change="getEachCities(0)"/>
+          <searchable-select sClass="s-item" v-model="city_id" :items="cities_arry[0]"
+                             text-property="city_name" value-property="id" 
+                             label="City of residence" stitle="Select City"
+                             :loading="(!form[0].cityLoading || !cities_arry[0].length)" :icon-end="chevronDownOutline" />
+          <input-error :message="error?.errors?.country_id || error?.errors?.city_id"/>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="12">
+          <ion-txt class="d-optoin"><p>{{  $t('2nd Description Option') }}</p></ion-txt>
+          <searchable-select sClass="f-item" v-model="form[1].country_id" :items="countries"
+                             text-property="country_name" value-property="id" 
+                             label="Country of residence" stitle="Select Country"
+                             :loading="!countries" :icon-end="chevronDownOutline" @change="getEachCities(1)"/>
+          <searchable-select sClass="s-item" v-model="city_id" :items="cities_arry[1]"
+                             text-property="city_name" value-property="id" 
+                             label="City of residence" stitle="Select City"
+                             :loading="(!form[1].cityLoading || !cities_arry[1].length)" :icon-end="chevronDownOutline" />
+          <input-error :message="error?.errors?.country_id || error?.errors?.city_id"/>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="12">
+          <ion-txt class="d-optoin"><p>{{  $t('3rd Description Option') }}</p></ion-txt>
+          <searchable-select sClass="f-item" v-model="form[2].country_id" :items="countries"
+                             text-property="country_name" value-property="id" 
+                             label="Country of residence" stitle="Select Country"
+                             :loading="!countries" :icon-end="chevronDownOutline" @change="getEachCities(2)"/>
+          <searchable-select sClass="s-item" v-model="city_id" :items="cities_arry[2]"
+                             text-property="city_name" value-property="id" 
+                             label="City of residence" stitle="Select City"
+                             :loading="(!form[2].cityLoading || !cities_arry[2].length)" :icon-end="chevronDownOutline" />
+          <input-error :message="error?.errors?.country_id || error?.errors?.city_id"/>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="12">
+          <ion-txt class="d-optoin"><p>{{  $t('4th Description Option') }}</p></ion-txt>
+          <searchable-select sClass="f-item" v-model="form[3].country_id" :items="countries"
+                             text-property="country_name" value-property="id" 
+                             label="Country of residence" stitle="Select Country"
+                             :loading="!countries" :icon-end="chevronDownOutline" @change="getEachCities(3)"/>
+          <searchable-select sClass="s-item" v-model="city_id" :items="cities_arry[3]"
+                             text-property="city_name" value-property="id" 
+                             label="City of residence" stitle="Select City"
+                             :loading="(!form[3].cityLoading || !cities_arry[3].length)" :icon-end="chevronDownOutline" />
+          <input-error :message="error?.errors?.country_id || error?.errors?.city_id"/>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="12">
+          <ion-txt class="d-optoin"><p>{{  $t('5th Description Option') }}</p></ion-txt>
+          <searchable-select sClass="f-item" v-model="form[4].country_id" :items="countries"
+                             text-property="country_name" value-property="id" 
+                             label="Country of residence" stitle="Select Country"
+                             :loading="!countries" :icon-end="chevronDownOutline" @change="getEachCities(4)"/>
+          <searchable-select sClass="s-item" v-model="city_id" :items="cities_arry[3]"
+                             text-property="city_name" value-property="id" 
+                             label="City of residence" stitle="Select City"
+                             :loading="(!form[4].cityLoading || !cities_arry[4].length)" :icon-end="chevronDownOutline" />
+          <input-error :message="error?.errors?.country_id || error?.errors?.city_id"/>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="12" class="ion-padding-top w-100">
+          <ion-button class="border-20" expand="block" @click="next">{{ $t('Step 3 select Program') }}</ion-button>
         </ion-col>
       </ion-row>
     </ion-grid>
@@ -37,14 +87,14 @@
 
 <script lang="ts">
 import {useAuthStore, useSetupProfileStore, useTranslationStore} from "@/store";
-import {close, locate} from 'ionicons/icons';
+import {chevronDownOutline} from 'ionicons/icons';
 
-import {IonButton, IonCol, IonGrid, IonIcon, IonRow,} from "@ionic/vue";
-import {computed, defineComponent, nextTick, onMounted, watch} from "vue";
+import {IonButton, IonCol, IonGrid, IonIcon, IonRow, IonText} from "@ionic/vue";
+import {computed, defineComponent, nextTick, onMounted, watch, reactive, ref} from "vue";
 import {useLoadingStore} from "@/store/loading";
 import InputError from "@/components/InputError.vue";
 import {useLocation} from "@/shared/location";
-import {useGoogleMap, usePages, useToast} from "@/shared";
+import {useGoogleMap, usePages, useToast, getCities} from "@/shared";
 import SetupProfileLayout from "@/views/User/SetupProfile/layout/SetupProfileLayout.vue";
 import SearchableSelect from "@/components/SearchableSelect.vue";
 
@@ -52,12 +102,13 @@ export default defineComponent({
   components: {
     SearchableSelect,
     SetupProfileLayout,
-    IonIcon,
+    // IonIcon,
     InputError,
     IonButton,
     IonGrid,
     IonRow,
     IonCol,
+    IonText
   },
   setup() {
     const store = useSetupProfileStore();
@@ -69,55 +120,34 @@ export default defineComponent({
     const {showLoading, hideLoading} = useLoadingStore();
     const {checkoutSetupProfileStep} = usePages();
     const {showToast} = useToast();
+    // const cc_id = ref('');
+    // const {getCities} = getCities();
     const {address, detectUser} = useGoogleMap();
     const error = computed(() => store.error);
     const {loading_cities, country_id, city_id, countries, cities, loadCities} = useLocation();
-    const findMyLocation = async () => {
-      showLoading()
-      const country = await detectUser()
-          .then(async () => {
-            return countries.value.find((country: any) => country.country_name == address.country);
-          })
-          .catch((err) => {
-            console.log(err);
-            showToast({
-              message: err?.message || 'GPS is off, please turn on your device GPS.', color: "danger", position: "top"
-            })
-          })
-          .finally(() => hideLoading());
-      if (!country) {
-        return;
-      }
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-      if (country_id.value != country.id) {
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
-        country_id.value = country.id;
-        const city = await loadCities().then(() => {
-          return cities.value.find((city: any) => city.city_name == address.city);
-        });
-        if (!city) {
-          return;
-        }
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
-        city_id.value = city.id;
-      } else {
-        const city = cities.value.find((city: any) => city.city_name == address.city);
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
-        city_id.value = city.id;
-      }
+    console.log(countries);
+    const form = reactive([
+      {country_id: "", city_id: "", cityLoading: true},
+      {country_id: "", city_id: "", cityLoading: true},
+      {country_id: "", city_id: "", cityLoading: true},
+      {country_id: "", city_id: "", cityLoading: true},
+      {country_id: "", city_id: "", cityLoading: true}
+    ]);
+    const cities_arry = reactive([
+      [], [], [], [], []
+    ])
 
-
+    const getEachCities =async (id: number) => {
+      const {city_array, loading_city} = await getCities(form[id].country_id);
+      cities_arry[id] = city_array.value;
+      form[id].cityLoading = loading_city.value;
+      // cities_arry[id] = await getCities(form[id].country_id);
+      console.log(id, form[id].country_id, cities_arry);
     }
     const next = async () => {
       showLoading();
       await store.submitStepTwo({
-        country_id: country_id.value,
-        city_id: city_id.value,
-        address: address.location
+        destinations: form
       }).then((res) => {
         hideLoading()
         if (!res) {
@@ -158,12 +188,18 @@ export default defineComponent({
       next,
       error,
       address,
-      findMyLocation,
-      locate,
-      close
+      chevronDownOutline,
+      form,
+      getCities,
+      cities_arry,
+      getEachCities,
     };
   },
 });
 </script>
 <style scoped>
+.d-optoin {
+  font-weight: bold;
+  color: #1c345a;
+}
 </style>

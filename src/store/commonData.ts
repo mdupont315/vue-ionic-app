@@ -11,14 +11,14 @@ export const useCommonDataStore = defineStore({
         curriculums: [],
         fee_ranges: [],
         funding_sources: [],
-        scales: [],
         studyLevels:[],
         hobbies: [],
         majors: [],
         schools: [],
         universities: [],
         dialCodes: [],
-        study_statuses:[{id:0,title:'I have graduated'},{id:1,title:'I am still studying'}]
+        studyStatuses: [],
+        gradeScales: [],
     }),
     actions: {
         async loadData(loadWithoutCheck = false) {
@@ -40,12 +40,13 @@ export const useCommonDataStore = defineStore({
                     this.universities = data.universities;
                     this.hobbies = data.hobbies;
                     this.majors = data.majors;
-                    this.scales = data.gradeScales;
                     this.studyLevels = data.studyLevels;
                     this.universities = data.universities;
                     this.schools = data.schools;
                     this.dataLoaded = true;
                     this.dialCodes = data.dialCodes;
+                    this.studyStatuses = data.studyStatuses;
+                    this.gradeScales = data.gradeScales;
                 }).catch(()=>{
                     return;
                 })
@@ -91,7 +92,7 @@ export const useCommonDataStore = defineStore({
             await fetchWrapper.get(`${BASE_URL}/gradeScales`)
                 .then((response) => {
                     return response.json()
-                }).then(({data}) => this.scales = data)
+                }).then(({data}) => this.gradeScales = data)
                 .catch(() => {
                     //TODO:Add ERROR TOAST
                 });

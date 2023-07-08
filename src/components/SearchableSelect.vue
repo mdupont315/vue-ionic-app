@@ -8,7 +8,7 @@
         {{selectedItem[localeProperty] || selectedItem[textProperty]}}
       </p>
     </ion-text>
-    <ion-input v-model="selectionValue" :type="type" :required="required" :autofocus="autofocus" :value="selectedItem[localeProperty] || selectedItem[textProperty]" style="display: none;" />
+    <ion-input v-model="selectionValue" :type="type" :required="required" :autofocus="autofocus" :value="selectedItem[textProperty] || selectedItem[localeProperty]" style="display: none;" :placeholder="placeholder" />
   </ion-item>
 
   <ion-modal :is-open="isOpen" :initial-breakpoint="0.95" >
@@ -153,7 +153,6 @@ export default defineComponent({
     IonToolbar
   },
   setup(props,{emit}){
-    console.log("props.items", props.items)
     const {t} = useI18n({useScope:"global"});
     const placeHolderText = computed(()=>{
       return (props.placeholder ? t(props.placeholder): "")
