@@ -110,7 +110,7 @@ export default defineComponent({
 
     const next = async () => {
       showLoading();
-      await store.submitStepTwo({
+      await store.submitStepFour({
         hobbies: form
       }).then((res) => {
         hideLoading()
@@ -120,7 +120,7 @@ export default defineComponent({
         const {data} = res;
         setProfileData(data);
         showToast({message: 'Info Updated!', color: 'primary', position: 'bottom'});
-        return checkoutSetupProfileStep(3);
+        return checkoutSetupProfileStep(5);
       });
     };
 
