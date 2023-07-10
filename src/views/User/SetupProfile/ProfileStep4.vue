@@ -58,7 +58,7 @@
       </ion-row>
       <ion-row>
         <ion-col size="12" class="ion-padding-top w-100">
-          <ion-button class="border-20" expand="block" @click="next">{{ $t('Step 3 select Program') }}</ion-button>
+          <ion-button class="border-20" expand="block" @click="next">{{ $t('Step 5 Support the finding') }}</ion-button>
         </ion-col>
       </ion-row>
     </ion-grid>

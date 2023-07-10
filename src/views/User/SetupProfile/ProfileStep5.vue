@@ -1,46 +1,63 @@
 <template>
   <setup-profile-layout step="5">
-    <template #header>{{ $t('Study Budget') }}</template>
     <ion-grid>
-      <ion-row>
-        <ion-col>
-          <ion-item lines="full" fill="outline" mode="md">
-            <ion-label color="medium" position="stacked">
-              {{ $t('Your Fee Range') }}
-            </ion-label>
-            <ion-spinner v-if="!fee_ranges.length" slot="end" color="secondary"/>
-            <ion-select v-else mode="ios" interface="action-sheet"
-                        :interface-options="{header:$t('Pick a range')}" v-model="form.fee_range_id">
-              <ion-select-option v-for="(range,index) in fee_ranges" :key="`range-${index}`" :value="range.id">
-                {{ range.currency_range }}
-              </ion-select-option>
-            </ion-select>
-          </ion-item>
+      <ion-row class="ion-padding-top">
+        <ion-col size="12">
+          <ion-text class="d-optoin"><p style="margin-bottom: 0;">{{  $t('Fees Range: ') }}</p></ion-text>
+          <select-item v-model="form.fee_range_id" :items="feeRanges"
+                        text-property="range" value-property="id" 
+                        :loading="!feeRanges"/>
           <input-error :message="error?.errors?.fee_range_id"/>
         </ion-col>
       </ion-row>
-      <ion-row>
-        <ion-col>
-          <ion-item lines="full" fill="outline" mode="md">
-            <ion-label position="stacked" color="medium">
-              {{ $t('University study budget source') }}
-            </ion-label>
-            <ion-spinner v-if="!funding_sources.length" slot="end" color="secondary"/>
-            <ion-select v-if="funding_sources.length" mode="ios" interface="action-sheet"
-                        :interface-options="{header:$t('University study budget source')}"
-                        v-model="form.study_fundings">
-              <ion-select-option v-for="source in funding_sources" :key="`source-${source.id}`"
-                                 :value="source.id.toString()">
-                {{ source.translated_name || source.funding_source }}
-              </ion-select-option>
-            </ion-select>
-          </ion-item>
-          <input-error :message="error?.errors?.study_fundings"/>
+      <ion-row class="ion-padding-top">
+        <ion-col size="12">
+          <ion-txt class="d-optoin"><p style="margin-bottom: 7px;">{{  $t('Mode of Study') }}</p></ion-txt>
+          <select-item v-model="form.study_mode_id" :items="studyModes"
+                        text-property="title" value-property="id" 
+                        :loading="!studyModes"/>
+          <input-error :message="error?.errors?.study_mode_id"/>
+        </ion-col>
+      </ion-row>
+      <ion-row class="ion-padding-top">
+        <ion-col size="12">
+          <ion-txt class="d-optoin"><p style="margin-bottom: 7px;">{{  $t('Language Requirements') }}</p></ion-txt>
+          <select-item v-model="form.language_requirement_id" :items="languageRequirements"
+                        text-property="title" value-property="id" 
+                        :loading="!languageRequirements"/>
+          <input-error :message="error?.errors?.language_requirement_id"/>
+        </ion-col>
+      </ion-row>
+      <ion-row class="ion-padding-top">
+        <ion-col size="12">
+          <ion-txt class="d-optoin"><p style="margin-bottom: 7px;">{{  $t('Intake year') }}</p></ion-txt>
+          <select-item v-model="form.intake_year" :items="intakeYear"
+                        text-property="id" value-property="id" 
+                        :loading="!intakeYear"/>
+          <input-error :message="error?.errors?.intake_year"/>
+        </ion-col>
+      </ion-row>
+      <ion-row class="ion-padding-top">
+        <ion-col size="12">
+          <ion-txt class="d-optoin"><p style="margin-bottom: 7px;">{{  $t('Intake Months') }}</p></ion-txt>
+          <select-item v-model="form.intake_month_id" :items="intakeMonths"
+                        text-property="title" value-property="id" 
+                        :loading="!intakeMonths"/>
+          <input-error :message="error?.errors?.intake_month_id"/>
+        </ion-col>
+      </ion-row>
+      <ion-row class="ion-padding-top">
+        <ion-col size="12">
+          <ion-txt class="d-optoin"><p style="margin-bottom: 7px;">{{  $t('Course Duration') }}</p></ion-txt>
+          <select-item v-model="form.course_duration_id" :items="courseDurations"
+                        text-property="title" value-property="id" 
+                        :loading="!courseDurations"/>
+          <input-error :message="error?.errors?.course_duration_id"/>
         </ion-col>
       </ion-row>
       <ion-row>
-        <ion-col size="12">
-          <ion-button expand="block" @click="next">{{ $t('Next') }}</ion-button>
+        <ion-col size="12" class="ion-padding-top w-100">
+          <ion-button class="border-20" expand="block" @click="next">{{ $t('Mission Accomplished') }}</ion-button>
         </ion-col>
       </ion-row>
     </ion-grid>
@@ -49,59 +66,66 @@
 
 <script lang="ts">
 import {useAuthStore, useCommonDataStore, useLoadingStore, useSetupProfileStore} from "@/store";
+import {chevronDownOutline} from 'ionicons/icons';
 import {
   IonButton,
   IonCol,
   IonGrid,
-  IonItem,
-  IonLabel,
   IonRow,
-  IonSelect,
-  IonSelectOption,
-  IonSpinner,
+  IonText,
+  IonRange 
 } from "@ionic/vue";
-import {computed, defineComponent, onBeforeMount, reactive, watch} from "vue";
+import {computed, defineComponent, reactive} from "vue";
 import InputError from "@/components/InputError.vue";
 import {usePages, useToast} from "@/shared";
 import SetupProfileLayout from "@/views/User/SetupProfile/layout/SetupProfileLayout.vue";
+import SelectItem from "@/components/SelectItem.vue";
+import SelectRange from "@/components/SelectRange.vue";
 
 export default defineComponent({
   components: {
+    SelectItem,
     SetupProfileLayout,
-    IonSpinner,
-    IonSelect,
-    IonSelectOption,
+    // SelectRange,
     InputError,
-    IonLabel,
     IonButton,
-    IonItem,
     IonGrid,
     IonRow,
     IonCol,
+    IonText,
+    // IonRange 
   },
   setup() {
+    
+    const commonDataStore = useCommonDataStore();
+    const feeRanges = computed(() => commonDataStore.fee_ranges);
+    const studyModes = computed(() => commonDataStore.studyModes);
+    const languageRequirements = computed(() => commonDataStore.languageRequirements);
+    const intakeYear = computed(() => commonDataStore.intakeYear);
+    const intakeMonths = computed(() => commonDataStore.intakeMonths);
+    const courseDurations = computed(() => commonDataStore.courseDurations);
     const store = useSetupProfileStore();
     const userStore = useAuthStore();
-    const user = computed(() => userStore.user);
     const {setProfileData} = userStore;
-    const commonDataStore = useCommonDataStore();
-    const fee_ranges = computed(() => commonDataStore.fee_ranges);
-    const funding_sources = computed(() => commonDataStore.funding_sources);
     const {showLoading, hideLoading} = useLoadingStore();
     const {checkoutSetupProfileStep} = usePages();
     const {showToast} = useToast();
     const error = computed(() => store.error);
+
     const form = reactive({
-      fee_range_id: '',
-      study_fundings: '',
-    });
-    const initFromData = () => {
-      form.fee_range_id = user.value?.user_bio?.fee_range_id;
-      form.study_fundings = user.value?.user_bio?.study_fundings;
-    }
+      fee_range_id: "",
+      intake_year: "",
+      intake_month_id: "",
+      course_duration_id: "",
+      study_mode_id: "",
+      language_requirement_id: ""
+    })
+
     const next = async () => {
       showLoading();
-      await store.submitStepFive(form).then((res) => {
+      await store.submitStepTwo({
+        hobbies: form
+      }).then((res) => {
         hideLoading()
         if (!res) {
           return;
@@ -109,27 +133,41 @@ export default defineComponent({
         const {data} = res;
         setProfileData(data);
         showToast({message: 'Info Updated!', color: 'primary', position: 'bottom'});
-        return checkoutSetupProfileStep(6);
+        return checkoutSetupProfileStep(3);
       });
     };
-    onBeforeMount(async () => {
-      initFromData();
-    })
-    watch(user, () => {
-      initFromData();
-    })
+
     return {
-      form,
-      fee_ranges,
-      funding_sources,
+      feeRanges,
+      studyModes,
+      languageRequirements,
+      intakeYear,
+      intakeMonths,
+      courseDurations,
       next,
       error,
+      chevronDownOutline,
+      form
     };
   },
 });
 </script>
 <style scoped>
-.ion-no-shadow {
-  --box-shadow: 0 !important;
+ion-col {
+  border-top: 1px solid #1c345a;;
+}
+ion-range {
+  --bar-background: #e6e6e6;
+  --bar-background-active: #1c345a;
+  --bar-height: 5px;
+  --bar-border-radius: 5px;
+  --knob-background: #1c345a;
+  --knob-size: 25px;
+  --pin-background: #ffafcc;
+  --pin-color: #fff;
+}
+.d-optoin {
+  font-weight: bold;
+  color: #1c345a;
 }
 </style>
