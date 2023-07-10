@@ -2,7 +2,7 @@
   <ion-list>
     <ion-item lines="full" mode="ios" v-for="item in filteredItems" :key="item[valueProperty]"
               :class="selectionValue == item[valueProperty] ? 'selected' : ''" @click="selectItem(item[valueProperty])">
-      <ion-label>{{ (item[localeProperty] || item[textProperty]) }}</ion-label>
+      <ion-label>{{ item[textProperty] }}</ion-label>
     </ion-item>
   </ion-list>
 </template>
@@ -30,10 +30,6 @@ export default defineComponent({
     textProperty:{
       type:String,
       required:true,
-    },
-    localeProperty:{
-      type:String,
-      default:()=>'translated_name'
     },
     modelValue:{
       type: String,
@@ -122,44 +118,17 @@ export default defineComponent({
         emit('change',newValue);
       }
     })
-    const isOpen = ref(false)
-    const search = ref('')
-    const setIsOpen = (state) => {
-      isOpen.value = state;
-      if (!state) {
-        search.value = '';
-      }
-    }
-    const selectedItem = computed(() => {
-      if (!selectionValue.value) return {};
-      return props.items.find((item) => item[props.valueProperty] == selectionValue.value);
-    })
-    const filteredItems = computed(() => {
-      if (!search.value) return props.items;
-      let query = search.value.toLowerCase();
-      return props.items.filter(item => {
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
-        return item[props.textProperty]?.toLowerCase().indexOf(query) > -1 || item[props.localeProperty]?.toLowerCase().indexOf(query) > -1;
-      })
-    })
+    const filteredItems = computed(() =>props.items);
     const selectItem = (id) => {
       selectionValue.value = id;
-      if (!props.multiple) {
-        setIsOpen(false);
-      }
     }
     return {
       chevronBackOutline,
       checkmark,
       placeHolderText,
       selectionValue,
-      isOpen,
-      search,
-      selectedItem,
       filteredItems,
       selectItem,
-      setIsOpen
     }
   }
 })

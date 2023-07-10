@@ -81,6 +81,7 @@ import {usePages, useToast} from "@/shared";
 import SetupProfileLayout from "@/views/User/SetupProfile/layout/SetupProfileLayout.vue";
 import SelectItem from "@/components/SelectItem.vue";
 import SelectRange from "@/components/SelectRange.vue";
+import router from "@/router";
 
 export default defineComponent({
   components: {
@@ -123,8 +124,8 @@ export default defineComponent({
 
     const next = async () => {
       showLoading();
-      await store.submitStepTwo({
-        hobbies: form
+      await store.submitStepFive({
+        form
       }).then((res) => {
         hideLoading()
         if (!res) {
@@ -133,7 +134,7 @@ export default defineComponent({
         const {data} = res;
         setProfileData(data);
         showToast({message: 'Info Updated!', color: 'primary', position: 'bottom'});
-        return checkoutSetupProfileStep(3);
+        router.replace('/explore');
       });
     };
 
