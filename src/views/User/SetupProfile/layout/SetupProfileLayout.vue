@@ -2,8 +2,8 @@
   <ion-page>
     <header-section />
     <ion-content :fullscreen="true" class="ion-padding">
-      <ion-item lines="none">
-        <ion-text class="ion-text-center ion-no-padding" color="dark1 txt-2" >
+      <ion-item lines="none" style="--background: transparent;">
+        <ion-text class="ion-text-center ion-no-padding" color="dark1 txt-step" >
           {{ descriptions[current_step] }} 
         </ion-text>
       </ion-item>
@@ -103,6 +103,7 @@ export default defineComponent({
 <style scoped>
 ion-content {
   --padding-top: 4rem;
+  --background: #f5f5f5;
 }
 .active {
   --background: green;

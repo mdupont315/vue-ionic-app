@@ -136,6 +136,9 @@ export default defineComponent({
 
 
 <style scoped>
+  ion-list {
+    background: transparent;
+  }
   ion-item {
     width: auto;
     height: 30px;
@@ -144,6 +147,7 @@ export default defineComponent({
     border-radius: 15px;
     --border-width: 0 !important;
     margin: 5px 10px 5px 0;
+    color: #1c345a;
   }
   ion-label {
     margin-top: -5px;

@@ -1,16 +1,17 @@
 <template>
   <setup-profile-layout step="5">
     <ion-grid>
-      <ion-row class="ion-padding-top">
+      <hr>
+      <ion-row>
         <ion-col size="12">
           <ion-text class="d-optoin"><p style="margin-bottom: 0;">{{  $t('Fees Range: ') }}</p></ion-text>
-          <select-item v-model="form.fee_range_id" :items="feeRanges"
-                        text-property="range" value-property="id" 
-                        :loading="!feeRanges"/>
+          <ion-range :dual-knobs="true" :value="{ lower: 20, upper: 80 }"></ion-range>
+          <select-range />
           <input-error :message="error?.errors?.fee_range_id"/>
         </ion-col>
       </ion-row>
-      <ion-row class="ion-padding-top">
+      <hr>
+      <ion-row>
         <ion-col size="12">
           <ion-txt class="d-optoin"><p style="margin-bottom: 7px;">{{  $t('Mode of Study') }}</p></ion-txt>
           <select-item v-model="form.study_mode_id" :items="studyModes"
@@ -19,7 +20,8 @@
           <input-error :message="error?.errors?.study_mode_id"/>
         </ion-col>
       </ion-row>
-      <ion-row class="ion-padding-top">
+      <hr>
+      <ion-row>
         <ion-col size="12">
           <ion-txt class="d-optoin"><p style="margin-bottom: 7px;">{{  $t('Language Requirements') }}</p></ion-txt>
           <select-item v-model="form.language_requirement_id" :items="languageRequirements"
@@ -28,7 +30,8 @@
           <input-error :message="error?.errors?.language_requirement_id"/>
         </ion-col>
       </ion-row>
-      <ion-row class="ion-padding-top">
+      <hr>
+      <ion-row>
         <ion-col size="12">
           <ion-txt class="d-optoin"><p style="margin-bottom: 7px;">{{  $t('Intake year') }}</p></ion-txt>
           <select-item v-model="form.intake_year" :items="intakeYear"
@@ -37,7 +40,8 @@
           <input-error :message="error?.errors?.intake_year"/>
         </ion-col>
       </ion-row>
-      <ion-row class="ion-padding-top">
+      <hr>
+      <ion-row>
         <ion-col size="12">
           <ion-txt class="d-optoin"><p style="margin-bottom: 7px;">{{  $t('Intake Months') }}</p></ion-txt>
           <select-item v-model="form.intake_month_id" :items="intakeMonths"
@@ -46,7 +50,8 @@
           <input-error :message="error?.errors?.intake_month_id"/>
         </ion-col>
       </ion-row>
-      <ion-row class="ion-padding-top">
+      <hr>
+      <ion-row>
         <ion-col size="12">
           <ion-txt class="d-optoin"><p style="margin-bottom: 7px;">{{  $t('Course Duration') }}</p></ion-txt>
           <select-item v-model="form.course_duration_id" :items="courseDurations"
@@ -55,8 +60,9 @@
           <input-error :message="error?.errors?.course_duration_id"/>
         </ion-col>
       </ion-row>
+      <hr>
       <ion-row>
-        <ion-col size="12" class="ion-padding-top w-100">
+        <ion-col size="12" class="w-100">
           <ion-button class="border-20" expand="block" @click="next">{{ $t('Mission Accomplished') }}</ion-button>
         </ion-col>
       </ion-row>
@@ -87,14 +93,14 @@ export default defineComponent({
   components: {
     SelectItem,
     SetupProfileLayout,
-    // SelectRange,
+    SelectRange,
     InputError,
     IonButton,
     IonGrid,
     IonRow,
     IonCol,
     IonText,
-    // IonRange 
+    IonRange 
   },
   setup() {
     
@@ -154,21 +160,25 @@ export default defineComponent({
 });
 </script>
 <style scoped>
-ion-col {
-  border-top: 1px solid #1c345a;;
-}
 ion-range {
   --bar-background: #e6e6e6;
   --bar-background-active: #1c345a;
-  --bar-height: 5px;
-  --bar-border-radius: 5px;
+  --bar-height: 2px;
+  --bar-border-radius: 2px;
   --knob-background: #1c345a;
-  --knob-size: 25px;
+  --knob-size: 15px;
   --pin-background: #ffafcc;
   --pin-color: #fff;
 }
 .d-optoin {
   font-weight: bold;
   color: #1c345a;
+}
+hr {
+  width: 85%;
+  height: 1px;
+  background: #bcbcbc;
+  margin-top: 20px;
+  margin-bottom: 0;
 }
 </style>
