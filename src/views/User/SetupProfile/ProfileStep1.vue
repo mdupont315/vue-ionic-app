@@ -2,17 +2,17 @@
   <setup-profile-layout step="1">
     <ion-grid>
       <ion-row>
-        <ion-col size="12">
+        <ion-col size="12" class="ion-padding-bottom">
           <input-field v-model="form.birthday" label="Date of Birth" placeholder="Example: 1995-09-13"
                        :icon-start="calendarOutline" @clickIconStart="openModel"/>
           <input-error :message="error?.errors?.birthday"/>
         </ion-col>
       </ion-row>
       <ion-row>
-        <ion-col size="12" v-if="!selectedStudyStatus">
+        <ion-col size="12" class="ion-padding-bottom" v-if="!selectedStudyStatus">
           <input-field label="Select study Status" :icon-end="chevronDownOutline" required :readonly="true" @clickItem="selectStudyStatus"/>
         </ion-col>
-        <ion-col size="12" v-if="selectedStudyStatus">
+        <ion-col size="12" class="ion-padding-bottom" v-if="selectedStudyStatus">
           <searchable-select v-model="form.study_status_id" :items="studyStatuses"
                              text-property="title" value-property="id" 
                              label="Select study Status" stitle="Select study Status"
@@ -21,7 +21,7 @@
         </ion-col>
       </ion-row>
       <ion-row v-if="selectedStudyStatus">
-        <ion-col size="12">
+        <ion-col size="12" class="ion-padding-bottom">
           <searchable-select v-model="form.school_id" :items="schools"
                              text-property="title" value-property="id" 
                              label="Select your school" stitle="Select your school"
@@ -30,7 +30,7 @@
         </ion-col>
       </ion-row>
       <ion-row v-if="selectedStudyStatus">
-        <ion-col size="12">
+        <ion-col size="12" class="ion-padding-bottom">
           <searchable-select v-model="form.curriculum_id" :items="curriculums"
                              text-property="title" value-property="id" 
                              label="Select your Curriculm" stitle="Select your Curriculm"
@@ -39,7 +39,7 @@
         </ion-col>
       </ion-row>
       <ion-row v-if="selectedStudyStatus && form.study_status_id == '2'">
-        <ion-col size="12">
+        <ion-col size="12" class="ion-padding-bottom">
           <searchable-select v-model="form.study_level_id" :items="studyLevels"
                              text-property="title" value-property="id" 
                              label="Select study level" stitle="Select study level"
@@ -48,7 +48,7 @@
         </ion-col>
       </ion-row>
       <ion-row v-if="selectedStudyStatus">
-        <ion-col size="12">
+        <ion-col size="12" class="ion-padding-bottom">
           <searchable-select v-model="form.grade_scale_id" :items="gradeScales"
                              text-property="title" value-property="id" 
                              label="Select your Grade Scale" stitle="Select your Grade Scale"
@@ -57,7 +57,7 @@
         </ion-col>
       </ion-row>
       <ion-row v-if="selectedStudyStatus">
-        <ion-col size="12">
+        <ion-col size="12" class="ion-padding-bottom">
           <input-field v-model="form.grades" label="Your Last Grades" required/>
           <input-error :message="error?.errors?.grades"/>
         </ion-col>

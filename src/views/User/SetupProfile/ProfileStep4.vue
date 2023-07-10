@@ -9,7 +9,7 @@
       <ion-row>
         <ion-col size="12">
           <ion-text class="d-optoin"><p style="margin-bottom: 0;">{{  $t('1st Hobby') }}</p></ion-text>
-          <searchable-select v-model="form[0]" :items="hobbies"
+          <searchable-select sClass="pro-input-style" v-model="form[0]" :items="hobbies"
                              text-property="title" value-property="id" 
                              label="Select a Hobby" stitle="Select a Hobby"
                              :loading="!hobbies" :icon-end="chevronDownOutline"/>
@@ -19,7 +19,7 @@
       <ion-row>
         <ion-col size="12">
           <ion-txt class="d-optoin"><p style="margin-bottom: 0;">{{  $t('2nd Hobby') }}</p></ion-txt>
-          <searchable-select v-model="form[1]" :items="hobbies"
+          <searchable-select sClass="pro-input-style" v-model="form[1]" :items="hobbies"
                              text-property="title" value-property="id" 
                              label="Select a Hobby" stitle="Select a Hobby"
                              :loading="!hobbies" :icon-end="chevronDownOutline"/>
@@ -29,7 +29,7 @@
       <ion-row>
         <ion-col size="12">
           <ion-txt class="d-optoin"><p style="margin-bottom: 0;">{{  $t('3rd Hobby') }}</p></ion-txt>
-          <searchable-select v-model="form[2]" :items="hobbies"
+          <searchable-select sClass="pro-input-style" v-model="form[2]" :items="hobbies"
                              text-property="title" value-property="id" 
                              label="Select a Hobby" stitle="Select a Hobby"
                              :loading="!hobbies" :icon-end="chevronDownOutline"/>
@@ -39,7 +39,7 @@
       <ion-row>
         <ion-col size="12">
           <ion-txt class="d-optoin"><p style="margin-bottom: 0;">{{  $t('4th Hobby') }}</p></ion-txt>
-          <searchable-select v-model="form[3]" :items="hobbies"
+          <searchable-select sClass="pro-input-style" v-model="form[3]" :items="hobbies"
                              text-property="title" value-property="id" 
                              label="Select a Hobby" stitle="Select a Hobby"
                              :loading="!hobbies" :icon-end="chevronDownOutline"/>
@@ -49,7 +49,7 @@
       <ion-row>
         <ion-col size="12">
           <ion-txt class="d-optoin"><p style="margin-bottom: 0;">{{  $t('5th Hobby') }}</p></ion-txt>
-          <searchable-select v-model="form[4]" :items="hobbies"
+          <searchable-select sClass="pro-input-style" v-model="form[4]" :items="hobbies"
                              text-property="title" value-property="id" 
                              label="Select a Hobby" stitle="Select a Hobby"
                              :loading="!hobbies" :icon-end="chevronDownOutline"/>
@@ -138,5 +138,10 @@ export default defineComponent({
 .d-optoin {
   font-weight: bold;
   color: #1c345a;
+}
+ion-item::part(native) {
+  border-radius: 15px;
+  filter: drop-shadow(0px 3px 3px rgba(0,0,0,0.16 ));
+  border-color: #bcbcbc;
 }
 </style>
