@@ -13,7 +13,7 @@
                              text-property="country_name" value-property="id" 
                              label="Country of residence" stitle="Select Country"
                              :loading="!countries" :icon-end="chevronDownOutline" @change="getEachCities(0)"/>
-          <searchable-select sClass="s-item" v-model="city_id" :items="cities_arry[0]"
+          <searchable-select sClass="s-item" v-model="form[0].city_id" :items="cities_arry[0]"
                              text-property="city_name" value-property="id" 
                              label="City of residence" stitle="Select City"
                              :loading="(!form[0].cityLoading || !cities_arry[0].length)" :icon-end="chevronDownOutline" />
@@ -27,7 +27,7 @@
                              text-property="country_name" value-property="id" 
                              label="Country of residence" stitle="Select Country"
                              :loading="!countries" :icon-end="chevronDownOutline" @change="getEachCities(1)"/>
-          <searchable-select sClass="s-item" v-model="city_id" :items="cities_arry[1]"
+          <searchable-select sClass="s-item" v-model="form[1].city_id" :items="cities_arry[1]"
                              text-property="city_name" value-property="id" 
                              label="City of residence" stitle="Select City"
                              :loading="(!form[1].cityLoading || !cities_arry[1].length)" :icon-end="chevronDownOutline" />
@@ -41,7 +41,7 @@
                              text-property="country_name" value-property="id" 
                              label="Country of residence" stitle="Select Country"
                              :loading="!countries" :icon-end="chevronDownOutline" @change="getEachCities(2)"/>
-          <searchable-select sClass="s-item" v-model="city_id" :items="cities_arry[2]"
+          <searchable-select sClass="s-item" v-model="form[2].city_id" :items="cities_arry[2]"
                              text-property="city_name" value-property="id" 
                              label="City of residence" stitle="Select City"
                              :loading="(!form[2].cityLoading || !cities_arry[2].length)" :icon-end="chevronDownOutline" />
@@ -55,7 +55,7 @@
                              text-property="country_name" value-property="id" 
                              label="Country of residence" stitle="Select Country"
                              :loading="!countries" :icon-end="chevronDownOutline" @change="getEachCities(3)"/>
-          <searchable-select sClass="s-item" v-model="city_id" :items="cities_arry[3]"
+          <searchable-select sClass="s-item" v-model="form[3].city_id" :items="cities_arry[3]"
                              text-property="city_name" value-property="id" 
                              label="City of residence" stitle="Select City"
                              :loading="(!form[3].cityLoading || !cities_arry[3].length)" :icon-end="chevronDownOutline" />
@@ -69,7 +69,7 @@
                              text-property="country_name" value-property="id" 
                              label="Country of residence" stitle="Select Country"
                              :loading="!countries" :icon-end="chevronDownOutline" @change="getEachCities(4)"/>
-          <searchable-select sClass="s-item" v-model="city_id" :items="cities_arry[3]"
+          <searchable-select sClass="s-item" v-model="form[4].city_id" :items="cities_arry[3]"
                              text-property="city_name" value-property="id" 
                              label="City of residence" stitle="Select City"
                              :loading="(!form[4].cityLoading || !cities_arry[4].length)" :icon-end="chevronDownOutline" />
@@ -86,15 +86,18 @@
 </template>
 
 <script lang="ts">
-import {useAuthStore, useSetupProfileStore, useTranslationStore} from "@/store";
+import {useAuthStore, useCommonDataStore, useLoadingStore, useSetupProfileStore} from "@/store";
 import {chevronDownOutline} from 'ionicons/icons';
-
-import {IonButton, IonCol, IonGrid, IonIcon, IonRow, IonText} from "@ionic/vue";
-import {computed, defineComponent, nextTick, onMounted, watch, reactive, ref} from "vue";
-import {useLoadingStore} from "@/store/loading";
+import {
+  IonButton,
+  IonCol,
+  IonGrid,
+  IonRow,
+  IonText
+} from "@ionic/vue";
+import {computed, defineComponent, onBeforeMount, reactive, watch} from "vue";
 import InputError from "@/components/InputError.vue";
-import {useLocation} from "@/shared/location";
-import {useGoogleMap, usePages, useToast, getCities} from "@/shared";
+import {usePages, useToast, useCities} from "@/shared";
 import SetupProfileLayout from "@/views/User/SetupProfile/layout/SetupProfileLayout.vue";
 import SearchableSelect from "@/components/SearchableSelect.vue";
 
@@ -102,7 +105,6 @@ export default defineComponent({
   components: {
     SearchableSelect,
     SetupProfileLayout,
-    // IonIcon,
     InputError,
     IonButton,
     IonGrid,
@@ -111,21 +113,17 @@ export default defineComponent({
     IonText
   },
   setup() {
+
+    const commonDataStore = useCommonDataStore();
+    const countries = computed(() => commonDataStore.countries);
     const store = useSetupProfileStore();
-    const langStore = useTranslationStore();
-    const lang = computed(() => langStore.locale);
     const userStore = useAuthStore();
-    const user = computed(() => userStore.user);
     const {setProfileData} = userStore;
     const {showLoading, hideLoading} = useLoadingStore();
     const {checkoutSetupProfileStep} = usePages();
     const {showToast} = useToast();
-    // const cc_id = ref('');
-    // const {getCities} = getCities();
-    const {address, detectUser} = useGoogleMap();
     const error = computed(() => store.error);
-    const {loading_cities, country_id, city_id, countries, cities, loadCities} = useLocation();
-    console.log(countries);
+
     const form = reactive([
       {country_id: "", city_id: "", cityLoading: true},
       {country_id: "", city_id: "", cityLoading: true},
@@ -138,11 +136,8 @@ export default defineComponent({
     ])
 
     const getEachCities =async (id: number) => {
-      const {city_array, loading_city} = await getCities(form[id].country_id);
-      cities_arry[id] = city_array.value;
-      form[id].cityLoading = loading_city.value;
-      // cities_arry[id] = await getCities(form[id].country_id);
-      console.log(id, form[id].country_id, cities_arry);
+      cities_arry[id] = await useCities(form[id].country_id);
+      form[id].cityLoading = true;
     }
     const next = async () => {
       showLoading();
@@ -159,38 +154,13 @@ export default defineComponent({
         return checkoutSetupProfileStep(3);
       });
     };
-    const setData = () => {
-      country_id.value = user.value?.user_bio?.country_id
-      city_id.value = user.value?.user_bio?.city_id
-      address.location = user.value?.user_bio?.address
-    }
-
-    onMounted(async () => {
-      setData();
-      await nextTick();
-      await loadCities();
-    });
-
-    watch(user, () => {
-      setData();
-    })
-    watch(lang, async () => {
-      await loadCities()
-    });
 
     return {
-      city_id,
-      country_id,
       countries,
-      cities,
-      loadCities,
-      loading_cities,
       next,
       error,
-      address,
       chevronDownOutline,
       form,
-      getCities,
       cities_arry,
       getEachCities,
     };
