@@ -19,7 +19,12 @@ export const useCommonDataStore = defineStore({
         dialCodes: [],
         studyStatuses: [],
         gradeScales: [],
-        disciplines: []
+        disciplines: [],
+        studyModes: [],
+        languageRequirements: [],
+        intakeYear: [{id: "2023"}, {id: "2024"}, {id: "2025"}],
+        intakeMonths: [],
+        courseDurations: []
     }),
     actions: {
         async loadData(loadWithoutCheck = false) {
@@ -49,6 +54,10 @@ export const useCommonDataStore = defineStore({
                     this.studyStatuses = data.studyStatuses;
                     this.gradeScales = data.gradeScales;
                     this.disciplines = data.disciplines;
+                    this.studyModes = data.studyModes;
+                    this.languageRequirements = data.languageRequirements;
+                    this.courseDurations = data.courseDurations;
+                    this.intakeMonths = data.intakeMonths;
                 }).catch(()=>{
                     return;
                 })
