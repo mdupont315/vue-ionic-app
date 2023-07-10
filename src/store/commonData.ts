@@ -19,6 +19,7 @@ export const useCommonDataStore = defineStore({
         dialCodes: [],
         studyStatuses: [],
         gradeScales: [],
+        disciplines: []
     }),
     actions: {
         async loadData(loadWithoutCheck = false) {
@@ -47,6 +48,7 @@ export const useCommonDataStore = defineStore({
                     this.dialCodes = data.dialCodes;
                     this.studyStatuses = data.studyStatuses;
                     this.gradeScales = data.gradeScales;
+                    this.disciplines = data.disciplines;
                 }).catch(()=>{
                     return;
                 })
