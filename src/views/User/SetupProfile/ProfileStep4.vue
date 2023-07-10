@@ -1,17 +1,64 @@
 <template>
   <setup-profile-layout step="4">
-    <template #header>{{ $t('What do you want to study?') }}</template>
     <ion-grid>
-      <ion-row v-for="i in 5" :key="`item-${i}`">
-        <ion-col>
-          <searchable-select v-model="form[(i-1)]" label="You Want to Study" :items="all_majors" text-property="title" value-property="id"
-                             :loading="!all_majors.length" clearable />
-          <input-error :message="error[`majors.${(i-1)}`] || ''"/>
+      <ion-row>
+        <ion-col size="12">
+          <ion-text>{{  $t("Engaging in hobbies can have a positive impact on students' scholarship opportunities in several ways") }}</ion-text>
         </ion-col>
       </ion-row>
       <ion-row>
         <ion-col size="12">
-          <ion-button expand="block" @click="next">{{ $t('Next') }}</ion-button>
+          <ion-text class="d-optoin"><p style="margin-bottom: 0;">{{  $t('1st Hobby') }}</p></ion-text>
+          <searchable-select v-model="form[0]" :items="hobbies"
+                             text-property="title" value-property="id" 
+                             label="Select a Hobby" stitle="Select a Hobby"
+                             :loading="!hobbies" :icon-end="chevronDownOutline"/>
+          <input-error :message="error?.errors?.hobbies"/>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="12">
+          <ion-txt class="d-optoin"><p style="margin-bottom: 0;">{{  $t('2nd Hobby') }}</p></ion-txt>
+          <searchable-select v-model="form[1]" :items="hobbies"
+                             text-property="title" value-property="id" 
+                             label="Select a Hobby" stitle="Select a Hobby"
+                             :loading="!hobbies" :icon-end="chevronDownOutline"/>
+          <input-error :message="error?.errors?.hobbies"/>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="12">
+          <ion-txt class="d-optoin"><p style="margin-bottom: 0;">{{  $t('3rd Hobby') }}</p></ion-txt>
+          <searchable-select v-model="form[2]" :items="hobbies"
+                             text-property="title" value-property="id" 
+                             label="Select a Hobby" stitle="Select a Hobby"
+                             :loading="!hobbies" :icon-end="chevronDownOutline"/>
+          <input-error :message="error?.errors?.hobbies"/>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="12">
+          <ion-txt class="d-optoin"><p style="margin-bottom: 0;">{{  $t('4th Hobby') }}</p></ion-txt>
+          <searchable-select v-model="form[3]" :items="hobbies"
+                             text-property="title" value-property="id" 
+                             label="Select a Hobby" stitle="Select a Hobby"
+                             :loading="!hobbies" :icon-end="chevronDownOutline"/>
+          <input-error :message="error?.errors?.hobbies"/>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="12">
+          <ion-txt class="d-optoin"><p style="margin-bottom: 0;">{{  $t('5th Hobby') }}</p></ion-txt>
+          <searchable-select v-model="form[4]" :items="hobbies"
+                             text-property="title" value-property="id" 
+                             label="Select a Hobby" stitle="Select a Hobby"
+                             :loading="!hobbies" :icon-end="chevronDownOutline"/>
+          <input-error :message="error?.errors?.hobbies"/>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="12" class="ion-padding-top w-100">
+          <ion-button class="border-20" expand="block" @click="next">{{ $t('Step 3 select Program') }}</ion-button>
         </ion-col>
       </ion-row>
     </ion-grid>
@@ -20,14 +67,15 @@
 
 <script lang="ts">
 import {useAuthStore, useCommonDataStore, useLoadingStore, useSetupProfileStore} from "@/store";
-import {close} from 'ionicons/icons';
+import {chevronDownOutline} from 'ionicons/icons';
 import {
   IonButton,
   IonCol,
   IonGrid,
   IonRow,
+  IonText
 } from "@ionic/vue";
-import {computed, defineComponent, onBeforeMount, ref, watch} from "vue";
+import {computed, defineComponent, reactive} from "vue";
 import InputError from "@/components/InputError.vue";
 import {usePages, useToast} from "@/shared";
 import SetupProfileLayout from "@/views/User/SetupProfile/layout/SetupProfileLayout.vue";
@@ -42,24 +90,29 @@ export default defineComponent({
     IonGrid,
     IonRow,
     IonCol,
+    IonText
   },
   setup() {
+    
     const commonDataStore = useCommonDataStore();
-    const all_majors = computed(() => commonDataStore.majors);
+    const hobbies = computed(() => commonDataStore.hobbies);
     const store = useSetupProfileStore();
     const userStore = useAuthStore();
-    const userMajors = computed(() => userStore.user?.profile_data?.majors);
     const {setProfileData} = userStore;
     const {showLoading, hideLoading} = useLoadingStore();
     const {checkoutSetupProfileStep} = usePages();
     const {showToast} = useToast();
     const error = computed(() => store.error);
-    const form = ref([])
+
+    const form = reactive([
+      "", "", "", "", ""
+    ])
 
     const next = async () => {
       showLoading();
-      let majors = Object.values(form.value).filter((value) => !!value);
-      await store.submitStepFour({majors}).then((res) => {
+      await store.submitStepTwo({
+        hobbies: form
+      }).then((res) => {
         hideLoading()
         if (!res) {
           return;
@@ -67,28 +120,23 @@ export default defineComponent({
         const {data} = res;
         setProfileData(data);
         showToast({message: 'Info Updated!', color: 'primary', position: 'bottom'});
-        return checkoutSetupProfileStep(5);
+        return checkoutSetupProfileStep(3);
       });
     };
 
-    onBeforeMount(async () => {
-      form.value = userMajors.value || [];
-    })
-
-    watch(userMajors, () => {
-      form.value = userMajors.value || [];
-    })
-
     return {
-      form,
-      all_majors,
+      hobbies,
       next,
       error,
-      close
-    }
+      chevronDownOutline,
+      form
+    };
   },
 });
 </script>
 <style scoped>
-
+.d-optoin {
+  font-weight: bold;
+  color: #1c345a;
+}
 </style>
