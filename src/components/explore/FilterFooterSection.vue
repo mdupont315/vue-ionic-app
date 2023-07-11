@@ -8,36 +8,31 @@
 </template>
 
 <script lang="ts">
-    import {computed, defineComponent} from 'vue';
+    import { defineComponent } from 'vue';
     import {
-    IonFooter,
-    IonTitle,
-    IonToolbar,
-    IonImg
-    } from "@ionic/vue";
-    import {userDarkModeStore} from "@/store";
-
-    export default defineComponent({
-    components: {
         IonFooter,
         IonTitle,
         IonToolbar,
         IonImg
-    },
-    setup() {
-        const darkMode = userDarkModeStore();
-        const is_dark_mode = computed(() => darkMode.prefersDark);
-        const imgUrl = computed(() => {
-        return is_dark_mode.value ? 'assets/images/filter-footer.svg' : `assets/images/filter-footer.svg`;
-        });
-        return {imgUrl};
-    }
+    } from "@ionic/vue";
+
+    export default defineComponent({
+        components: {
+            IonFooter,
+            IonTitle,
+            IonToolbar,
+            IonImg
+        },
+        setup() {
+            const imgUrl = 'assets/images/filter-footer.svg';
+            return {imgUrl};
+        }
     });
 </script>
 
 <style scoped>
 ion-toolbar {
---background: #1c345a;
+    --background: #1c345a;
     width: 100%;
     height: 55px;
     border-top: 2px solid #1c345a;
@@ -49,9 +44,8 @@ ion-toolbar {
 }
 
 .footer-img{
-    width: 238.4px;
+    width: 100%;
     height: 36.7px;
     margin-top:5px;
-    margin-left:20%;
 }
 </style>
