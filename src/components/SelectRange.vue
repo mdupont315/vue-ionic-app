@@ -1,8 +1,8 @@
 <template>
   <ion-cont>
-    <input-field label="Minimum" :icon-start="chevronDownOutline"/>
+    <input-field v-model="setMinValue" label="Minimum" :required="true" :autofocus="true"/>
     <ion-label>-</ion-label>
-    <input-field label="Maximum" :icon-start="chevronDownOutline"/>
+    <input-field v-model="setMaxValue" label="Maximum" :required="true" :autofocus="true"/>
   </ion-cont>
 </template>
 
@@ -18,16 +18,16 @@ import InputField from "@/components/InputField.vue";
 
 export default defineComponent({
   props: {
-    minValue:{
+    min:{
       type: String,
       default: '',
     },
-    maxValue:{
+    max:{
       type: String,
       default: '',
     },
   },
-  emits:['update:minValue', 'update:maxValue', 'focus', 'change'],
+  emits:['update:min', 'update:max', 'focus', 'change'],
   components: {
     IonLabel,
     // IonItem,
@@ -35,58 +35,32 @@ export default defineComponent({
   },
   setup(props,{emit}){
     const {t} = useI18n({useScope:"global"});
-    const placeHolderText = computed(()=>{
-      return (props.placeholder ? t(props.placeholder): "")
-    });
-    const selectionValue = computed({
+    const setMinValue = computed({
       // getter
       get() {
-        return props.modelValue || props.value
+        return props.min;
       },
       // setter
       set(newValue) {
-        emit('update:modelValue',newValue);
-        emit('change',newValue);
+        emit('update:min', newValue);
+        emit('change', newValue);
+      }
+    });
+    const setMaxValue = computed({
+      // getter
+      get() {
+        return props.max;
+      },
+      // setter
+      set(newValue) {
+        emit('update:max', newValue);
+        emit('change', newValue);
       }
     })
-    const isOpen = ref(false)
-    const search = ref('')
-    const setIsOpen = (state) => {
-      isOpen.value = state;
-      if (!state) {
-        search.value = '';
-      }
-    }
-    const selectedItem = computed(() => {
-      if (!selectionValue.value) return {};
-      return props.items.find((item) => item[props.valueProperty] == selectionValue.value);
-    })
-    const filteredItems = computed(() => {
-      if (!search.value) return props.items;
-      let query = search.value.toLowerCase();
-      return props.items.filter(item => {
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
-        return item[props.textProperty]?.toLowerCase().indexOf(query) > -1 || item[props.localeProperty]?.toLowerCase().indexOf(query) > -1;
-      })
-    })
-    const selectItem = (id) => {
-      selectionValue.value = id;
-      if (!props.multiple) {
-        setIsOpen(false);
-      }
-    }
     return {
       chevronBackOutline,
-      checkmark,
-      placeHolderText,
-      selectionValue,
-      isOpen,
-      search,
-      selectedItem,
-      filteredItems,
-      selectItem,
-      setIsOpen
+      setMinValue,
+      setMaxValue,
     }
   }
 })
