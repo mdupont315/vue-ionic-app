@@ -3,12 +3,14 @@
         <header-section />
         <ion-content :fullscreen="true" class="ion-padding-top">
             <ion-grid style="display:flex; flex-flow: column; justify-content: center;">
-                <ion-row class="ion-padding-top">
+              <ion-row class="ion-padding-top">
                 <ion-col size="12" style="margin-top: 25px; width: 100%; justify-content: center">
                     <ion-text class="big-title">
                       <p class="ion-text-left" style="margin-bottom: 0;">{{ $t('Design Your Future') }}</p>
                     </ion-text>
                 </ion-col>
+              </ion-row>
+              <ion-row class="ion-padding-top">
                 <ion-col size="12" style="display: flex; flex-flow: row;"  @click="toUniversityMore">
                     <ion-img :src='uniImgUrl' class="leftImg"/>
                     <ion-text class="mid-title">
@@ -20,7 +22,6 @@
                   <div v-for="university in universities" :key="university.id">
                     <ion-card @click="toUniversityDetailModal(university.id)">
                         <ion-card-content>
-                            <!-- <ion-label>{universities.value}</ion-label> -->
                             <div style="display: flex; flex-flow: row;">
                               <ion-img :src='university.logo_url' class="leftImg"/>
                               <div style="display: flex; flex-flow: column;" class="university-header">
@@ -39,6 +40,8 @@
                     </ion-card>
                   </div>
                 </ion-col>
+              </ion-row>
+              <ion-row class="ion-padding-top">
                 <ion-col size="12" style="display: flex; flex-flow: row;">
                     <ion-img :src='stuImgUrl' class="leftImg"/>
                     <ion-text class="mid-title">
@@ -50,7 +53,6 @@
                   <div v-for="program in programs" :key="program.id" style="height: max-content;">
                     <ion-card @click="toProgramDetail(uni_url, program.university.university_name)">
                         <ion-card-content style="height: max-content;">
-                            <!-- <ion-label>{universities.value}</ion-label> -->
                             <ion-text class="program-name" style="height:30%">{{ short_name(program.title) }}</ion-text>
                             <hr style="border-top: 1px solid #606060;"/>
                             <div style="display: flex; flex-flow: row;">
@@ -64,44 +66,42 @@
                     </ion-card>
                   </div>
                 </ion-col>
+              </ion-row>
+              <ion-row class="ion-padding-top">
                 <ion-col size="12" style="margin-top: 10px; width: 100%; justify-content: center">
                     <ion-text class="big-title">
                     <p class="ion-text-left" style="margin-bottom: 0; margin-top: 0;">{{ $t('Your Unique Adventure') }}</p>
                     </ion-text>
                 </ion-col>
-                <ion-col>
+                <ion-col size="12">
                   <ion-row>
-                    <ion-col>
-                      <ion-card class="unique-image-first-card" @click="toStudyDestination">
-                        <!-- <ion-img alt="Silhouette of mountains" :src='study_dest' /> -->
-                        <ion-img :src='study_dest' class="unique-first-img"/>
+                    <ion-col size="6">
+                      <ion-card class="unique-image-content" @click="toStudyDestination">
+                        <ion-img :src='study_dest' class="unique-img"/>
                         <ion-card-header>
                           <ion-card-title class="unique-title">
                             <ion-text>Study Destinations</ion-text>
                           </ion-card-title>
                         </ion-card-header>
-
                         <ion-card-content class="unique-content">
                           <ion-text>Find your own ideal study destination</ion-text>
                         </ion-card-content>
                       </ion-card>
-                      <ion-card class="unique-image-first-card" @click="toUnlockingSec">
-                        <ion-img :src='unlock_sec' class="unique-first-img"/>
+                      <ion-card class="unique-image-content" @click="toUnlockingSec">
+                        <ion-img :src='unlock_sec' class="unique-img"/>
                         <ion-card-header>
                           <ion-card-title  class="unique-title">
                             <ion-text>Unlocking the Secrets</ion-text>
                           </ion-card-title>
                         </ion-card-header>
-
                         <ion-card-content class="unique-content">
                           <ion-text>to a Successful Study Abroad Experience</ion-text>
                         </ion-card-content>
                       </ion-card>
                     </ion-col>
-                    <ion-col>
-                      <ion-card class="unique-image-second-card"  @click="toUniversityMore">
-                        <!-- <ion-img alt="Silhouette of mountains" :src='study_dest' /> -->
-                        <ion-img :src='top_unis' class="unique-second-img"/>
+                    <ion-col size="6">
+                      <ion-card class="unique-image-content"  @click="toUniversityMore">
+                        <ion-img :src='top_unis' class="unique-img"/>
                         <ion-card-header>
                           <ion-card-title class="unique-title">
                             <ion-text>Top Universities</ion-text>
@@ -112,26 +112,24 @@
                         <ion-text>Exploring UNIRANKS Top Universities</ion-text>
                         </ion-card-content>
                       </ion-card>
-                      <ion-card class="unique-image-second-card" @click="toGetInspired">
-                        <ion-img :src='inspiration' class="unique-second-img"/>
+                      <ion-card class="unique-image-content" @click="toGetInspired">
+                        <ion-img :src='inspiration' class="unique-img"/>
                         <ion-card-header>
                           <ion-card-title  class="unique-title">
                             <ion-text>Get Inspired</ion-text>
                           </ion-card-title>
                         </ion-card-header>
-
                         <ion-card-content class="unique-content">
                           Essential Tips for Choosing the Right University and Major
                         </ion-card-content>
                       </ion-card>
-                      <ion-card class="unique-image-second-card" @click="toTopArticles">
-                        <ion-img :src='news' class="unique-second-img"/>
+                      <ion-card class="unique-image-content" @click="toTopArticles">
+                        <ion-img :src='news' class="unique-img"/>
                         <ion-card-header>
                           <ion-card-title  class="unique-title">
                             <ion-text>Top Articles</ion-text>
                           </ion-card-title>
                         </ion-card-header>
-
                         <ion-card-content class="unique-content" style="justify-content: center;">
                           <ion-text>Stay updated with our fascinating news and articles.</ion-text>
                         </ion-card-content>
@@ -139,7 +137,7 @@
                     </ion-col>
                   </ion-row>
                 </ion-col>
-                </ion-row>
+              </ion-row>
             </ion-grid>
         </ion-content>
         <footer-section />
@@ -149,19 +147,18 @@
 <script>
 import {useExploreDataStore} from "@/store";
 import {
-    IonButton,
-    IonCol,
-    IonContent,
-    IonGrid,
-    IonPage,
-    IonRow,
-    IonText,
-    IonHeader,
-    IonTitle,
-    IonToolbar,
-    IonImg,
-    IonSearchbar,
-    modalController,
+  IonPage,
+  IonContent,
+  IonGrid,
+  IonRow,
+  IonCol,
+  IonText,
+  IonImg,
+  IonCard, 
+  IonCardContent, 
+  IonCardHeader, 
+  IonCardTitle,
+  modalController,
 } from "@ionic/vue";
 import {computed, defineComponent, ref, onBeforeMount} from "vue";
 import {useRouter} from "vue-router";
@@ -177,18 +174,17 @@ export default defineComponent({
   components: {
     HeaderSection,
     FooterSection,
-    // IonButton,
-    // IonHeader,
-    // IonTitle,
-    // IonToolbar,
-    IonImg,
-    // IonSearchbar,
-    IonContent,
     IonPage,
+    IonContent,
+    IonImg,
     IonGrid,
     IonRow,
-    // IonCol,
-    IonText
+    IonCol,
+    IonText,
+    IonCard, 
+    IonCardContent, 
+    IonCardHeader, 
+    IonCardTitle
   },
   setup() {
     const store = useExploreDataStore();
@@ -198,7 +194,6 @@ export default defineComponent({
     const universities = computed(() => store.universities);
     const total_programs = computed(() => store.total_programs);
     const programs = computed(() => store.programs);
-    // console.log(dataLoaded.value)
     const {showLoading, hideLoading} = useLoadingStore();
     const router = useRouter();
     const doLogin = async () => {
@@ -263,7 +258,7 @@ export default defineComponent({
               id:id
           },
           initialBreakpoint: 0.95,
-          // breakpoints: [0, 0.5, 1],
+          breakpoints: [0, 0.95],
         });
         modal.present();
     }
@@ -319,60 +314,54 @@ ion-content {
   --background: #ffffff;
 }
 ion-text {
-    padding:0%;
+  padding:0%;
 }
 .big-title {
-    font-family: "Calibri";
-font-size: 30px;
-font-weight: bold;
-font-style: normal;
-text-align: left;
-color: #1c345a;
+  font-family: "Calibri";
+  font-size: 30px;
+  font-weight: bold;
+  font-style: normal;
+  text-align: left;
+  color: #1c345a;
 }
 .mid-title {
-    font-family: "Calibri";
-    font-size: 20px;
-    font-weight: bold;
-    font-style: normal;
-    text-align: left;
-    color: #1c345a;
+  font-family: "Calibri";
+  font-size: 20px;
+  font-weight: bold;
+  font-style: normal;
+  text-align: left;
+  color: #1c345a;
 }
 
 ion-toolbar {
-    position: absolute;
-    background: #1c345a;
-    text-align: center;
-    border-bottom-left-radius: 25px;
-    border-bottom-right-radius: 25px;
-  }
+  position: absolute;
+  background: #1c345a;
+  text-align: center;
+  border-bottom-left-radius: 25px;
+  border-bottom-right-radius: 25px;
+}
 
 ion-searchbar {
-
-    width: 346px;
-    height: 49.6px;
-
-    border-color: #7fc4fd;
-    border-width: 1px;
-    border-style: solid;
-    border-radius: 15px;
-
-    background: #ffffff;
-    margin-left: 10px;
-    margin-top: 15px;
-    margin-bottom: 15px;
-    text-align: center;
-
-    padding-top: 15px;
+  width: 346px;
+  height: 49.6px;
+  border-color: #7fc4fd;
+  border-width: 1px;
+  border-style: solid;
+  border-radius: 15px;
+  background: #ffffff;
+  margin-left: 10px;
+  margin-top: 15px;
+  margin-bottom: 15px;
+  text-align: center;
+  padding-top: 15px;
 }
 ion-card {
-    width: 189px;
-    height: 169px;
-
-    border-radius: 15px;
-
-    filter: drop-shadow(0px 3px 3px rgba(0,0,0,0.16 ));
-    margin: 0 10px 0 0;
-    background: #ffffff
+  width: 189px;
+  height: 169px;
+  border-radius: 15px;
+  filter: drop-shadow(0px 3px 3px rgba(0,0,0,0.16 ));
+  margin: 0 10px 0 0;
+  background: #ffffff
 }
 ion-card-header {
   padding-left: 10px;
@@ -380,12 +369,12 @@ ion-card-header {
   padding-bottom: 0;
 }
 .leftImg {
-    width: 25px;
-    margin-right: 10px;
+  width: 25px;
+  margin-right: 10px;
 }
 .rightImg {
-    width: 7.7px;
-    margin-left: auto;
+  width: 7.7px;
+  margin-left: auto;
 }
 .university-header{
   font-family: "Calibri";
@@ -420,40 +409,28 @@ ion-card-header {
   color: #007a00;
 }
 .program-name {
-
-font-family: "Calibri";
-font-size: 16px;
-font-weight: normal;
-font-style: normal;
-text-align: left;
-color: #203456;
+  font-family: "Calibri";
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  text-align: left;
+  color: #203456;
 }
 .program-university-name {
   font-family: "Calibri";
-font-size: 12px;
-font-weight: normal;
-font-style: normal;
-text-align: left;
-color: #203456;
+  font-size: 12px;
+  font-weight: normal;
+  font-style: normal;
+  text-align: left;
+  color: #203456;
 }
 .program-fee {
   font-family: "Calibri";
-font-size: 18px;
-font-weight: normal;
-font-style: normal;
-text-align: left;
-color: #606060;
-}
-.unique-image-first-card {
-  width: 164px;
-  height: 300px;
-
-  border-radius: 10px;
-
-  filter: drop-shadow(0px 3px 3px rgba(0,0,0,0.16 ));
-
-  background: #ffffff;
-  margin-bottom: 18px;
+  font-size: 18px;
+  font-weight: normal;
+  font-style: normal;
+  text-align: left;
+  color: #606060;
 }
 .unique-title{
   font-family: "Calibri";
@@ -462,6 +439,7 @@ color: #606060;
   font-style: normal;
   text-align: left;
   color: #1c345a;
+  padding-top: 10px;
 }
 .unique-content {
   font-family: "Calibri";
@@ -472,31 +450,18 @@ color: #606060;
   color: #606060;
   padding-left:8px;
 }
-.unique-first-img {
-  width: 163px;
-height: 187px;
-
-}
-.unique-image-second-card {
-  width: 165px;
-  height: 193px;
-
+.unique-image-content {
+  width: 100%;
+  height: auto;
   border-radius: 10px;
-
   filter: drop-shadow(0px 3px 3px rgba(0,0,0,0.16 ));
-
   background: #ffffff;
   margin-bottom: 18px;
 }
-.unique-second-img {
-  width: 165px; 
-  height: 89px;
+.unique-img {
+  width: 100%; 
+  height: auto;
 }
-
-/* ion-searchbar.searchbar-input-container.sc-ion-searchbar-ios {
-    height: 36px;
-    margin-top: 16px !important;
-} */
 .scrolling {
   display: flex; 
   flex-flow: row;
