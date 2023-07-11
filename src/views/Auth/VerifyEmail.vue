@@ -1,12 +1,7 @@
 <template>
   <ion-page>
-    <ion-header class="ion-no-border" mode="ios" collapse="fade" :translucent="true">
-      <ion-toolbar>
-        <ion-title class="ion-text-center" color="primary"></ion-title>
-        <language-switch slot="end"/>
-      </ion-toolbar>
-    </ion-header>
-    <ion-content :fullscreen="true" class="ion-padding">
+    <header-section />
+    <ion-content :fullscreen="true" class="ion-padding" color="dark2">
       <ion-grid style="display:flex; flex-flow: column; justify-content: center; height: 100%">
         <ion-row>
           <ion-col size="12" style="display: flex; width: 100%; justify-content: center">
@@ -15,7 +10,7 @@
         </ion-row>
         <ion-row>
           <ion-col>
-            <ion-text color="primary">
+            <ion-text color="light">
               <h1 class="ion-text-center"> {{$t('Verify Your Email Address')}} </h1>
               <p class="ion-text-center"><small>{{ $t('Please check in spam emails, if you dont find in inbox') }}</small></p>
             </ion-text>
@@ -35,22 +30,22 @@
         </ion-row>
         <ion-row>
           <ion-col size="12">
-            <ion-button expand="block" @click="verify">{{$t("Verify")}}</ion-button>
+            <ion-button color="secondary" expand="block" @click="verify">{{$t("Verify")}}</ion-button>
           </ion-col>
         </ion-row>
         <ion-row>
           <ion-col size="12" class="ion-text-center">
-            <ion-text color="medium">
+            <ion-text color="light">
               <p>
-                <a v-if="resendCodeIn <= 0" href="#" @click.prevent="resend" class="ion-color-secondary">{{$t('Resend Verification Code')}}</a>
-                <ion-label v-else color="primary">{{$t('Try resend code in')}} : {{`00:${(resendCodeIn < 10 ? "0":"")}${resendCodeIn}`}}</ion-label>
+                <a v-if="resendCodeIn <= 0" href="#" @click.prevent="resend" style="color: #fff !important;">{{$t('Resend Verification Code')}}</a>
+                <ion-label v-else color="light">{{$t('Try resend code in')}} : {{`00:${(resendCodeIn < 10 ? "0":"")}${resendCodeIn}`}}</ion-label>
               </p>
             </ion-text>
           </ion-col>
         </ion-row>
         <ion-row>
           <ion-col size="12" class="ion-text-center">
-            <ion-text color="primary">
+            <ion-text color="light">
               <p>{{$t('Code sent to')}}:</p>
               <p>{{user?.email}}</p>
               <p>{{user?.user_bio?.mobile_number}}</p>
@@ -59,19 +54,19 @@
         </ion-row>
         <ion-row>
           <ion-col size="12" class="ion-text-center">
-            <ion-text color="medium">
+            <ion-text color="light">
               <p>
-                <a href="/update-email" class="ion-color-secondary">{{$t('Edit email or mobile number')}}</a>
+                <a href="/update-email" style="color: #fff !important;">{{$t('Edit email or mobile number')}}</a>
               </p>
             </ion-text>
           </ion-col>
         </ion-row>
         <ion-row>
           <ion-col size="12" class="ion-text-center">
-            <ion-text color="medium">
+            <ion-text color="light">
               <p>
                 <span>{{$t("Verify Latter?")}}&nbsp;</span>
-                <a href="#" @click.prevent="logoutUser" class="ion-color-secondary">{{$t("Logout")}}</a>
+                <a href="#" @click.prevent="logoutUser" style="color: #fff !important;">{{$t("Logout")}}</a>
               </p>
             </ion-text>
           </ion-col>
@@ -104,25 +99,27 @@ import SchoolMasterLogo from "@/components/SchoolMasterLogo.vue";
 import {useFormErrorAlert, useToast} from "@/shared";
 import InputError from "@/components/InputError.vue";
 import LanguageSwitch from "@/components/LanguageSwitch.vue";
+import HeaderSection from "@/components/HeaderSection.vue";
 
 export default defineComponent({
   components: {
     IonLabel,
-    LanguageSwitch,
+    // LanguageSwitch,
     InputError,
     SchoolMasterLogo,
     IonInput,
     IonButton,
     IonItem,
     IonContent,
-    IonHeader,
-    IonTitle,
-    IonToolbar,
+    // IonHeader,
+    // IonTitle,
+    // IonToolbar,
     IonPage,
     IonGrid,
     IonRow,
     IonCol,
-    IonText
+    IonText,
+    HeaderSection
   },
   setup() {
     const store = useAuthStore();
@@ -148,7 +145,7 @@ export default defineComponent({
     const verified = () => {
       showToast({message: 'Successfully Verified!', color: 'success'});
       stopInterval();
-      return setTimeout(() => router.replace({name: 'home'}), 300);
+      return setTimeout(() => router.replace('/profile'), 300);
     }
     const inputs = ref([]);
     const router = useRouter();

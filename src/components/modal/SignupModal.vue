@@ -78,7 +78,7 @@
       </ion-row>
       <ion-row>
         <ion-col size="12" class="d-flex">
-          <ion-button class="btn-get-start button-1" @click="confirmRegister">{{ $t('Continue') }}</ion-button>
+          <ion-button class="btn-get-start button-1" color="dark2" @click="confirmRegister">{{ $t('Continue') }}</ion-button>
         </ion-col>
       </ion-row>
     </ion-grid>
@@ -157,13 +157,15 @@
         showLoading();
         await register(form).then(res => {
           hideLoading();
-          console.log(res)
           return (!res ? showFormUserFormError() : accountCreated());
         }).finally(() => hideLoading());
       };
       const accountCreated = () => {
         showToast({message: 'Account Create Successfully!'});
-        return setTimeout(() => router.replace('/profile'), 300);
+        return setTimeout(() => {
+          modalController.dismiss(null, 'cancel');
+          router.replace('/verify-email')
+        }, 300);
       }
       return {
         agreed,
