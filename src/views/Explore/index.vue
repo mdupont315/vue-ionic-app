@@ -6,7 +6,7 @@
                 <ion-row class="ion-padding-top">
                 <ion-col size="12" style="margin-top: 25px; width: 100%; justify-content: center">
                     <ion-text class="big-title">
-                    <p class="ion-text-left" style="margin-bottom: 0;">{{ $t('Design Your Future') }}</p>
+                      <p class="ion-text-left" style="margin-bottom: 0;">{{ $t('Design Your Future') }}</p>
                     </ion-text>
                 </ion-col>
                 <ion-col size="12" style="display: flex; flex-flow: row;"  @click="toUniversityMore">
@@ -24,17 +24,17 @@
                             <div style="display: flex; flex-flow: row;">
                               <ion-img :src='university.logo_url' class="leftImg"/>
                               <div style="display: flex; flex-flow: column;" class="university-header">
-                                <p>{{`Local #${university.local_position} | Global #${university.global_position}`}}</p>
-                                <p>Top University</p>
+                                <ion-text>{{`Local #${university.local_position} | Global #${university.global_position}`}}</ion-text>
+                                <ion-text>Top University</ion-text>
                               </div>
                             </div>
                             <hr style="border-top: 1px solid #606060;"/>
                             <div style="display: flex; flex-flow: column;">
-                              <p class="university-name">{{ university.university_name }}</p>
-                              <p class="university-country-name">{{ university.country }}</p>
+                              <ion-text class="university-name">{{ short_name(university.university_name) }}</ion-text>
+                              <ion-text class="university-country-name">{{ university.country }}</ion-text>
                             </div>
                             <hr style="border-top: 1px solid #606060;"/>
-                            <p class="university-status">{{ university.status }}</p>
+                            <ion-text class="university-status">{{ university.status }}</ion-text>
                         </ion-card-content>
                     </ion-card>
                   </div>
@@ -47,19 +47,19 @@
                     <ion-img :src='nextImgUrl' class="rightImg" style="margin-right:10px"/>
                 </ion-col>
                 <ion-col class="scrolling">
-                  <div v-for="program in programs" :key="program.id">
+                  <div v-for="program in programs" :key="program.id" style="height: max-content;">
                     <ion-card @click="toProgramDetail(uni_url, program.university.university_name)">
-                        <ion-card-content>
+                        <ion-card-content style="height: max-content;">
                             <!-- <ion-label>{universities.value}</ion-label> -->
-                            <p class="program-name" style="height:42px">{{ program.title }}</p>
+                            <ion-text class="program-name" style="height:30%">{{ short_name(program.title) }}</ion-text>
                             <hr style="border-top: 1px solid #606060;"/>
                             <div style="display: flex; flex-flow: row;">
                               <ion-img :src="uni_url" class="leftImg"/>                                
-                              <p class="program-university-name">{{ program.university.university_name }}</p>
+                              <ion-text class="program-university-name">{{ short_name(program.university.university_name) }}</ion-text>
                             </div>
                             <hr style="border-top: 1px solid #606060;"/>
-                            <p style="display: inline; margin-right: 60%;" class="program-fee">UK</p>
-                            <p style="display: inline;" class="program-fee">$500</p>
+                            <ion-text style="display: inline; margin-right: 60%;" class="program-fee">UK</ion-text>
+                            <ion-text style="display: inline;" class="program-fee">$500</ion-text>
                         </ion-card-content>
                     </ion-card>
                   </div>
@@ -76,21 +76,25 @@
                         <!-- <ion-img alt="Silhouette of mountains" :src='study_dest' /> -->
                         <ion-img :src='study_dest' class="unique-first-img"/>
                         <ion-card-header>
-                          <ion-card-title class="unique-title">Study Destinations</ion-card-title>
+                          <ion-card-title class="unique-title">
+                            <ion-text>Study Destinations</ion-text>
+                          </ion-card-title>
                         </ion-card-header>
 
                         <ion-card-content class="unique-content">
-                          Find your own ideal study destination
+                          <ion-text>Find your own ideal study destination</ion-text>
                         </ion-card-content>
                       </ion-card>
                       <ion-card class="unique-image-first-card" @click="toUnlockingSec">
                         <ion-img :src='unlock_sec' class="unique-first-img"/>
                         <ion-card-header>
-                          <ion-card-title  class="unique-title">Unlocking the Secrets</ion-card-title>
+                          <ion-card-title  class="unique-title">
+                            <ion-text>Unlocking the Secrets</ion-text>
+                          </ion-card-title>
                         </ion-card-header>
 
                         <ion-card-content class="unique-content">
-                          to a Successful Study Abroad Experience
+                          <ion-text>to a Successful Study Abroad Experience</ion-text>
                         </ion-card-content>
                       </ion-card>
                     </ion-col>
@@ -99,17 +103,21 @@
                         <!-- <ion-img alt="Silhouette of mountains" :src='study_dest' /> -->
                         <ion-img :src='top_unis' class="unique-second-img"/>
                         <ion-card-header>
-                          <ion-card-title class="unique-title">Top Universities</ion-card-title>
+                          <ion-card-title class="unique-title">
+                            <ion-text>Top Universities</ion-text>
+                          </ion-card-title>
                         </ion-card-header>
 
                         <ion-card-content class="unique-content ">
-                          Exploring UNIRANKS Top Universities
+                        <ion-text>Exploring UNIRANKS Top Universities</ion-text>
                         </ion-card-content>
                       </ion-card>
                       <ion-card class="unique-image-second-card" @click="toGetInspired">
                         <ion-img :src='inspiration' class="unique-second-img"/>
                         <ion-card-header>
-                          <ion-card-title  class="unique-title">Get Inspired</ion-card-title>
+                          <ion-card-title  class="unique-title">
+                            <ion-text>Get Inspired</ion-text>
+                          </ion-card-title>
                         </ion-card-header>
 
                         <ion-card-content class="unique-content">
@@ -119,11 +127,13 @@
                       <ion-card class="unique-image-second-card" @click="toTopArticles">
                         <ion-img :src='news' class="unique-second-img"/>
                         <ion-card-header>
-                          <ion-card-title  class="unique-title">Top Articles</ion-card-title>
+                          <ion-card-title  class="unique-title">
+                            <ion-text>Top Articles</ion-text>
+                          </ion-card-title>
                         </ion-card-header>
 
                         <ion-card-content class="unique-content" style="justify-content: center;">
-                          Stay updated with our fascinating news and articles.
+                          <ion-text>Stay updated with our fascinating news and articles.</ion-text>
                         </ion-card-content>
                       </ion-card>
                     </ion-col>
@@ -238,6 +248,14 @@ export default defineComponent({
         });
         modal.present();
     }
+    const short_name = (name) => {
+        let newname = name;
+        if (name.length>19) {
+            newname = name.substring(0, 20);
+            newname = `${newname}...`;
+        }
+        return newname;
+    }
     const toUniversityDetailModal = async(id) => {
       const modal = await modalController.create({
           component: UniversityDetailModal,
@@ -288,6 +306,7 @@ export default defineComponent({
       handleInput,
       toProgramDetail,
       toUniversityDetailModal,
+      short_name,
     };
   },
 });
