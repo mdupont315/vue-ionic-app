@@ -264,8 +264,8 @@ router.beforeEach((to) => {
         '/application/login',
         '/profile/login',
     ];
-    // const authRequired = !publicPages.includes(to.path);
-    const authRequired = false;
+    const authRequired = !publicPages.includes(to.path);
+    // const authRequired = false;
     const {isLoggedIn, isVerified, currentStep, profileCompleted, roleId} = useAuthStore();
 
     if (authRequired && !isLoggedIn && to.path == '/chat') {

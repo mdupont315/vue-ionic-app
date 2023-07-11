@@ -79,7 +79,7 @@ export default defineComponent({
     const lang = computed(()=>locale.value);
     const introUrl = computed(() => {
       let addLang = ['tr','ar'].includes(lang.value) ? `${lang.value}-` : '';
-      return is_dark_mode.value ? 'assets/logos/intro-light.svg' : `assets/logos/${addLang}intro.svg`;
+      return is_dark_mode.value ? 'assets/logos/intro-light.svg' : `assets/logos/${addLang}Intro.svg`;
     });
     return {
       getStart,
