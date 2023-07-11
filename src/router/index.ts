@@ -196,27 +196,6 @@ const routes: Array<RouteRecordRaw> = [
         component: () => import("../views/User/SetupProfile/ProfileStep5.vue"),
         name: 'user.profile.setup5',
     },
-    {
-        path: "/profile/setup/step/6",
-        component: () => import("../views/User/SetupProfile/ProfileStep6.vue"),
-        name: 'user.profile.setup6',
-    },
-    {
-        path: "/profile/setup/step/7",
-        component: () => import("../views/User/SetupProfile/ProfileStep7.vue"),
-        name: 'user.profile.setup7',
-    },
-    {
-        path: "/profile/setup/step/8",
-        component: () => import("../views/User/SetupProfile/ProfileStep8.vue"),
-        name: 'user.profile.setup8',
-    },
-    {
-        path: "/profile/setup/step/9",
-        component: () => import("../views/User/SetupProfile/ProfileStep9.vue"),
-        name: 'user.profile.setup9',
-    },
-
     //Rep Routes
     {
         path: '/rep-home',
@@ -250,16 +229,12 @@ router.beforeEach((to) => {
         '/explore/universitymore',
         '/explore/studydestination',
         '/explore/studydestination/:id',
-        // '/explore/studydestinationcountry/:id',
-
         '/register',
         '/forget-password',
         '/verify-code',
         '/rest-password',
         '/get-start',
         '/home',
-        // '/chat',
-        // '/application',
         '/chat/login',
         '/application/login',
         '/profile/login',
@@ -281,9 +256,8 @@ router.beforeEach((to) => {
     }
 
     if (authRequired && !isLoggedIn) {
-        return '/login';
+        return '/explore';
     }
-
 
     if (isLoggedIn && isVerified && (to.path.includes('user/update-') || to.path.includes('user/delete-'))) {
         return;
@@ -297,9 +271,8 @@ router.beforeEach((to) => {
         return '/rep-home';
     }
 
-
     if (!authRequired && isLoggedIn && isVerified) {
-        return '/home';
+        return '/explore';
     }
 
     if ((isLoggedIn && !isVerified) && to.path == '/update-email') {
@@ -310,7 +283,7 @@ router.beforeEach((to) => {
         return '/verify-email'
     }
 
-    const base_path = '/user/profile/setup/step';
+    const base_path = '/profile/setup/step';
     const profile_path = `${base_path}/${currentStep}`;
     if (isVerified && roleId == ROLE_STUDENT && to.path != profile_path && isLoggedIn && !profileCompleted && !to.path.includes(base_path)) {
         return profile_path;

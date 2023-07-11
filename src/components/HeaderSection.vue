@@ -42,5 +42,6 @@
     text-align: center;
     border-bottom-left-radius: 25px;
     border-bottom-right-radius: 25px;
+    --opacity-scale: 0 !important;
   }
   </style>

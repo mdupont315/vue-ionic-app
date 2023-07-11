@@ -11,6 +11,7 @@
       <ion-row>
         <ion-col size="12" class="ion-padding-bottom" v-if="!selectedStudyStatus">
           <input-field label="Select study Status" :icon-end="chevronDownOutline" required :readonly="true" @clickItem="selectStudyStatus"/>
+          <input-error :message="error?.errors?.study_status_id"/>
         </ion-col>
         <ion-col size="12" class="ion-padding-bottom" v-if="selectedStudyStatus">
           <searchable-select v-model="form.study_status_id" :items="studyStatuses"
@@ -40,7 +41,7 @@
       </ion-row>
       <ion-row v-if="selectedStudyStatus && form.study_status_id == '2'">
         <ion-col size="12" class="ion-padding-bottom">
-          <searchable-select v-model="form.study_level_id" :items="studyLevels"
+          <searchable-select v-model="study_level_id" :items="studyLevels"
                              text-property="title" value-property="id" 
                              label="Select study level" stitle="Select study level"
                              :loading="!studyLevels" :icon-end="chevronDownOutline" />
@@ -62,7 +63,7 @@
           <input-error :message="error?.errors?.grades"/>
         </ion-col>
       </ion-row>
-      <ion-row class="d-bottom w-100">
+      <ion-row :class="(selectedStudyStatus && form.study_status_id == '2') ? 'w-100': 'd-bottom w-100'">
         <ion-col size="12" class="ion-padding">
           <ion-button class="border-20" expand="block" @click="next">{{ $t(`Step 2 ${form.study_status_id != '3' ? "select Program" : "Where do you want to study?"}`) }}</ion-button>
         </ion-col>

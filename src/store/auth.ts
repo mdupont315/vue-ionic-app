@@ -89,9 +89,8 @@ export const useAuthStore = defineStore({
             })
         },
         async loadUserData() {
-            // console.log("loading User Data...");
             if (!this.isLoggedIn || this.user) return Promise.resolve(true);
-            const response = await fetchWrapper.get(`${BASE_URL}/user/get`);
+            const response = await fetchWrapper.get(`${BASE_URL}/user`);
             if (!response.ok) {
                 if ([401, 403].includes(response.status) && this.isLoggedIn) {
                     // auto logout if 401 Unauthorized or 403 Forbidden response returned from api
@@ -134,14 +133,12 @@ export const useAuthStore = defineStore({
                 return true;
             } catch (e: any) {
                 this.error = e;
-                // console.log(e);
                 return false;
             }
         },
         async register(form:any) {
             this.resetErrors();
             const response = await fetchWrapper.post(`${BASE_URL}/user/register`, form);
-
             if (!response.ok) {
                 return response.json().then((res) => {
                     this.error = res;
@@ -162,7 +159,7 @@ export const useAuthStore = defineStore({
         },
         async verifyEmail(form: any) {
             this.resetErrors();
-            const response = await fetchWrapper.post(`${BASE_URL}/email/verify`, form);
+            const response = await fetchWrapper.post(`${BASE_URL}/user/email/verify`, form);
             if (!response.ok) {
                 return response.json().then((res) => {
                     this.error = res;
@@ -171,7 +168,7 @@ export const useAuthStore = defineStore({
             }
             return response.json().then(data => {
                 try {
-                    this.setUserVerification(data.user.email_verified_at);
+                    this.setUserVerification(data.user.email_verified);
                     this.updateCanSendCodeIn(0);
                     return true;
                 } catch (e: any) {
@@ -328,7 +325,6 @@ export const useAuthStore = defineStore({
                 this.setUserProfileCompleted(true);
 
             } catch (e: any) {
-                console.log(e);
                 throw new Error();
                 // //showToast({message: 'Something Went Wrong!', color: 'danger'});
             }
@@ -365,7 +361,7 @@ export const useAuthStore = defineStore({
             try {
                 this.setProfileData(user);
                 this.setUserToken(user.token);
-                this.setUserVerification(user.email_verified_at);
+                this.setUserVerification(user.email_verified);
                 // this.setUserProfileCompleted(user.user_bio.profile_completion_status);
                 this.setUserProfileCompleted(true);
                 this.setUserRoleId(user.role_id);
@@ -379,8 +375,6 @@ export const useAuthStore = defineStore({
         setUserToken(token: string) {
             try {
                 this.token = token;
-                console.log(token)
-                console.log(this.token)
                 localStorage.setItem(USER_TOKEN_STORAGE_KEY, token);
             } catch (e: any) {
                 const {hideLoading} = useLoadingStore();
@@ -428,7 +422,6 @@ export const useAuthStore = defineStore({
             }
             return response.json().then(data => {
                 try {
-                    console.log(data);
                     // this.setUserData(data);
                     // this.updateCanSendCodeIn(60);
                     //TODO: get can send verification in time
