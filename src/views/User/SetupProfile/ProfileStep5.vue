@@ -5,8 +5,8 @@
       <ion-row>
         <ion-col size="12">
           <ion-text class="d-optoin"><p style="margin-bottom: 0;">{{  $t('Fees Range: ') }}</p></ion-text>
-          <ion-range :dual-knobs="true" :value="{ lower: 20, upper: 80 }"></ion-range>
-          <select-range />
+          <ion-range :dual-knobs="true" :value="{ lower: form.fee_range_from, upper: form.fee_range_to }" :max="300000" :min="0"  @ionChange="setRange"></ion-range>
+          <select-range v-model:min="form.fee_range_from" v-model:max="form.fee_range_to"/>
           <input-error :message="error?.errors?.fee_range_id"/>
         </ion-col>
       </ion-row>
@@ -120,13 +120,19 @@ export default defineComponent({
     const error = computed(() => store.error);
 
     const form = reactive({
-      fee_range_id: "",
+      fee_range_from: 10000,
+      fee_range_to: 50000,
       intake_year: "",
       intake_month_id: "",
       course_duration_id: "",
       study_mode_id: "",
       language_requirement_id: ""
     })
+
+    const setRange = (e: any) => {
+      form.fee_range_from = e.detail.value.lower;
+      form.fee_range_to = e.detail.value.upper;
+    }
 
     const next = async () => {
       showLoading();
@@ -154,7 +160,8 @@ export default defineComponent({
       next,
       error,
       chevronDownOutline,
-      form
+      form,
+      setRange
     };
   },
 });
