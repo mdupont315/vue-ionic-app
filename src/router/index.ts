@@ -250,7 +250,6 @@ router.beforeEach((to) => {
         '/explore/universitymore',
         '/explore/studydestination',
         '/explore/studydestination/:id',
-        // '/explore/studydestinationcountry/:id',
 
         '/register',
         '/forget-password',
