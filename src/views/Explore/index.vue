@@ -4,7 +4,7 @@
         <ion-content :fullscreen="true" class="ion-padding-top">
             <ion-grid style="display:flex; flex-flow: column; justify-content: center;">
               <ion-row class="ion-padding-top">
-                <ion-col size="12" style="margin-top: 25px; width: 100%; justify-content: center">
+                <ion-col size="12" style="margin-top: 8%; width: 100%; justify-content: center">
                     <ion-text class="big-title">
                       <p class="ion-text-left" style="margin-bottom: 0;">{{ $t('Design Your Future') }}</p>
                     </ion-text>
@@ -222,45 +222,43 @@ export default defineComponent({
     const toUnlockingSec = () => {
       router.push("/explore/unlockingsec");
     }
-    
     const toUniversityMore = () => {
       router.push('/explore/universitymore');
     }
-
     const handleInput = (event) => {
       router.push(`/explore/searchpage/${event.target.value}`);
     }
 
     const toProgramDetail = async(url, name) => {
       const modal = await modalController.create({
-          component: ProgramDetailModal,
-          componentProps: {
-              url: url,
-              name:name
-          },
-          initialBreakpoint: 0.75,
-          // breakpoints: [0, 0.5, 1],
-        });
-        modal.present();
+        component: ProgramDetailModal,
+        componentProps: {
+            url: url,
+            name:name
+        },
+        initialBreakpoint: 0.75,
+        breakpoints: [0, 0.75],
+      });
+      modal.present();
     }
     const short_name = (name) => {
-        let newname = name;
-        if (name.length>19) {
-            newname = name.substring(0, 20);
-            newname = `${newname}...`;
-        }
-        return newname;
+      let newname = name;
+      if (name.length>19) {
+        newname = name.substring(0, 20);
+        newname = `${newname}...`;
+      }
+      return newname;
     }
     const toUniversityDetailModal = async(id) => {
       const modal = await modalController.create({
-          component: UniversityDetailModal,
-          componentProps: {
-              id:id
-          },
-          initialBreakpoint: 0.95,
-          breakpoints: [0, 0.95],
-        });
-        modal.present();
+        component: UniversityDetailModal,
+        componentProps: {
+            id:id
+        },
+        initialBreakpoint: 0.95,
+        breakpoints: [0, 0.95],
+      });
+      modal.present();
     }
     onBeforeMount(() => {
       if (!dataLoaded.value) {
@@ -276,7 +274,6 @@ export default defineComponent({
 
     return {
       doLogin,
-    //   comingSoon,
       imgUrl,
       uniImgUrl,
       nextImgUrl,

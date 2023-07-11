@@ -1,61 +1,61 @@
 <template>
-    <ion-page>
-      <header-section />
-      <ion-content :fullscreen="true" class="ion-padding-top">
-        <ion-grid  class="ion-padding" style="display:flex; flex-flow: column; justify-content: center;">
-          <ion-row style="display: flex; flex-flow: column;">
-            <ion-col style="text-align: center; margin-top: 18px;">
-                <ion-text class="qr-title">QR Code Scanned Leads</ion-text>
-            </ion-col>
-            <ion-col style="text-align: center; margin-top: 28px;">
-                <ion-text class="qr-mid-title">15 Students QR code has been scanned</ion-text>
-            </ion-col>
-            <ion-col style="text-align: left; margin-top: 28px;">
-                <ion-text class="qr-text-title">We're saving those leads right in the university dashboard for safekeeping. They'll be removed from here within 24 hours after you click <p style="display:inline;font-weight: bold;">Email me The Leads.</p></ion-text>
-            </ion-col>
-            <ion-col style="margin-top: 68px; margin-bottom: 18px; justify-content: left;">
-                <ion-card class="intro-card">
-                    <ion-card-content style="display: flex; flex-flow: row;">
-                        <ion-img :src='userImgUrl' class="user-Img"/>                                
-                        <div style="display: flex; flex-flow: column;">
-                            <ion-text class="intro-name">Jennifer William</ion-text>
-                            <ion-text class="intro-pos">jennifer.lopez@gmail.com</ion-text>
-                            <ion-text class="intro-pos">00971123456789</ion-text>
-                        </div>
-                    </ion-card-content>
-                </ion-card>
-            </ion-col>
-            <ion-col v-for="name in names" :key="name" style="margin-top: 58px; justify-content: left;">
-                <ion-card class="intro-card">
-                    <ion-card-content style="display: flex; flex-flow: row;">
-                        <ion-img :src='userImgUrl' class="user-Img"/>                                
-                        <div style="display: flex; flex-flow: column;">
-                            <ion-text class="intro-name">{{ `${name}` }}</ion-text>
-                            <ion-text class="intro-pos">jennifer.lopez@gmail.com</ion-text>
-                            <ion-text class="intro-pos">00971123456789</ion-text>
-                        </div>
-                    </ion-card-content>
-                </ion-card>
-            </ion-col>
-          </ion-row>
-        </ion-grid>
-      </ion-content>
-      <footer-section />
-    </ion-page>
-  </template>
+  <ion-page>
+    <header-section />
+    <ion-content :fullscreen="true" class="ion-padding-top">
+      <ion-grid  class="ion-padding" style="display:flex; flex-flow: column; justify-content: center;">
+        <ion-row style="display: flex; flex-flow: column;">
+          <ion-col style="text-align: center; margin-top: 18px;">
+            <ion-text class="qr-title">{{$t(`QR Code Scanned Leads`)}}</ion-text>
+          </ion-col>
+          <ion-col style="text-align: center; margin-top: 28px;">
+            <ion-text class="qr-mid-title">{{$t(`15 Students QR code has been scanned`)}}</ion-text>
+          </ion-col>
+          <ion-col style="text-align: left; margin-top: 28px;">
+            <ion-text class="qr-text-title">{{$t(`We're saving those leads right in the university dashboard for safekeeping. They'll be removed from here within 24 hours after you click`)}} <p style="display:inline;font-weight: bold;">{{$t(`Email me The Leads.`)}}</p></ion-text>
+          </ion-col>
+          <ion-col style="margin-top: 68px; margin-bottom: 18px; justify-content: left;">
+            <ion-card class="intro-card">
+              <ion-card-content style="display: flex; flex-flow: row;">
+                <ion-img :src='userImgUrl' class="user-Img"/>                                
+                <div style="display: flex; flex-flow: column;">
+                  <ion-text class="intro-name">{{$t(`Jennifer William`)}}</ion-text>
+                  <ion-text class="intro-pos">{{$t(`jennifer.lopez@gmail.com`)}}</ion-text>
+                  <ion-text class="intro-pos">{{$t(`00971123456789`)}}</ion-text>
+                </div>
+              </ion-card-content>
+            </ion-card>
+          </ion-col>
+          <ion-col v-for="name in names" :key="name" style="margin-top: 58px; justify-content: left;">
+            <ion-card class="intro-card">
+              <ion-card-content style="display: flex; flex-flow: row;">
+                <ion-img :src='userImgUrl' class="user-Img"/>                                
+                <div style="display: flex; flex-flow: column;">
+                  <ion-text class="intro-name">{{ $t(`${name}`) }}</ion-text>
+                  <ion-text class="intro-pos">{{$t(`jennifer.lopez@gmail.com`)}}</ion-text>
+                  <ion-text class="intro-pos">{{$t(`00971123456789`)}}</ion-text>
+                </div>
+              </ion-card-content>
+            </ion-card>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-content>
+    <footer-section />
+  </ion-page>
+</template>
   
-  <script>
+<script>
   import {useAuthStore} from "@/store";
   import {
-    IonButton,
-    IonCol,
+    IonPage,
     IonContent,
     IonGrid,
-    IonPage,
     IonRow,
+    IonCol,
+    IonCard,
+    IonCardContent,
     IonText,
-    IonIcon,
-    IonItem,
+    IonImg,
     modalController
   } from "@ionic/vue";
   import { defineComponent } from "vue";
@@ -67,15 +67,17 @@
     components: {
       HeaderSection,
       FooterSection,
-      IonContent,
       IonPage,
+      IonContent,
       IonGrid,
       IonRow,
       IonCol,
+      IonCard,
+      IonCardContent,
       IonText,
+      IonImg,
     },
     setup() {
-
         const userImgUrl = '/assets/images/indv.png';
         const qrImgUrl = '/assets/images/qrcodesample.svg';
         const names = [
@@ -92,7 +94,7 @@
     },
   });
   </script>
-  <style scoped>
+<style scoped>
   ion-content {
     --background:#F5F5F5;
   }
@@ -106,12 +108,8 @@
   ion-card-content {
     padding: 0;
   }
-  /* ion-card {
-    padding: 0;
-  } */
-
   .intro-card {
-    width: 346px;
+    width: 100%;
     border-radius: 6px;
     filter: drop-shadow(0px 3px 3px rgba(0,0,0,0.16 ));
     background: #ffffff;
@@ -177,5 +175,4 @@
     text-align: left;
     color: #606060;
  }
-
-  </style>
+</style>
