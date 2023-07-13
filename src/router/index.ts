@@ -95,6 +95,11 @@ const routes: Array<RouteRecordRaw> = [
         component: () => import('../views/Profile/QrScannedPage.vue'),
     },
     {
+        path: '/profile/mydocument',
+        name: 'MyDocument',
+        component: () => import('../views/Profile/MyDocumentPage.vue'),
+    },
+    {
         path: '/application',
         name: 'Application',
         component: () => import('../views/Application/index.vue'),
@@ -229,6 +234,11 @@ router.beforeEach((to) => {
         '/explore/universitymore',
         '/explore/studydestination',
         '/explore/studydestination/:id',
+        '/explore/getinspired',
+        '/explore/unlockingsec',
+        '/explore/searchpage/:keyword',
+        '/explore/searchdetailpage/:keyword',
+        '/explore/toparticles',
         '/register',
         '/forget-password',
         '/verify-code',
@@ -238,6 +248,7 @@ router.beforeEach((to) => {
         '/chat/login',
         '/application/login',
         '/profile/login',
+        '/profile/mydocument',
     ];
     const authRequired = !publicPages.includes(to.path);
     // const authRequired = false;
