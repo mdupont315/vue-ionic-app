@@ -7,7 +7,7 @@
                         <ion-text class="modal-title">{{ $t(`${title}`)}}</ion-text>
                     </ion-col>
                     <ion-col size="12">
-                        <ion-text class="modal-intro-text">{{ $t("Document name: IMG-202545424Whg.jpg")}}</ion-text>
+                        <ion-text class="modal-intro-text">{{ $t(`Document name: ${fileName}`)}}</ion-text>
                     </ion-col>
                 </ion-row>
                 <ion-row class="flex-col">
@@ -15,13 +15,14 @@
                         <hr class="under_line" />
                     </ion-col>
                     <ion-col size="12">
-                        <ion-img src="assets/images/upload.png"></ion-img>
+                        <ion-img v-if="type=='img'" :src="fileDirectory"></ion-img>
+                        <pdf v-else :src="url"></pdf>
                     </ion-col>
                     <ion-col size="12">
                         <hr class="under_line" />
                     </ion-col>
                     <ion-col size="12">
-                        <ion-button>
+                        <ion-button @click="closeModal">
                             <ion-text class="button-title">
                                 {{ $t("Close") }}
                             </ion-text>
@@ -30,7 +31,7 @@
                 </ion-row>
             </ion-grid>
         </ion-content>
-        <footer-section />
+        <footer-section/>
     </ion-page>
 </template>
 <script>
@@ -45,7 +46,8 @@ import {
     IonImg,
     modalController,
 } from "@ionic/vue";
-import { defineComponent } from "vue";
+import { defineComponent, ref, onBeforeMount } from "vue";
+import pdf from 'vue3-pdf';
 
 export default defineComponent({
     name:"HigherModal",
@@ -57,17 +59,48 @@ export default defineComponent({
         IonText,
         IonCol,
         IonButton,
-        IonImg
+        IonImg,
+        pdf
     },
     props: {
       title: String,
+      fileName: String,
+      fileDirectory: String,
+      type: String,
     },
-    // setup() {
-    //     return {
-    //         chevronDownOutline,
-    //         trashBin,
-    //     };
-    // }
+    setup(props) {
+        const url = ref("")
+        const base64toBlob = (data) => {
+            const base64WithoutPrefix = data.substr('data:application/pdf;base64,'.length);
+
+            const bytes = atob(base64WithoutPrefix);
+            let length = bytes.length;
+            let out = new Uint8Array(length);
+
+            while (length--) {
+                out[length] = bytes.charCodeAt(length);
+            }
+
+            return new Blob([out], { type: 'application/pdf' });
+        };
+
+        const closeModal = () => {
+            modalController.dismiss({
+                'dismissed': true
+            })
+        };
+
+        onBeforeMount(() => {
+            if(props.type == 'pdf') {
+                const blob = base64toBlob(props.fileDirectory);
+                url.value = URL.createObjectURL(blob);
+            }
+        })
+        return {
+            url,
+            closeModal,
+        };
+    }
 })
 </script>
 <style scoped>
@@ -92,6 +125,7 @@ ion-img {
     margin-right: auto;
     margin-left: auto;
 }
+
 .modal-title {
     font-size: 30px;
     font-weight: bold;

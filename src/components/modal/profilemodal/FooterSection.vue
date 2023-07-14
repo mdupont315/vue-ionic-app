@@ -4,11 +4,11 @@
         <ion-tabs>
           <ion-router-outlet></ion-router-outlet>
           <ion-tab-bar slot="bottom">
-            <ion-button expand="block" style="width: 40%; margin-right: 15%;" class="white-button">
+            <ion-button expand="block" style="width: 40%; margin-right: 15%;" class="white-button" @click="$emit('discard')">
               <ion-text style="color: black;">{{ $t(`Discard`) }}</ion-text>
             </ion-button>
 
-            <ion-button expand="block" style="width: 40%;" class="blue-button">
+            <ion-button expand="block" style="width: 40%;" class="blue-button" @click="$emit('save')">
               <ion-text>{{ $t(`Save`) }}</ion-text>
             </ion-button>
           </ion-tab-bar>
@@ -39,12 +39,6 @@
         IonText,
         IonButton 
     },
-    // setup(props) {
-    //   const bookmark = 'assets/images/bookmarg.svg';
-    //   const imgUrl = 'assets/images/header.svg'
-      
-    //   return {imgUrl, bookmark, logoWechat};
-    // }
   });
   </script>
   

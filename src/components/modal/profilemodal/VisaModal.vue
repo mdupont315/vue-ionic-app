@@ -14,6 +14,7 @@
                         </ion-text>
                     </ion-col>
                     <ion-col size="12">
+                        <ion-input type="file" class="file-input" style="opacity: 0" accept=".png, .jpg, .pdf" @change="handleFile($event)" />
                         <ion-button>
                             <ion-text class="button-title">
                                 {{ $t("Upload") }}
@@ -28,7 +29,7 @@
                 </ion-row>
             </ion-grid>
         </ion-content>
-        <footer-section />
+        <footer-section  @save="postData" @discard="discardData"/>
     </ion-page>
 </template>
 <script>
@@ -40,11 +41,12 @@ import {
     IonText,
     IonCol,
     IonButton,
+    IonInput,
     modalController,
 } from "@ionic/vue";
-import { defineComponent } from "vue";
+import { defineComponent, ref, computed } from "vue";
 import FooterSection from "@/components/modal/profilemodal/FooterSection.vue";
-import {chevronDownOutline, trashBin} from 'ionicons/icons';
+import {useDocumentDataStore} from "@/store";
 
 export default defineComponent({
     name:"HigherModal",
@@ -56,15 +58,44 @@ export default defineComponent({
         IonRow,
         IonText,
         IonCol,
+        IonInput,
         IonButton
     },
     props: {
       title: String,
     },
-    setup() {
+    setup(props) {
+        const store = useDocumentDataStore();
+        const {postWorkData} = store;
+        const postresult = computed(() => store.postresult);
+        const file=ref("");
+
+        const handleFile = (event) => {
+            file.value = event.target.files[0];
+        }
+
+        const postData = async () => {
+            let formData = new FormData();
+            formData.append("document", file.value);
+            if(props.title=="Recommendations Letter")
+                await postWorkData('recommendation-latter', formData);
+            else if( props.title=="Other Documents")
+                await postWorkData('others', formData);
+            else if( props.title=="Finance Documents")
+                await postWorkData('finance', formData);
+            else if( props.title=="Health Documents")
+                await postWorkData('health', formData);
+            else
+                await postWorkData(props.title.toLowerCase(), formData);
+        }
+        const discardData = () => {
+            file.value = "";
+        }
+
         return {
-            chevronDownOutline,
-            trashBin,
+            postData,
+            discardData,
+            handleFile,
         };
     }
 })
