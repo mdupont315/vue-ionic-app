@@ -6,3 +6,4 @@ export * from  './commonData';
 export * from './translation';
 export * from './darkMode'
 export * from './exploreData';
+export * from './document';

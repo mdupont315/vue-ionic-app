@@ -251,7 +251,6 @@ router.beforeEach((to) => {
         '/profile/mydocument',
     ];
     const authRequired = !publicPages.includes(to.path);
-    // const authRequired = false;
     const {isLoggedIn, isVerified, currentStep, profileCompleted, roleId} = useAuthStore();
 
     if (authRequired && !isLoggedIn && to.path == '/chat') {

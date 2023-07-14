@@ -12,13 +12,14 @@
                 </ion-row>
                 <ion-row class="flex-col" style="margin-bottom: 9px;">
                     <ion-col size="12" style="text-align: center;">
-                        <searchable-select 
+                        <searchable-select v-model="engTest_id"
                             label="Test Name" stitle="Test Name"
-                            :icon-end="chevronDownOutline">
+                            :icon-end="chevronDownOutline" :items="engTestData"
+                            valueProperty="id" textProperty="title">
                         </searchable-select>
                     </ion-col>
                     <ion-col size="12">
-                        <input-field label="Score"></input-field>
+                        <input-field label="Score" v-model="score"></input-field>
                     </ion-col>
                     <ion-col size="12" style="text-align: center;">
                         <searchable-select 
@@ -27,6 +28,7 @@
                         </searchable-select>
                     </ion-col>
                     <ion-col size="12">
+                        <ion-input type="file" class="file-input" style="opacity: 0" accept=".png, .jpg, .pdf" @change="handleFile($event)" />
                         <ion-button>
                             <ion-text class="button-title">
                                 {{ $t("Upload") }}
@@ -41,7 +43,7 @@
                 </ion-row>
             </ion-grid>
         </ion-content>
-        <footer-section />
+        <footer-section @save="postData" @discard="discardData"/>
     </ion-page>
 </template>
 <script>
@@ -52,14 +54,18 @@ import {
     IonRow,
     IonText,
     IonCol,
+    IonInput,
     IonButton,
     modalController,
 } from "@ionic/vue";
-import { defineComponent } from "vue";
+import { defineComponent, computed, ref, onBeforeMount } from "vue";
 import FooterSection from "@/components/modal/profilemodal/FooterSection.vue";
 import SearchableSelect from "@/components/SearchableSelect.vue";
 import InputField from "@/components/InputField.vue";
-import {chevronDownOutline, trashBin} from 'ionicons/icons';
+import {chevronDownOutline} from 'ionicons/icons';
+
+import {useDocumentDataStore} from "@/store";
+import {useLoadingStore} from "@/store/loading";
 
 export default defineComponent({
     name:"EnglishTest",
@@ -73,15 +79,68 @@ export default defineComponent({
         IonRow,
         IonText,
         IonCol,
-        // IonButton
+        IonInput,
+        IonButton
     },
     props: {
       title: String,
     },
-    setup() {
+    setup(props) {
+        const store = useDocumentDataStore();
+        const {showLoading, hideLoading} = useLoadingStore();
+        const {loadEngTests, changeFlag, postTestData} = store;
+        const dataLoaded = computed(() => store.dataLoaded);
+        const engTestData = computed(() => store.engTestData);
+        const postresult = computed(() => store.postresult);
+        const engTest_id = ref("");
+        const file = ref("");
+        const score = ref("");
+        const handleFile = (event) => {
+            file.value = event.target.files[0];
+        }
+
+        const postData = async () => {
+            // let formData = new FormData();
+            // formData.append("test_id", engTest_id.value);
+            // formData.append("score", score.value);
+            // formData.append("date_issued", date.value);
+            // formData.append("document", file.value);
+            // if(props.title=="English Language")
+            //     await postTestData("english", formData);
+            // else
+            //     await postTestData("entrance", formData);
+            // console.log(postresult.value)
+        }
+        const discardData = () => {
+            // engTest_id.value="";
+            // file.value = "";
+            // score.value = "";
+            // date.value = "";
+        }
+
+        onBeforeMount(() => {
+            if (!dataLoaded.value) {
+                showLoading();
+                if(props.title=="English Language")
+                    Promise.all([loadEngTests('english')]).then(() => {
+                        hideLoading();
+                        changeFlag();
+                    })
+                else  
+                    Promise.all([loadEngTests('entrance')]).then(() => {
+                        hideLoading();
+                        changeFlag();
+                    })      
+            }
+        })
         return {
+            engTest_id,
+            engTestData,
+            score,
             chevronDownOutline,
-            trashBin,
+            handleFile,
+            postData,
+            discardData,
         };
     }
 })
@@ -104,7 +163,7 @@ ion-button {
 }
 ion-item {
   width: 100%;
-  --border-color: black;
+  --border-color: #bcbcbc;
   --ion-color-base: gray !important;
 }
 ion-item::part(native) {

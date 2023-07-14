@@ -12,10 +12,11 @@
                 </ion-row>
                 <ion-row class="flex-col" style="margin-bottom: 9px;">
                     <ion-col size="12">
-                        <input-field label="Title"></input-field>
+                        <input-field label="Title" v-model="title"></input-field>
                     </ion-col>
                     <ion-col size="12" style="text-align: center;">
                         <ion-textarea
+                            v-model="description"
                             aria-label="Custom textarea"
                             placeholder="Description"
                             class="custom"
@@ -24,6 +25,7 @@
                         ></ion-textarea>
                     </ion-col>
                     <ion-col size="12">
+                        <ion-input type="file" class="file-input" style="opacity: 0" accept=".png, .jpg, .pdf" @change="handleFile($event)" />
                         <ion-button>
                             <ion-text class="button-title">
                                 {{ $t("Upload") }}
@@ -38,7 +40,7 @@
                 </ion-row>
             </ion-grid>
         </ion-content>
-        <footer-section />
+        <footer-section  @save="postData" @discard="discardData"/>
     </ion-page>
 </template>
 <script>
@@ -50,17 +52,18 @@ import {
     IonText,
     IonCol,
     IonButton,
+    IonInput,
     IonTextarea,
     modalController,
 } from "@ionic/vue";
-import { defineComponent } from "vue";
+import { defineComponent, ref, computed } from "vue";
 import FooterSection from "@/components/modal/profilemodal/FooterSection.vue";
 import SearchableSelect from "@/components/SearchableSelect.vue";
 import InputField from "@/components/InputField.vue";
-import {chevronDownOutline, trashBin} from 'ionicons/icons';
+import {useDocumentDataStore} from "@/store";
 
 export default defineComponent({
-    name:"EnglishTest",
+    name:"ExtracurModal",
     components: {
         FooterSection,
         InputField,    
@@ -70,16 +73,41 @@ export default defineComponent({
         IonRow,
         IonText,
         IonCol,
+        IonInput,
         IonTextarea,
         IonButton
     },
-    props: {
-      title: String,
-    },
     setup() {
+        const store = useDocumentDataStore();
+        const {postWorkData} = store;
+        const postresult = computed(() => store.postresult);
+        const file=ref("");
+        const title=ref("");
+        const description=ref("");
+
+        const handleFile = (event) => {
+            file.value = event.target.files[0];
+        }
+
+        const postData = async () => {
+            let formData = new FormData();
+            formData.append("title", title.value);
+            formData.append("description", description.value);
+            formData.append("document", file.value);
+            await postWorkData('extra-curricular', formData);
+        }
+        const discardData = () => {
+            file.value = "";
+            title.value = "";
+            description.value = "";
+        }
+
         return {
-            chevronDownOutline,
-            trashBin,
+            postData,
+            discardData,
+            handleFile,
+            title,
+            description,
         };
     }
 })

@@ -39,6 +39,7 @@
                         </searchable-select>
                     </ion-col>
                     <ion-col size="12">
+                        <ion-input type="file" class="file-input" style="opacity: 0" accept=".png, .jpg, .pdf" @change="handleFile($event)" />
                         <ion-button>
                             <ion-text class="button-title">
                                 {{ $t("Upload") }}
@@ -53,7 +54,7 @@
                 </ion-row>
             </ion-grid>
         </ion-content>
-        <footer-section />
+        <footer-section  @save="postData" @discard="discardData"/>
     </ion-page>
 </template>
 <script>
@@ -65,14 +66,17 @@ import {
     IonText,
     IonCol,
     IonButton,
+    IonInput,
     IonCheckbox,
     modalController,
 } from "@ionic/vue";
-import { defineComponent } from "vue";
+import { defineComponent, ref, computed } from "vue";
 import FooterSection from "@/components/modal/profilemodal/FooterSection.vue";
 import SearchableSelect from "@/components/SearchableSelect.vue";
 import InputField from "@/components/InputField.vue";
-import {chevronDownOutline, trashBin} from 'ionicons/icons';
+import {chevronDownOutline} from 'ionicons/icons';
+
+import {useDocumentDataStore} from "@/store";
 
 export default defineComponent({
     name:"WorkExperience",
@@ -86,16 +90,40 @@ export default defineComponent({
         IonRow,
         IonText,
         IonCol,
-        IonCheckbox
-        // IonButton
+        IonCheckbox,
+        IonButton,
+        IonInput
     },
     props: {
       title: String,
     },
     setup() {
+        const store = useDocumentDataStore();
+        const {postWorkData} = store;
+        const postresult = computed(() => store.postresult);
+        const file=ref("");
+
+        const handleFile = (event) => {
+            file.value = event.target.files[0];
+        }
+        const postData = async () => {
+            let formData = new FormData();
+            formData.append("organization_name", "");
+            formData.append("is_working_here", "");
+            formData.append("designation", "");
+            formData.append("joining_date", "");
+            formData.append("reliving_date", "");
+            formData.append("document", file.value);
+            await postWorkData("add-experiencer", formData);
+        }
+        const discardData = () => {
+            file.value = "";
+        }
         return {
             chevronDownOutline,
-            trashBin,
+            postData,
+            discardData,
+            handleFile,
         };
     }
 })
