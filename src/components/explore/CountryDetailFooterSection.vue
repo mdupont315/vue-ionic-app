@@ -14,7 +14,7 @@
               <ion-label>{{ $t("Chat") }}</ion-label>
             </ion-tab-button>
 
-            <ion-button @click="openModal" expand="block" style="width: 50%;">
+            <ion-button @click="openModal" class="ion-margin-horizontal" expand="block" style="width: 50%;">
               <p>{{ $t(`View All Programs`) }}</p>
             </ion-button>
           </ion-tab-bar>

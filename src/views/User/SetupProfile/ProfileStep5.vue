@@ -7,7 +7,7 @@
           <ion-text class="d-optoin"><p style="margin-bottom: 0;">{{  $t('Fees Range: ') }}</p></ion-text>
           <ion-range :dual-knobs="true" :value="{ lower: form.fee_range_from, upper: form.fee_range_to }" :max="300000" :min="0"  @ionChange="setRange"></ion-range>
           <select-range v-model:min="form.fee_range_from" v-model:max="form.fee_range_to"/>
-          <input-error :message="error?.errors?.fee_range_id"/>
+          <input-error :message="error?.errors?.fee_range_from || error?.errors?.fee_range_to"/>
         </ion-col>
       </ion-row>
       <hr>
@@ -136,9 +136,7 @@ export default defineComponent({
 
     const next = async () => {
       showLoading();
-      await store.submitStepFive({
-        form
-      }).then((res) => {
+      await store.submitStepFive(form).then((res) => {
         hideLoading()
         if (!res) {
           return;

@@ -45,8 +45,8 @@ export const useAuthStore = defineStore({
         roleId: (state) => parseInt(state.role || ROLE_STUDENT.toString()),
         userToken: (state) => state.token,
         userError: (state) => state.error,
-        currentStep: (state) => parseInt(state.user?.user_bio?.profile_completion_status || 0) + 1,
-        actualStep: (state) => parseInt(state.user?.user_bio?.profile_completion_status || 0),
+        currentStep: (state) => parseInt(state.user?.profile_completion_status || 0) + 1,
+        actualStep: (state) => parseInt(state.user?.profile_completion_status || 0),
         isVerified: (state) => state.verified,
         profileCompleted: (state) => state.completed == 'true',
         sendCodeIn: (state) => `00:${(state.can_resend_code_in < 10 ? '0' :'')} ${state.can_resend_code_in}`,
@@ -321,8 +321,7 @@ export const useAuthStore = defineStore({
                 } else {
                     this.user = user;
                 }
-                // this.setUserProfileCompleted(this.user.user_bio.profile_completion_status);
-                this.setUserProfileCompleted(true);
+                this.setUserProfileCompleted(this.user.profile_completion_status);
 
             } catch (e: any) {
                 throw new Error();
@@ -363,7 +362,8 @@ export const useAuthStore = defineStore({
                 this.setUserToken(user.token);
                 this.setUserVerification(user.email_verified);
                 // this.setUserProfileCompleted(user.user_bio.profile_completion_status);
-                this.setUserProfileCompleted(true);
+                this.setUserProfileCompleted(user.profile_completion_status);
+                // this.setUserProfileCompleted(true);
                 this.setUserRoleId(user.role_id);
             } catch (e: any) {
                 const {hideLoading} = useLoadingStore();
@@ -394,7 +394,7 @@ export const useAuthStore = defineStore({
         },
         setUserProfileCompleted(status: any) {
             try {
-                this.completed = String(status >= 9);
+                this.completed = String(Number(status) >= 5);
                 localStorage.setItem(USER_PROFILE_COMPLETED_STORAGE_KEY, this.completed);
             } catch (e: any) {
                 const {hideLoading} = useLoadingStore();

@@ -6,54 +6,14 @@
           <ion-text>{{  $t("Engaging in hobbies can have a positive impact on students' scholarship opportunities in several ways") }}</ion-text>
         </ion-col>
       </ion-row>
-      <ion-row>
+      <ion-row v-for="(item, index) in form" :key="index">
         <ion-col size="12">
-          <ion-text class="d-optoin"><p style="margin-bottom: 0;">{{  $t('1st Hobby') }}</p></ion-text>
-          <searchable-select sClass="pro-input-style" v-model="form[0]" :items="hobbies"
+          <ion-text class="d-optoin"><p style="margin-bottom: 0;">{{  $t(`${orderText[index]} Hobby`) }}</p></ion-text>
+          <searchable-select sClass="pro-input-style" v-model="form[index]" :items="hobbies"
                              text-property="title" value-property="id" 
                              label="Select a Hobby" stitle="Select a Hobby"
                              :loading="!hobbies" :icon-end="chevronDownOutline"/>
-          <input-error :message="error?.errors?.hobbies"/>
-        </ion-col>
-      </ion-row>
-      <ion-row>
-        <ion-col size="12">
-          <ion-txt class="d-optoin"><p style="margin-bottom: 0;">{{  $t('2nd Hobby') }}</p></ion-txt>
-          <searchable-select sClass="pro-input-style" v-model="form[1]" :items="hobbies"
-                             text-property="title" value-property="id" 
-                             label="Select a Hobby" stitle="Select a Hobby"
-                             :loading="!hobbies" :icon-end="chevronDownOutline"/>
-          <input-error :message="error?.errors?.hobbies"/>
-        </ion-col>
-      </ion-row>
-      <ion-row>
-        <ion-col size="12">
-          <ion-txt class="d-optoin"><p style="margin-bottom: 0;">{{  $t('3rd Hobby') }}</p></ion-txt>
-          <searchable-select sClass="pro-input-style" v-model="form[2]" :items="hobbies"
-                             text-property="title" value-property="id" 
-                             label="Select a Hobby" stitle="Select a Hobby"
-                             :loading="!hobbies" :icon-end="chevronDownOutline"/>
-          <input-error :message="error?.errors?.hobbies"/>
-        </ion-col>
-      </ion-row>
-      <ion-row>
-        <ion-col size="12">
-          <ion-txt class="d-optoin"><p style="margin-bottom: 0;">{{  $t('4th Hobby') }}</p></ion-txt>
-          <searchable-select sClass="pro-input-style" v-model="form[3]" :items="hobbies"
-                             text-property="title" value-property="id" 
-                             label="Select a Hobby" stitle="Select a Hobby"
-                             :loading="!hobbies" :icon-end="chevronDownOutline"/>
-          <input-error :message="error?.errors?.hobbies"/>
-        </ion-col>
-      </ion-row>
-      <ion-row>
-        <ion-col size="12">
-          <ion-txt class="d-optoin"><p style="margin-bottom: 0;">{{  $t('5th Hobby') }}</p></ion-txt>
-          <searchable-select sClass="pro-input-style" v-model="form[4]" :items="hobbies"
-                             text-property="title" value-property="id" 
-                             label="Select a Hobby" stitle="Select a Hobby"
-                             :loading="!hobbies" :icon-end="chevronDownOutline"/>
-          <input-error :message="error?.errors?.hobbies"/>
+          <input-error :message="error?.errors?.[`hobbies.${index}`]"/>
         </ion-col>
       </ion-row>
       <ion-row>
@@ -103,6 +63,9 @@ export default defineComponent({
     const {checkoutSetupProfileStep} = usePages();
     const {showToast} = useToast();
     const error = computed(() => store.error);
+    const orderText = reactive([
+      "1st", "2nd", "3rd", "4th", "5th"
+    ]);
 
     const form = reactive([
       "", "", "", "", ""
@@ -110,9 +73,11 @@ export default defineComponent({
 
     const next = async () => {
       showLoading();
-      await store.submitStepFour({
-        hobbies: form
-      }).then((res) => {
+      const nForm = new FormData();
+      form.forEach((element, index) => {
+        nForm.append(`hobbies[]`, element)
+      });
+      await store.submitStepFour(nForm).then((res) => {
         hideLoading()
         if (!res) {
           return;
@@ -129,7 +94,8 @@ export default defineComponent({
       next,
       error,
       chevronDownOutline,
-      form
+      form,
+      orderText
     };
   },
 });

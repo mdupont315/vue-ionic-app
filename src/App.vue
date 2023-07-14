@@ -120,7 +120,7 @@ export default defineComponent({
 
         function logoutUser() {
             authStore.logout();
-            router.replace("/login");
+            router.replace("/explore");
         }
 
         return {
