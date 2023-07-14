@@ -256,7 +256,7 @@ export default defineComponent({
             id:id
         },
         initialBreakpoint: 0.95,
-        breakpoints: [0, 0.95],
+        // breakpoints: [0, 0.95],
       });
       modal.present();
     }

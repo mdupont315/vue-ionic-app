@@ -28,7 +28,7 @@ export function usePages() {
             icon:people
         },
     ];
-    const setup_profile_base_url = '/user/profile/setup/step';
+    const setup_profile_base_url = '/profile/setup/step';
     const setupProfilePages = [
         {
             title: 'Personal Information',

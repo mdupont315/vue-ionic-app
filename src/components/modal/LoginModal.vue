@@ -110,6 +110,8 @@
   import {useLoadingStore} from "@/store/loading";
   import InputPassword from "@/components/InputPassword.vue";
   import InputField from "@/components/InputField.vue";
+  import {useFormErrorAlert} from "@/shared/userError";
+  import {useRouter} from "vue-router";
 
   export default defineComponent({
     name: 'LoginModal',
@@ -127,7 +129,9 @@
       const store = useAuthStore();
       const {checkAccount, login} = store;
       const {showLoading, hideLoading} = useLoadingStore();
+      const {showFormUserFormError} = useFormErrorAlert();
       const status = ref(1);
+      const router = useRouter();
       const email = ref("");
       const password = ref("");
       const errorEmail = ref(false);
@@ -147,7 +151,10 @@
           }).finally(() => hideLoading());
         } else {
           await login(email.value, password.value).then(res => {
-            console.log(res);
+            return !res ? showFormUserFormError() : setTimeout(() => {
+              modalController.dismiss(null, 'cancel');
+              router.replace('/profile')
+            }, 300);
           }).finally(() => hideLoading());
         }
       };

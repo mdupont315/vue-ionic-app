@@ -6,74 +6,18 @@
           <ion-text>{{  $t('Select up to 5 countries where you would like to study in.') }}</ion-text>
         </ion-col>
       </ion-row>
-      <ion-row>
+      <ion-row v-for="(item, index) in form" :key="index">
         <ion-col size="12">
-          <ion-text class="d-optoin"><p>{{  $t('1st Description Option') }}</p></ion-text>
-          <searchable-select sClass="f-item" v-model="form[0].country_id" :items="countries"
+          <ion-text class="d-optoin"><p>{{  $t(`${orderText[index]} Description Option`) }}</p></ion-text>
+          <searchable-select sClass="f-item" v-model="form[index].country_id" :items="countries"
                              text-property="country_name" value-property="id" 
                              label="Country of residence" stitle="Select Country"
-                             :loading="!countries" :icon-end="chevronDownOutline" @change="getEachCities(0)"/>
-          <searchable-select sClass="s-item" v-model="form[0].city_id" :items="cities_arry[0]"
+                             :loading="!countries" :icon-end="chevronDownOutline" @change="getEachCities(index)"/>
+          <searchable-select sClass="s-item" v-model="form[index].city_id" :items="cities_arry[index]"
                              text-property="city_name" value-property="id" 
                              label="City of residence" stitle="Select City"
-                             :loading="(!form[0].cityLoading || !cities_arry[0].length)" :icon-end="chevronDownOutline" />
-          <input-error :message="error?.errors?.country_id || error?.errors?.city_id"/>
-        </ion-col>
-      </ion-row>
-      <ion-row>
-        <ion-col size="12">
-          <ion-txt class="d-optoin"><p>{{  $t('2nd Description Option') }}</p></ion-txt>
-          <searchable-select sClass="f-item" v-model="form[1].country_id" :items="countries"
-                             text-property="country_name" value-property="id" 
-                             label="Country of residence" stitle="Select Country"
-                             :loading="!countries" :icon-end="chevronDownOutline" @change="getEachCities(1)"/>
-          <searchable-select sClass="s-item" v-model="form[1].city_id" :items="cities_arry[1]"
-                             text-property="city_name" value-property="id" 
-                             label="City of residence" stitle="Select City"
-                             :loading="(!form[1].cityLoading || !cities_arry[1].length)" :icon-end="chevronDownOutline" />
-          <input-error :message="error?.errors?.country_id || error?.errors?.city_id"/>
-        </ion-col>
-      </ion-row>
-      <ion-row>
-        <ion-col size="12">
-          <ion-txt class="d-optoin"><p>{{  $t('3rd Description Option') }}</p></ion-txt>
-          <searchable-select sClass="f-item" v-model="form[2].country_id" :items="countries"
-                             text-property="country_name" value-property="id" 
-                             label="Country of residence" stitle="Select Country"
-                             :loading="!countries" :icon-end="chevronDownOutline" @change="getEachCities(2)"/>
-          <searchable-select sClass="s-item" v-model="form[2].city_id" :items="cities_arry[2]"
-                             text-property="city_name" value-property="id" 
-                             label="City of residence" stitle="Select City"
-                             :loading="(!form[2].cityLoading || !cities_arry[2].length)" :icon-end="chevronDownOutline" />
-          <input-error :message="error?.errors?.country_id || error?.errors?.city_id"/>
-        </ion-col>
-      </ion-row>
-      <ion-row>
-        <ion-col size="12">
-          <ion-txt class="d-optoin"><p>{{  $t('4th Description Option') }}</p></ion-txt>
-          <searchable-select sClass="f-item" v-model="form[3].country_id" :items="countries"
-                             text-property="country_name" value-property="id" 
-                             label="Country of residence" stitle="Select Country"
-                             :loading="!countries" :icon-end="chevronDownOutline" @change="getEachCities(3)"/>
-          <searchable-select sClass="s-item" v-model="form[3].city_id" :items="cities_arry[3]"
-                             text-property="city_name" value-property="id" 
-                             label="City of residence" stitle="Select City"
-                             :loading="(!form[3].cityLoading || !cities_arry[3].length)" :icon-end="chevronDownOutline" />
-          <input-error :message="error?.errors?.country_id || error?.errors?.city_id"/>
-        </ion-col>
-      </ion-row>
-      <ion-row>
-        <ion-col size="12">
-          <ion-txt class="d-optoin"><p>{{  $t('5th Description Option') }}</p></ion-txt>
-          <searchable-select sClass="f-item" v-model="form[4].country_id" :items="countries"
-                             text-property="country_name" value-property="id" 
-                             label="Country of residence" stitle="Select Country"
-                             :loading="!countries" :icon-end="chevronDownOutline" @change="getEachCities(4)"/>
-          <searchable-select sClass="s-item" v-model="form[4].city_id" :items="cities_arry[3]"
-                             text-property="city_name" value-property="id" 
-                             label="City of residence" stitle="Select City"
-                             :loading="(!form[4].cityLoading || !cities_arry[4].length)" :icon-end="chevronDownOutline" />
-          <input-error :message="error?.errors?.country_id || error?.errors?.city_id"/>
+                             :loading="(!form[index].cityLoading || !cities_arry[index].length)" :icon-end="chevronDownOutline" />
+          <input-error :message="error?.errors?.[`destinations.${index}.country_id`] || error?.errors?.[`destinations.${index}.city_id`]"/>
         </ion-col>
       </ion-row>
       <ion-row>
@@ -123,6 +67,9 @@ export default defineComponent({
     const {checkoutSetupProfileStep} = usePages();
     const {showToast} = useToast();
     const error = computed(() => store.error);
+    const orderText = reactive([
+      "1st", "2nd", "3rd", "4th", "5th"
+    ]);
 
     const form = reactive([
       {country_id: "", city_id: "", cityLoading: true},
@@ -141,9 +88,12 @@ export default defineComponent({
     }
     const next = async () => {
       showLoading();
-      await store.submitStepTwo({
-        destinations: form
-      }).then((res) => {
+      const nForm = new FormData();
+      form.forEach((element, index) => {
+        nForm.append(`destination[${index}].country_id`, element.country_id)
+        nForm.append(`destination[${index}].city_id`, element.city_id)
+      });
+      await store.submitStepTwo(nForm).then((res) => {
         hideLoading()
         if (!res) {
           return;
@@ -163,6 +113,7 @@ export default defineComponent({
       form,
       cities_arry,
       getEachCities,
+      orderText
     };
   },
 });

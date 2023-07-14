@@ -30,7 +30,7 @@ export const useCommonDataStore = defineStore({
         async loadData(loadWithoutCheck = false) {
             // console.log("loading common Data...");
             const {isLoggedIn} = useAuthStore();
-            // if ((!isLoggedIn || this.dataLoaded) && !loadWithoutCheck) return ;
+            if ((!isLoggedIn || this.dataLoaded) && !loadWithoutCheck) return ;
             await fetchWrapper.get(`${BASE_URL}/get-all-required-data`)
                 .then((response) => {
                     if (!response.ok){

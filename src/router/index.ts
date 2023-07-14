@@ -224,23 +224,22 @@ const router = createRouter({
 router.beforeEach((to) => {
     // redirect to login page if not logged in and trying to access a restricted page
     const publicPages = [
-        '/login',
+        // '/login',
         '/explore',
         '/explore/universitymore',
         '/explore/studydestination',
         '/explore/studydestination/:id',
-        '/register',
-        '/forget-password',
-        '/verify-code',
-        '/rest-password',
-        '/get-start',
-        '/home',
+        // '/register',
+        // '/forget-password',
+        // '/verify-code',
+        // '/rest-password',
+        // '/get-start',
+        // '/home',
         '/chat/login',
         '/application/login',
         '/profile/login',
     ];
     const authRequired = !publicPages.includes(to.path);
-    // const authRequired = false;
     const {isLoggedIn, isVerified, currentStep, profileCompleted, roleId} = useAuthStore();
 
     if (authRequired && !isLoggedIn && to.path == '/chat') {

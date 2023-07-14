@@ -24,7 +24,7 @@
       <ion-row v-if="selectedStudyStatus">
         <ion-col size="12" class="ion-padding-bottom">
           <searchable-select v-model="form.school_id" :items="schools"
-                             text-property="title" value-property="id" 
+                             text-property="school_name" value-property="id" 
                              label="Select your school" stitle="Select your school"
                              :loading="!schools" :icon-end="chevronDownOutline" />
           <input-error :message="error?.errors?.school_id"/>

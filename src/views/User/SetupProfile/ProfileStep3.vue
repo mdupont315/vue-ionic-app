@@ -1,79 +1,23 @@
 <template>
-  <setup-profile-layout step="2">
+  <setup-profile-layout step="3">
     <ion-grid>
       <ion-row>
         <ion-col size="12">
           <ion-text>{{  $t('Select up to 5 Majors of what do you want to study.') }}</ion-text>
         </ion-col>
       </ion-row>
-      <ion-row>
+      <ion-row v-for="(item, index) in form" :key="index">
         <ion-col size="12">
-          <ion-text class="d-optoin"><p>{{  $t('1st Major Option') }}</p></ion-text>
-          <searchable-select sClass="f-item" v-model="form[0].discipline_id" :items="disciplines"
+          <ion-text class="d-optoin"><p>{{  $t(`${orderText[index]} Major Option`) }}</p></ion-text>
+          <searchable-select sClass="f-item" v-model="form[index].discipline_id" :items="disciplines"
                              text-property="title" value-property="id" 
                              label="Study Discipline" stitle="Select Study Discipline"
-                             :loading="!disciplines" :icon-end="chevronDownOutline" @change="getEachMajors(0)"/>
-          <searchable-select sClass="s-item" v-model="form[0].major_id" :items="majors_arry[0]"
+                             :loading="!disciplines" :icon-end="chevronDownOutline" @change="getEachMajors(index)"/>
+          <searchable-select sClass="s-item" v-model="form[index].major_id" :items="majors_arry[index]"
                              text-property="title" value-property="id" 
                              label="Study Major" stitle="Major City"
-                             :loading="(!form[0].majorLoading || !majors_arry[0].length)" :icon-end="chevronDownOutline" />
-          <input-error :message="error?.errors?.discipline_id || error?.errors?.major_id"/>
-        </ion-col>
-      </ion-row>
-      <ion-row>
-        <ion-col size="12">
-          <ion-txt class="d-optoin"><p>{{  $t('2nd Major Option') }}</p></ion-txt>
-          <searchable-select sClass="f-item" v-model="form[1].discipline_id" :items="disciplines"
-                             text-property="title" value-property="id" 
-                             label="Study Discipline" stitle="Select Study Discipline"
-                             :loading="!disciplines" :icon-end="chevronDownOutline" @change="getEachMajors(1)"/>
-          <searchable-select sClass="s-item" v-model="form[1].major_id" :items="majors_arry[1]"
-                             text-property="title" value-property="id" 
-                             label="Study Major" stitle="Major City"
-                             :loading="(!form[1].majorLoading || !majors_arry[1].length)" :icon-end="chevronDownOutline" />
-          <input-error :message="error?.errors?.discipline_id || error?.errors?.major_id"/>
-        </ion-col>
-      </ion-row>
-      <ion-row>
-        <ion-col size="12">
-          <ion-txt class="d-optoin"><p>{{  $t('3rd Major Option') }}</p></ion-txt>
-          <searchable-select sClass="f-item" v-model="form[2].discipline_id" :items="disciplines"
-                             text-property="title" value-property="id" 
-                             label="Study Discipline" stitle="Select Study Discipline"
-                             :loading="!disciplines" :icon-end="chevronDownOutline" @change="getEachMajors(2)"/>
-          <searchable-select sClass="s-item" v-model="form[2].major_id" :items="majors_arry[2]"
-                             text-property="title" value-property="id" 
-                             label="Study Major" stitle="Major City"
-                             :loading="(!form[2].majorLoading || !majors_arry[2].length)" :icon-end="chevronDownOutline" />
-          <input-error :message="error?.errors?.discipline_id || error?.errors?.major_id"/>
-        </ion-col>
-      </ion-row>
-      <ion-row>
-        <ion-col size="12">
-          <ion-txt class="d-optoin"><p>{{  $t('4th Major Option') }}</p></ion-txt>
-          <searchable-select sClass="f-item" v-model="form[3].discipline_id" :items="disciplines"
-                             text-property="title" value-property="id" 
-                             label="Study Discipline" stitle="Select Study Discipline"
-                             :loading="!disciplines" :icon-end="chevronDownOutline" @change="getEachMajors(3)"/>
-          <searchable-select sClass="s-item" v-model="form[3].major_id" :items="majors_arry[3]"
-                             text-property="title" value-property="id" 
-                             label="Study Major" stitle="Major City"
-                             :loading="(!form[3].majorLoading || !majors_arry[3].length)" :icon-end="chevronDownOutline" />
-          <input-error :message="error?.errors?.discipline_id || error?.errors?.major_id"/>
-        </ion-col>
-      </ion-row>
-      <ion-row>
-        <ion-col size="12">
-          <ion-txt class="d-optoin"><p>{{  $t('5th Major Option') }}</p></ion-txt>
-          <searchable-select sClass="f-item" v-model="form[4].discipline_id" :items="disciplines"
-                             text-property="title" value-property="id" 
-                             label="Study Discipline" stitle="Select Study Discipline"
-                             :loading="!disciplines" :icon-end="chevronDownOutline" @change="getEachMajors(4)"/>
-          <searchable-select sClass="s-item" v-model="form[4].major_id" :items="majors_arry[3]"
-                             text-property="title" value-property="id" 
-                             label="Study Major" stitle="Major City"
-                             :loading="(!form[4].majorLoading || !majors_arry[4].length)" :icon-end="chevronDownOutline" />
-          <input-error :message="error?.errors?.discipline_id || error?.errors?.major_id"/>
+                             :loading="(!form[index].majorLoading || !majors_arry[index].length)" :icon-end="chevronDownOutline" />
+          <input-error :message="error?.errors?.[`majors.${orderText[index]}.discipline_id`] || error?.errors?.[`majors.${orderText[index]}.major_id`]"/>
         </ion-col>
       </ion-row>
       <ion-row>
@@ -123,6 +67,9 @@ export default defineComponent({
     const {checkoutSetupProfileStep} = usePages();
     const {showToast} = useToast();
     const error = computed(() => store.error);
+    const orderText = reactive([
+      "1st", "2nd", "3rd", "4th", "5th"
+    ]);
 
     const form = reactive([
       {discipline_id: "", major_id: "", majorLoading: true},
@@ -141,9 +88,12 @@ export default defineComponent({
     }
     const next = async () => {
       showLoading();
-      await store.submitStepThree({
-        majors: form
-      }).then((res) => {
+      const nForm = new FormData();
+      form.forEach((element, index) => {
+        nForm.append(`majors[${index}][discipline_id]`, element.discipline_id)
+        nForm.append(`majors[${index}][major_id]`, element.major_id)
+      });
+      await store.submitStepThree(nForm).then((res) => {
         hideLoading()
         if (!res) {
           return;
@@ -163,6 +113,7 @@ export default defineComponent({
       form,
       majors_arry,
       getEachMajors,
+      orderText
     };
   },
 });
