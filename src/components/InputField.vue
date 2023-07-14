@@ -3,7 +3,7 @@
     <ion-label :position="labelPosition" :color="labelColor">{{ $t(label) }}</ion-label>
     <ion-icon v-if="iconStart" slot="start" :icon="iconStart" @click="$emit('clickIconStart')"></ion-icon>
     <ion-icon v-if="iconEnd" slot="end" :icon="iconEnd" @click="$emit('clickIconEnd')"></ion-icon>
-    <ion-input v-model="myValue" :type="type" :required="required" :autofocus="autofocus" :readonly="readonly" />
+    <ion-input v-model="myValue" :type="type" :required="required" :placeholder="placeholder" :autofocus="autofocus" :readonly="readonly" />
   </ion-item>
 </template>
 
