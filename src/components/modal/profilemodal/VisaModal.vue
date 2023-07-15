@@ -47,6 +47,8 @@ import {
 import { defineComponent, ref, computed } from "vue";
 import FooterSection from "@/components/modal/profilemodal/FooterSection.vue";
 import {useDocumentDataStore} from "@/store";
+import {useToast} from "@/shared/toast";
+import {useLoadingStore} from "@/store/loading";
 
 export default defineComponent({
     name:"HigherModal",
@@ -66,17 +68,25 @@ export default defineComponent({
     },
     setup(props) {
         const store = useDocumentDataStore();
+        const {showToast} = useToast();
+        const {showLoading, hideLoading} = useLoadingStore();
         const {postWorkData} = store;
         const postresult = computed(() => store.postresult);
         const file=ref("");
 
         const handleFile = (event) => {
             file.value = event.target.files[0];
+            showToast({message: "File uploaded successfully!", color:'secondary'});
         }
 
         const postData = async () => {
+            if(!file.value) {
+                showToast({message: "Upload file please!", color:'warning'});
+                return; 
+            }
             let formData = new FormData();
             formData.append("document", file.value);
+            showLoading();
             if(props.title=="Recommendations Letter")
                 await postWorkData('recommendation-latter', formData);
             else if( props.title=="Other Documents")
@@ -87,6 +97,11 @@ export default defineComponent({
                 await postWorkData('health', formData);
             else
                 await postWorkData(props.title.toLowerCase(), formData);
+            hideLoading();
+            showToast({message: postresult.value, color:'secondary'});
+            modalController.dismiss({
+                'dismissed': true
+            })
         }
         const discardData = () => {
             file.value = "";

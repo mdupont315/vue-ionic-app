@@ -15,8 +15,8 @@
                         <hr class="under_line" />
                     </ion-col>
                     <ion-col size="12">
-                        <ion-img v-if="type=='img'" :src="fileDirectory"></ion-img>
-                        <pdf v-else :src="url"></pdf>
+                        <div v-if="!(type=='img')" id="webviewer" ref="viewer"></div>
+                        <ion-img v-else :src="fileDirectory"></ion-img>
                     </ion-col>
                     <ion-col size="12">
                         <hr class="under_line" />
@@ -46,8 +46,8 @@ import {
     IonImg,
     modalController,
 } from "@ionic/vue";
-import { defineComponent, ref, onBeforeMount } from "vue";
-import pdf from 'vue3-pdf';
+import { defineComponent, ref, onBeforeMount, onMounted } from "vue";
+import WebViewer from "@pdftron/webviewer";
 
 export default defineComponent({
     name:"HigherModal",
@@ -60,7 +60,6 @@ export default defineComponent({
         IonCol,
         IonButton,
         IonImg,
-        pdf
     },
     props: {
       title: String,
@@ -69,8 +68,11 @@ export default defineComponent({
       type: String,
     },
     setup(props) {
+        const viewer = ref(null);
         const url = ref("")
+        // const { PdfViewer } = Plugins;
         const base64toBlob = (data) => {
+            // Cut the prefix `data:application/pdf;base64` from the raw base 64
             const base64WithoutPrefix = data.substr('data:application/pdf;base64,'.length);
 
             const bytes = atob(base64WithoutPrefix);
@@ -88,16 +90,43 @@ export default defineComponent({
             modalController.dismiss({
                 'dismissed': true
             })
-        };
-
+        }
         onBeforeMount(() => {
             if(props.type == 'pdf') {
                 const blob = base64toBlob(props.fileDirectory);
                 url.value = URL.createObjectURL(blob);
             }
+        });
+        onMounted(() => {
+            
+            const path = `${process.env.BASE_URL}webviewer`;
+            console.log(url.value)
+            WebViewer({ 
+                path, 
+                initialDoc: url.value, 
+                licenseKey: 'demo:1689368950107:7c7e8acb030000000071b7cca60a0b7965d73b24554e24cd754a136b5c'  // sign up to get a free trial key at https://dev.apryse.com
+            }, viewer.value).then( (instance) => {
+                console.log(instance)
+                const { documentViewer, annotationManager, Annotations } = instance.Core;
+                console.log(documentViewer)
+                documentViewer.addEventListener("documentLoaded", () => {
+                            const rectangleAnnot = new Annotations.RectangleAnnotation({
+                            PageNumber: 1,
+                            // values are in page coordinates with (0, 0) in the top left
+                            X: 100,
+                            Y: 150,
+                            Width: 200,
+                            Height: 500,
+                            Author: annotationManager.getCurrentUser(),
+                        });
+                    annotationManager.addAnnotation(rectangleAnnot);
+                    annotationManager.redrawAnnotation(rectangleAnnot);
+                });
+            });
         })
         return {
             url,
+            viewer,
             closeModal,
         };
     }
@@ -125,7 +154,9 @@ ion-img {
     margin-right: auto;
     margin-left: auto;
 }
-
+#webviewer {
+    height: 500px !important
+}
 .modal-title {
     font-size: 30px;
     font-weight: bold;
