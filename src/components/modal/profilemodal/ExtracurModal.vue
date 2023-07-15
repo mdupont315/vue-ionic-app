@@ -61,6 +61,8 @@ import FooterSection from "@/components/modal/profilemodal/FooterSection.vue";
 import SearchableSelect from "@/components/SearchableSelect.vue";
 import InputField from "@/components/InputField.vue";
 import {useDocumentDataStore} from "@/store";
+import {useLoadingStore} from "@/store/loading";
+import {useToast} from "@/shared/toast";
 
 export default defineComponent({
     name:"ExtracurModal",
@@ -79,6 +81,8 @@ export default defineComponent({
     },
     setup() {
         const store = useDocumentDataStore();
+        const {showToast} = useToast();
+        const {showLoading, hideLoading} = useLoadingStore();
         const {postWorkData} = store;
         const postresult = computed(() => store.postresult);
         const file=ref("");
@@ -86,15 +90,26 @@ export default defineComponent({
         const description=ref("");
 
         const handleFile = (event) => {
+            showToast({message: "File uploaded successfully!", color:'secondary'});
             file.value = event.target.files[0];
         }
 
         const postData = async () => {
+            if(!file.value){
+                showToast({message: 'Fill the gaps exactly!', color:'warning'});
+                return;
+            }
             let formData = new FormData();
             formData.append("title", title.value);
             formData.append("description", description.value);
             formData.append("document", file.value);
-            await postWorkData('extra-curricular', formData);
+            showLoading();
+            await postWorkData('extra-curricular', formData);            
+            hideLoading();
+            modalController.dismiss({
+                'dismissed': true
+            })
+            showToast({message: postresult.value, color:'secondary'});
         }
         const discardData = () => {
             file.value = "";
