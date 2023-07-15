@@ -22,10 +22,7 @@
                         <input-field label="Score" v-model="score"></input-field>
                     </ion-col>
                     <ion-col size="12" style="text-align: center;">
-                        <searchable-select 
-                            label="Date of issue" stitle="Date of issue"
-                            :icon-end="chevronDownOutline">
-                        </searchable-select>
+                        <input-field v-model="date" label="Date of issue" placeholder="Example: 1995-09-13" :icon-start="calendarOutline" @clickIconStart="openModel"/>
                     </ion-col>
                     <ion-col size="12">
                         <ion-input type="file" class="file-input" style="opacity: 0" accept=".png, .jpg, .pdf" @change="handleFile($event)" />
@@ -42,6 +39,16 @@
                     </ion-col>
                 </ion-row>
             </ion-grid>
+            <ion-modal :is-open="isOpen" ref="modal" :keep-contents-mounted="true" @didDismiss="closeModel">
+                <ion-datetime id="datetime" :locale="`${$root.$i18n.locale == 'ar'?'ar-ae': $root.$i18n.locale}`"
+                                presentation="date" mode="ios"
+                                :show-default-buttons="true"
+                                :done-text="$t('Done')"
+                                :cancel-text="$t('Cancel')"
+                                v-model="selectedDate">
+                    <span slot="title">{{ $t('Select your date') }}</span>
+                </ion-datetime>
+            </ion-modal>
         </ion-content>
         <footer-section @save="postData" @discard="discardData"/>
     </ion-page>
@@ -56,16 +63,19 @@ import {
     IonCol,
     IonInput,
     IonButton,
+    IonDatetime,
     modalController,
 } from "@ionic/vue";
-import { defineComponent, computed, ref, onBeforeMount } from "vue";
+import { defineComponent, computed, ref, onBeforeMount, watch } from "vue";
 import FooterSection from "@/components/modal/profilemodal/FooterSection.vue";
 import SearchableSelect from "@/components/SearchableSelect.vue";
 import InputField from "@/components/InputField.vue";
-import {chevronDownOutline} from 'ionicons/icons';
+import {calendarOutline, chevronDownOutline} from 'ionicons/icons';
 
 import {useDocumentDataStore} from "@/store";
 import {useLoadingStore} from "@/store/loading";
+import {useToast} from "@/shared/toast";
+import {format, parseISO} from 'date-fns';
 
 export default defineComponent({
     name:"EnglishTest",
@@ -78,6 +88,7 @@ export default defineComponent({
         IonGrid,
         IonRow,
         IonText,
+        IonDatetime,
         IonCol,
         IonInput,
         IonButton
@@ -87,6 +98,7 @@ export default defineComponent({
     },
     setup(props) {
         const store = useDocumentDataStore();
+        const {showToast} = useToast();
         const {showLoading, hideLoading} = useLoadingStore();
         const {loadEngTests, changeFlag, postTestData} = store;
         const dataLoaded = computed(() => store.dataLoaded);
@@ -95,29 +107,53 @@ export default defineComponent({
         const engTest_id = ref("");
         const file = ref("");
         const score = ref("");
+        const date = ref("");
+        const selectedDate = ref("");
+        const isOpen = ref(false);
+        
+        const openModel = () => {
+            isOpen.value = true;
+        }
+        const closeModel = () => {
+            isOpen.value = false;
+        }
         const handleFile = (event) => {
+            showToast({message: "File uploaded successfully!", color:'secondary'});
             file.value = event.target.files[0];
         }
 
         const postData = async () => {
-            // let formData = new FormData();
-            // formData.append("test_id", engTest_id.value);
-            // formData.append("score", score.value);
-            // formData.append("date_issued", date.value);
-            // formData.append("document", file.value);
-            // if(props.title=="English Language")
-            //     await postTestData("english", formData);
-            // else
-            //     await postTestData("entrance", formData);
-            // console.log(postresult.value)
+            if(!engTest_id.value || !score.value || !date.value || !file.value){
+                showToast({message: 'Fill the gaps exactly!', color:'warning'});
+                return;
+            }
+            let formData = new FormData();
+            formData.append("test_id", engTest_id.value);
+            formData.append("score", score.value);
+            formData.append("date_issued", date.value);
+            formData.append("document", file.value);
+            showLoading();
+            if(props.title=="English Language")
+                await postTestData("english", formData);
+            else
+                await postTestData("entrance", formData);
+            hideLoading();
+            modalController.dismiss({
+                'dismissed': true
+            })
+            showToast({message: postresult.value, color:'secondary'});
+            console.log(postresult.value)
         }
         const discardData = () => {
-            // engTest_id.value="";
-            // file.value = "";
-            // score.value = "";
-            // date.value = "";
+            engTest_id.value="";
+            file.value = "";
+            score.value = "";
+            date.value = "";
         }
-
+        watch(selectedDate, (new_date) => {
+            if (!new_date) return;
+            date.value = format(parseISO(new_date), 'yyyy-MM-dd')
+        });
         onBeforeMount(() => {
             if (!dataLoaded.value) {
                 showLoading();
@@ -137,10 +173,16 @@ export default defineComponent({
             engTest_id,
             engTestData,
             score,
+            calendarOutline,
             chevronDownOutline,
             handleFile,
             postData,
             discardData,
+            selectedDate,
+            date,
+            isOpen,
+            openModel,
+            closeModel,
         };
     }
 })
@@ -168,6 +210,16 @@ ion-item {
 }
 ion-item::part(native) {
   border-radius: 15px !important;
+}
+
+ion-modal {
+  --width: 290px;
+  --height: 382px;
+  --border-radius: 8px;
+}
+
+ion-modal ion-datetime {
+  height: 382px;
 }
 .modal-title {
     font-size: 30px;
