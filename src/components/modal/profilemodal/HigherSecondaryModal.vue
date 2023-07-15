@@ -49,11 +49,7 @@
                         </searchable-select>
                     </ion-col>
                     <ion-col size="6" style="text-align: center;">
-                        <searchable-select v-model="score_id" 
-                            label="Score" stitle="Score(out of 100)"
-                            :icon-end="chevronDownOutline" :items="scores"
-                            textProperty="score" valueProperty="id">
-                        </searchable-select>
+                        <input-field label="Score" v-model="score"></input-field>
                     </ion-col>
                 </ion-row>
                 <ion-row class="flex-col">
@@ -102,6 +98,7 @@ import UploadModal from "@/components/modal/profilemodal/UploadModal.vue";
 import {useDocumentDataStore} from "@/store";
 import {useLoadingStore} from "@/store/loading";
 import {useToast} from "@/shared/toast";
+
 
 export default defineComponent({
     name:"HigherModal",
@@ -156,8 +153,7 @@ export default defineComponent({
                 title: "Postgraduate"
             },
         ]);
-        const scores=ref([]);
-        const score_id=ref("");
+        const score=ref("");
 
         const handleFile = (event) => {
             const file = event.target.files[0];
@@ -197,7 +193,7 @@ export default defineComponent({
 
         const postData = async () => {
             
-            if(!country_id.value || !school_id.value || ! fieldS_id.value || !gradeS_id.value || !score_id.value || !filePost.value)
+            if(!country_id.value || !school_id.value || ! fieldS_id.value || !gradeS_id.value || !score.value || !filePost.value)
                 showToast({message: 'Fill the gaps exactly!', color:'warning'});
             else {
                 let formData = new FormData();
@@ -205,11 +201,16 @@ export default defineComponent({
                 formData.append("institute", school_id.value);
                 formData.append("discipline", fieldS_id.value);
                 formData.append("grade_scale_id", gradeS_id.value);
-                formData.append("grades", score_id.value);
+                formData.append("grades", score.value);
                 formData.append("document", filePost.value);
-                await postEducationData(props.title.toLowerCase().replace(" ", "-"), formData);
 
+                showLoading();
+                await postEducationData(props.title.toLowerCase().replace(" ", "-"), formData);
+                hideLoading();
                 showToast({message: postresult.value, color:'secondary'});
+                modalController.dismiss({
+                    'dismissed': true
+                })
             }
         }
         const discardData = () => {
@@ -217,7 +218,7 @@ export default defineComponent({
             school_id.value="";
             fieldS_id.value="";
             gradeS_id.value="";
-            score_id.value="";
+            score.value="";
             fileName.value="";
             fileType.value="";
             fileDirectory.value="";
@@ -231,8 +232,6 @@ export default defineComponent({
                     hideLoading();
                     changeFlag();
             })
-            for(let i=0;i<=100;i++)
-                scores.value.push({id:i, score:i});
             if(props.title==="Higher Secondary"){
                 school_title.value="School name";
                 degree_id.value="1";
@@ -261,8 +260,7 @@ export default defineComponent({
             gradeS_id,
             fieldStudy,
             fieldS_id,
-            score_id,
-            scores,
+            score,
             handleFile,
             loadSchool,
             postData,
@@ -290,7 +288,7 @@ ion-button {
 ion-item {
   width: 100%;
   --min-height: 35px !important;
-  --border-color: black;
+  --border-color: #bcbcbc;
   --ion-color-base: gray !important;
 }
 ion-item::part(native) {
