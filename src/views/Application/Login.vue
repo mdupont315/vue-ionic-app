@@ -95,6 +95,9 @@ export default defineComponent({
     const openModal = async () => {
       const modal = await modalController.create({
         component: SignupModal,
+        componentProps: {
+          title:"Signup"
+        },
         initialBreakpoint: 1.0,
         breakpoints: [0, 1.0],
       });
