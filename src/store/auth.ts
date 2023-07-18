@@ -89,7 +89,7 @@ export const useAuthStore = defineStore({
             })
         },
         async loadUserData() {
-            if (!this.isLoggedIn || this.user) return Promise.resolve(true);
+            // if (!this.isLoggedIn || this.user) return Promise.resolve(true);
             const response = await fetchWrapper.get(`${BASE_URL}/user`);
             if (!response.ok) {
                 if ([401, 403].includes(response.status) && this.isLoggedIn) {
@@ -149,6 +149,28 @@ export const useAuthStore = defineStore({
             return response.json().then(data => {
                 try {
                     this.setUserData(data.data);
+                    this.updateCanSendCodeIn(60);
+                    return true;
+                } catch (e: any) {
+                    //showToast({message: 'Something Went Wrong!', color: 'danger'});
+                    return false;
+                }
+            });
+        },
+        async updateProfile(form:any) {
+            this.resetErrors();
+            const response = await fetchWrapper.post(`${BASE_URL}/user/update-profile`, form);
+            if (!response.ok) {
+                return response.json().then((res) => {
+                    this.error = res;
+                    return false;
+                });
+
+            }
+            return response.json().then(data => {
+                try {
+                    console.log(data.user)
+                    this.setUserData(data.user);
                     this.updateCanSendCodeIn(60);
                     return true;
                 } catch (e: any) {
