@@ -22,7 +22,7 @@
                         <ion-card>
                             <ion-card-content style="padding-top: 0; padding-bottom: 0;">
                                 <ion-text class="card-title" style="float:left; margin-top:8px;">
-                                    {{$t("Marketing Notification")}}
+                                    {{$t("Subscribe to emails")}}
                                 </ion-text>
                                 <ion-toggle :checked="true" style="float:right">Checked Toggle</ion-toggle>
                             </ion-card-content>

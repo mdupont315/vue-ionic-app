@@ -7,6 +7,7 @@ export const useProfileMainStore = defineStore({
     state: () => ({
         dataLoaded: false,
         currencies: [],
+        all_lang: [],
         postresult: "",
     }),
     actions: {
@@ -24,7 +25,23 @@ export const useProfileMainStore = defineStore({
                     return;
                 });
             return  Promise.resolve();
-        },        
+        },   
+
+        async loadLanguages() {
+            await fetchWrapper.get(`${BASE_URL}/welcome`)
+                .then((response) => {
+                    if (!response.ok){
+                        return Promise.reject();
+                    }
+                    return response.json()
+                }).then((data) => {
+                    this.all_lang = data["all_languages"];
+                    this.dataLoaded = true;
+                }).catch(()=>{
+                    return;
+                });
+            return  Promise.resolve();
+        },   
 
         async postCurrencyData(formData:any) {
             await fetchWrapper.post(`${BASE_URL}/user/update-currency`,formData)

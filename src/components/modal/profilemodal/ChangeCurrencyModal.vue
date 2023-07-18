@@ -7,7 +7,7 @@
                         <ion-text class="modal-title">{{ $t(`${title}`)}}</ion-text>
                     </ion-col>
                 </ion-row>
-                <ion-row class="flex-col" style="margin-bottom:0;">
+                <ion-row v-if="title=='Currency'" class="flex-col" style="margin-bottom:0;">
                     <ion-col v-for="currency in currencies" :key="currency.id" size="12" :style="user.currency.id==currency.id? 'color: #00AEEF': 'color: #1c345a'" @click="postData(currency.id, user.currency.id)">
                         <div style="float: left;">
                             <ion-icon :src="logoEuro" style="margin-right:18px"></ion-icon>
@@ -16,6 +16,16 @@
                             </ion-text>
                         </div>
                         <ion-icon v-if="user.currency.id==currency.id" :src="checkmark" style="float: right;" size="large"></ion-icon>
+                    </ion-col>
+                </ion-row>
+                <ion-row v-else class="flex-col" style="margin-bottom:0;">
+                    <ion-col v-for="lang in all_lang" :key="lang.code" size="12" :style="lang.code==sug_lang? 'color: #00AEEF': 'color: #1c345a'" @click="changeLang(lang.code, sug_lang)">
+                        <div style="float: left;">
+                            <ion-text class="currency-title" :style="lang.code==sug_lang? 'color: #00AEEF': 'color: #1c345a' ">    
+                                {{$t(`${lang.name}`)}}
+                            </ion-text>
+                        </div>
+                        <ion-icon v-if="lang.code==sug_lang" :src="checkmark" style="float: right;" size="large"></ion-icon>
                     </ion-col>
                 </ion-row>
             </ion-grid>
@@ -37,7 +47,7 @@ import {
 } from "@ionic/vue";
 import { defineComponent, ref, computed, onBeforeMount } from "vue";
 import FooterSection from "@/components/modal/profilemodal/BackFooterSection.vue";
-import {useProfileMainStore, useAuthStore} from "@/store";
+import {useProfileMainStore, useAuthStore, useTranslationStore} from "@/store";
 import {useToast} from "@/shared/toast";
 import {useLoadingStore} from "@/store/loading";
 import { logoEuro, checkmark } from "ionicons/icons"
@@ -60,12 +70,16 @@ export default defineComponent({
     setup(props) {
         const userStore = useAuthStore();
         const store = useProfileMainStore();
+        const tranStore = useTranslationStore();
         const {showToast} = useToast();
         const {showLoading, hideLoading} = useLoadingStore();
-        const {loadCurrencies, changeFlag, postCurrencyData} = store;
+        const {setLocale} = tranStore;
+        const {loadCurrencies, changeFlag, postCurrencyData, loadLanguages} = store;
         const {loadUserData} = userStore;
         const user = computed(() => userStore.user);
         const currencies = computed(() => store.currencies);
+        const sug_lang = computed(() => tranStore.locale);
+        const all_lang = computed(() => store.all_lang);
         const dataLoaded = computed(() => store.dataLoaded);
         const postresult = computed(() => store.postresult);
 
@@ -86,10 +100,20 @@ export default defineComponent({
                 'dismissed': true
             })
         }
+        const changeLang = (code, sug_code) => {
+            if(code != sug_code)
+            setLocale(code);
+        }
         onBeforeMount(() => {
             if (!dataLoaded.value) {
                 showLoading();
+                if(props.title=="Currency")
                 Promise.all([loadCurrencies()]).then(() => {
+                    hideLoading();
+                    changeFlag();
+                })
+                else
+                Promise.all([loadLanguages()]).then(() => {
                     hideLoading();
                     changeFlag();
                 })
@@ -102,6 +126,9 @@ export default defineComponent({
             checkmark,
             user,
             currencies,
+            sug_lang,
+            all_lang,
+            changeLang
         };
     }
 })

@@ -120,7 +120,7 @@
                     <ion-card class="three_sum">
                         <ion-card-content>
                             <ion-list>
-                                <ion-item lines="full">
+                                <ion-item lines="full" @click="toChangeCurrency('Language')">
                                     <ion-icon src="assets/images/change-language.svg"></ion-icon>
                                     <ion-label class="card-label" style="float: left;">{{ $t("Change Language") }}</ion-label>
                                     <ion-img src="assets/images/Chevron.svg" style="float: right;"></ion-img>
@@ -150,14 +150,14 @@
                     <ion-text class="txt-15">{{ $t('Legal') }}</ion-text>
                 </ion-col>
                 <ion-col size="12" class="flex-row">
-                    <ion-item lines="none" class="btn-get-start button-2" @click="goTermsService">
+                    <ion-item lines="none" class="btn-get-start button-2">
                         <ion-img src='assets/images/icons/bar.svg'/>
                         <ion-text class="ion-padding-start">{{ $t('Terms of Service') }}</ion-text>
                         <ion-icon :icon="chevronForwardOutline" class="p-icon" />
                     </ion-item>
                 </ion-col>
                 <ion-col size="12" class="flex-row">
-                    <ion-item lines="none" class="btn-get-start button-2" @click="goPolicy">
+                    <ion-item lines="none" class="btn-get-start button-2">
                         <ion-img src='assets/images/icons/bar.svg'/>
                         <ion-text class="ion-padding-start">{{ $t('Privacy Policy') }}</ion-text>
                         <ion-icon :icon="chevronForwardOutline" class="p-icon" />
