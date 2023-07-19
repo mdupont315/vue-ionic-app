@@ -100,6 +100,11 @@ const routes: Array<RouteRecordRaw> = [
         component: () => import('../views/Profile/MyDocumentPage.vue'),
     },
     {
+        path: '/profile/main',
+        name: 'ProfileMain',
+        component: () => import('../views/Profile/ProfileMain.vue'),
+    },
+    {
         path: '/application',
         name: 'Application',
         component: () => import('../views/Application/index.vue'),
