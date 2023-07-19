@@ -143,7 +143,7 @@ const tr = {
 
     "GET STARTED":"BAŞLAMAK",
     "Pick a Language": "Bir Dil Seçin",
-    "want to talk!":"konuşmak istemek!",
+    "WANT TO TALK!":"KONUŞMAK İSTEMEK!",
     "Time to bust out your login moves! Ready to dive into the chat?":"Giriş hareketlerinizi patlatma zamanı! Sohbete dalmaya hazır mısınız?",
     "Please Login to Start to Chat":"Sohbete Başlamak için Lütfen Giriş Yapın",
     "Beam ME up":"Beni ışınla",

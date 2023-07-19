@@ -3,6 +3,8 @@ http://ionicframework.com/docs/theming/ */
 
 /** Ionic CSS Variables **/
 :root {
+    --ion-font-family: "Calibri";
+
     --ion-color-primary: #19335a;
     --ion-color-primary-rgb: 25, 51, 90;
     --ion-color-primary-contrast: #ffffff;
@@ -350,8 +352,12 @@ body.qrscanner .scanner-hide {
     font-size: 1.5rem;
 }
 
-.txt-2 {
-    font-size: 2rem;
+.txt-37 {
+    font-size: 37px;
+}
+
+.txt-bold {
+    font-weight: bold;
 }
 
 .txt-step {
