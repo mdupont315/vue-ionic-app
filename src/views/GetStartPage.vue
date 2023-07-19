@@ -95,7 +95,7 @@ ion-content {
   --background: #1C345A;
 }
 .btn-get-start {
-  font-size: 1.3rem;
+  font-size: 26px;
   font-weight: bold;
   color: #1c345a;
   --background: #fff;

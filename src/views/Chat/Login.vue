@@ -6,7 +6,7 @@
         <ion-row class="ion-padding-top">
           <ion-col size="12" style="display: flex; width: 100%; justify-content: center">
             <ion-text color="light">
-              <p class="ion-text-center txt-2">{{ $t('want to talk!') }}</p>
+              <p class="ion-text-center txt-37 txt-bold">{{ $t('WANT TO TALK!') }}</p>
             </ion-text>
           </ion-col>
         </ion-row>

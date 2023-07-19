@@ -147,7 +147,7 @@ const ar = {
 
     "GET STARTED":"البدء",
     "Pick a Language": "اختر لغة",
-    "want to talk!":"أريد أن أتحدث!",
+    "WANT TO TALK!":"أريد أن أتحدث!",
     "Time to bust out your login moves! Ready to dive into the chat?":"حان الوقت لكسر تحركات تسجيل الدخول الخاصة بك! جاهز للغوص في الدردشة؟",
     "Please Login to Start to Chat":"الرجاء تسجيل الدخول لبدء الدردشة",
     "Beam ME up":"شعاع لي يصل",

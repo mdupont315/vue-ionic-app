@@ -7,7 +7,7 @@
     </ion-text>
     <ion-button @click="changeLanguage" fill="outline" size="small" style="text-transform: none; --border-color: #fff;">
       <ion-text color="light">
-        <p class="ion-text-center s-line">
+        <p class="ion-text-center  switch-language-text">
           {{ $t('Pick a Language') }}
           <ion-icon :icon="chevronDownOutline"/>
         </p>
@@ -100,5 +100,13 @@ export default defineComponent({
 ion-icon {
   color: #fff;
   margin-left: 1rem;
+}
+.switch-language-text {
+  font-family: "SF UI Display";
+  font-size: 11px;
+  font-weight: 300;
+  font-style: normal;
+  text-align: center;
+  color: #ffffff;
 }
 </style>
