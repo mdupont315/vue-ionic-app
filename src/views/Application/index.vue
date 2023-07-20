@@ -9,7 +9,7 @@
           </ion-col>
         </ion-row>
         <ion-row v-if="applications">
-          <ion-col size="12" v-for="item in applications" :key="item.id" @click="toProgramDetail">
+          <ion-col size="12" v-for="item in applications" :key="item.id" @click="toProgramDetail(item.id)">
               <ion-card class="program-card">
                   <ion-card-content class="flex-col" style=" margin-top: 4px;">
                       <div class="flex-row">
@@ -21,9 +21,14 @@
                       <ion-text>
                           <p class="program-count">{{ $t(`${item.university}`) }}</p>
                       </ion-text>
-                      <ion-text>
-                          <p class="program-status">{{ $t(`${item.status}`) }}</p>
-                      </ion-text>
+                      <div class="flex-row">
+                        <ion-text>
+                          <p class="program-status">{{ $t(`Status: ${item.status}`) }}</p>
+                        </ion-text>
+                        <ion-text v-if="item.sub-status">
+                          <p class="program-status" style="color:#FFB300; margin-left: 9px;">{{ $t(`${item.sub-status}`) }}</p>
+                        </ion-text>
+                      </div>
                   </ion-card-content>
               </ion-card>
           </ion-col>
@@ -81,14 +86,13 @@
       const {showLoading, hideLoading} = useLoadingStore();
       const { loadApplications, changeFlag } = store;
       const applications = computed(()=>store.applications);
-      console.log(applications);
       const dataLoaded = computed(()=>store.dataLoaded);
       const nextImgUrl = 'assets/images/Chevron.svg';
-      const toProgramDetail = async(url, name) => {
+      const toProgramDetail = async(id) => {
           const modal = await modalController.create({
               component: ProgramDetailModal,
               componentProps: {
-                  id:"1"
+                  id:id
               },
               initialBreakpoint: 0.9,
           });

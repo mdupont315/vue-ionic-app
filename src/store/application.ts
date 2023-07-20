@@ -14,7 +14,6 @@ export const useApplicationStore = defineStore({
         async loadApplications() {
             await fetchWrapper.get(`${BASE_URL}/user/applications-list`)
                 .then((response) => {
-                    console.log(response);
                     if (!response.ok){
                         return Promise.reject();
                     }
