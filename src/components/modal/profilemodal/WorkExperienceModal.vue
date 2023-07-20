@@ -48,15 +48,15 @@
         <footer-section  @save="postData" @discard="discardData"/>
 
         <ion-modal :is-open="isOpen" ref="modal" :keep-contents-mounted="true" @didDismiss="closeModel">
-                <ion-datetime id="datetime" :locale="`${$root.$i18n.locale == 'ar'?'ar-ae': $root.$i18n.locale}`"
-                                presentation="date" mode="ios"
-                                :show-default-buttons="true"
-                                :done-text="$t('Done')"
-                                :cancel-text="$t('Cancel')"
-                                v-model="selectedDate">
-                    <span slot="title">{{ $t('Select your date') }}</span>
-                </ion-datetime>
-            </ion-modal>
+            <ion-datetime id="datetime" :locale="`${$root.$i18n.locale == 'ar'?'ar-ae': $root.$i18n.locale}`"
+                            presentation="date" mode="ios"
+                            :show-default-buttons="true"
+                            :done-text="$t('Done')"
+                            :cancel-text="$t('Cancel')"
+                            v-model="selectedDate">
+                <span slot="title">{{ $t('Select your date') }}</span>
+            </ion-datetime>
+        </ion-modal>
     </ion-page>
 </template>
 <script>

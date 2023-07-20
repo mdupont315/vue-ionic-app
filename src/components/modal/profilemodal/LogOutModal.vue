@@ -20,9 +20,7 @@ import {
     IonGrid,
     IonRow,
     IonText,
-    IonCol,
-    IonButton,
-    IonInput,
+    IonImg,
     modalController,
 } from "@ionic/vue";
 import { defineComponent, ref, computed } from "vue";
@@ -36,6 +34,7 @@ export default defineComponent({
     components: {
         FooterSection,
         IonPage,
+        IonImg,
         IonContent,
         IonGrid,
         IonRow,
