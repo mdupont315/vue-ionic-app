@@ -301,7 +301,9 @@ ion-button {
 ion-modal {
     --border-radius: 30px;
 }
-
+ion-text {
+    font-family: "Calibri";
+}
 .custom-input {
     /*--background-focused: transparent;*/
     /*--background-hover: transparent;*/

@@ -41,13 +41,12 @@ export const useExploreDataStore = defineStore({
         unipro_detail_dataLoaded: false,
         unipro_detail_datas:[],
 
+        program_detail: {},
+
         search_keyword:"",
     }),
     actions: {
         async loadData(loadWithoutCheck = false) {
-            console.log("loading explore Data...");
-            // const {isLoggedIn} = useAuthStore();
-            // if ((!isLoggedIn || this.dataLoaded) && !loadWithoutCheck) return ;
             await fetchWrapper.get(`${BASE_URL}/homepage`)
                 .then((response) => {
                     if (!response.ok){
@@ -69,9 +68,6 @@ export const useExploreDataStore = defineStore({
         },
 
         async loadEliteData(loadWithoutCheck = false) {
-            console.log("loading explore Data...");
-            // const {isLoggedIn} = useAuthStore();
-            // if ((!isLoggedIn || this.dataLoaded) && !loadWithoutCheck) return ;
             await fetchWrapper.get(`${BASE_URL}/universities/elite`)
                 .then((response) => {
                     if (!response.ok){
@@ -227,7 +223,7 @@ export const useExploreDataStore = defineStore({
             this.search_dataLoaded = false;
             this.university_detail_dataLoaded = false;
             this.unipro_detail_dataLoaded = false;
-
+            this.dataLoaded = false;
         },
 
         async changeSearchKeyword(val="") {
@@ -244,9 +240,6 @@ export const useExploreDataStore = defineStore({
                     return response.json()
                 }).then((data) => {
                     console.log("program-university", data);
-                    // this.search_programs_data = data["programs"];
-                    // this.search_institutes_data = data["institutes"];
-                    // this.search_dataLoaded = true;
                     this.search_program_detail_datas = data["data"];
                 }).catch(()=>{
                     return;
@@ -291,6 +284,22 @@ export const useExploreDataStore = defineStore({
                     return;
                 })
             return  Promise.resolve();   
+        },
+        
+        async programDetails(id="") {
+            await fetchWrapper.get(`${BASE_URL}/program-details/${id}`)
+                .then((response) => {
+                    if (!response.ok){
+                        return Promise.reject();
+                    }
+                    return response.json()
+                }).then((data) => {
+                    this.program_detail = data["data"];
+                    this.dataLoaded = true;
+                }).catch(()=>{
+                    return;
+                })
+           return  Promise.resolve();
         },
     }
 });

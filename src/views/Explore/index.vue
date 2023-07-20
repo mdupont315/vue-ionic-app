@@ -51,7 +51,7 @@
                 </ion-col>
                 <ion-col class="scrolling">
                   <div v-for="program in programs" :key="program.id" style="height: max-content;">
-                    <ion-card @click="toProgramDetail(uni_url, program.university.university_name)">
+                    <ion-card @click="toProgramDetail(program.id)">
                         <ion-card-content style="height: max-content;">
                             <ion-text class="program-name" style="height:30%">{{ short_name(program.title) }}</ion-text>
                             <hr style="border-top: 1px solid #606060;"/>
@@ -188,7 +188,7 @@ export default defineComponent({
   },
   setup() {
     const store = useExploreDataStore();
-    const {loadData} = store;
+    const {loadData, changeLoadedVal} = store;
     const dataLoaded = computed(() => store.dataLoaded);
     const total_universities = computed(() => store.total_universities);
     const universities = computed(() => store.universities);
@@ -229,15 +229,13 @@ export default defineComponent({
       router.push(`/explore/searchpage/${event.target.value}`);
     }
 
-    const toProgramDetail = async(url, name) => {
+    const toProgramDetail = async(id) => {
       const modal = await modalController.create({
         component: ProgramDetailModal,
         componentProps: {
-            url: url,
-            name:name
+            id: id
         },
-        initialBreakpoint: 0.75,
-        breakpoints: [0, 0.75],
+        initialBreakpoint: 0.9,
       });
       modal.present();
     }
@@ -264,10 +262,11 @@ export default defineComponent({
       if (!dataLoaded.value) {
         showLoading();
         Promise.all([loadData()]).then(() => {
-            console.log(total_universities.value);
-            console.log(dataLoaded.value);
+            // console.log(programs.value);
+            // console.log(dataLoaded.value);
             // console.log(universities.value[0]);
-          hideLoading();
+            hideLoading();
+            changeLoadedVal();
         })
       }
     });
