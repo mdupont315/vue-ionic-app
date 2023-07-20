@@ -151,6 +151,7 @@ export default defineComponent({
             date.value = "";
         }
         watch(selectedDate, (new_date) => {
+            console.log(new_date)
             if (!new_date) return;
             date.value = format(parseISO(new_date), 'yyyy-MM-dd')
         });
