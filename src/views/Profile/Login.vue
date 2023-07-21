@@ -2,11 +2,11 @@
   <ion-page>
     <header-section />
     <ion-content :fullscreen="true" class="ion-padding">
-      <ion-grid style="display:flex; flex-flow: column; justify-content: center;">
+      <ion-grid class="d-grid">
         <ion-row class="ion-padding-top">
           <ion-col size="12" class="d-flex">
             <ion-text color="light">
-              <p class="ion-text-center txt-2">{{ $t('Hop on board!') }}</p>
+              <p class="ion-text-center txt-37 txt-bold">{{ $t('HOP ON BOARD!') }}</p>
             </ion-text>
           </ion-col>
         </ion-row>
@@ -18,30 +18,30 @@
         <ion-row>
           <ion-col>
             <ion-text color="light">
-              <p class="ion-text-center txt-1">{{ $t("We'd love to have you join our community. Just sign up and polish up your profile, so we can hook you up with an awesome study option experience.") }}</p>
+              <p class="ion-text-center txt-16">{{ $t("We'd love to have you join our community. Just sign up and polish up your profile, so we can hook you up with an awesome study option experience.") }}</p>
             </ion-text>
           </ion-col>
         </ion-row>
         <ion-row>
           <ion-col size="12" class="d-flex">
-            <ion-button class="btn-get-start button-1" @click="openModal">{{ $t('Log in or Sign up') }}</ion-button>
+            <ion-button class="btn-get-start button-1 txt-20" @click="openModal">{{ $t('Log in or Sign up') }}</ion-button>
           </ion-col>
         </ion-row>
         <ion-row class="p-bottom">
           <ion-col size="12" class="d-flex p-txt">
-            <ion-text class="txt-15">{{ $t('Legal') }}</ion-text>
+            <ion-text class="txt-20 ion-color-dark1">{{ $t('Legal') }}</ion-text>
           </ion-col>
           <ion-col size="12" class="d-flex">
             <ion-item lines="none" class="btn-get-start button-2" @click="goTermsService">
                 <ion-img src='assets/images/icons/bar.svg'/>
-                <ion-text class="ion-padding-start">{{ $t('Terms of Service') }}</ion-text>
+                <ion-text class="ion-padding-start txt-16 ion-color-dark1">{{ $t('Terms of Service') }}</ion-text>
                 <ion-icon :icon="chevronForwardOutline" class="p-icon" />
             </ion-item>
           </ion-col>
           <ion-col size="12" class="d-flex">
             <ion-item lines="none" class="btn-get-start button-2" @click="goPolicy">
                 <ion-img src='assets/images/icons/bar.svg'/>
-                <ion-text class="ion-padding-start">{{ $t('Privacy Policy') }}</ion-text>
+                <ion-text class="ion-padding-start txt-16 ion-color-dark1">{{ $t('Privacy Policy') }}</ion-text>
                 <ion-icon :icon="chevronForwardOutline" class="p-icon" />
             </ion-item>
           </ion-col>
@@ -104,10 +104,10 @@ export default defineComponent({
       modal.present();
     };
     const goTermsService = () => {
-      router.replace('/home');
+      router.replace('/explore');
     };
     const goPolicy = () => {
-      router.replace('/home');
+      router.replace('/explore');
     };
 
     return {

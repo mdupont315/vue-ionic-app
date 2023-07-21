@@ -106,7 +106,7 @@ ion-item {
   --ion-color-base: #029ae4 !important;
 }
 ion-item::part(native) {
-  border-radius: 25px;
+  border-radius: 15px;
 }
 .item-fill-outline.item-has-value .label-floating.sc-ion-label-md-h,
 .item-fill-outline.item-has-focus .label-floating.sc-ion-label-md-h {

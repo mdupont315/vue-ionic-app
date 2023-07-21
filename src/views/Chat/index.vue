@@ -6,26 +6,8 @@
         <ion-row class="ion-padding-top">
           <ion-col size="12" style="display: flex; width: 100%; justify-content: center">
             <ion-text color="light">
-              <p class="ion-text-center txt-2">{{ $t('want to talk!') }}</p>
+              <p class="ion-text-center txt-37">{{ $t('Chat Page') }}</p>
             </ion-text>
-          </ion-col>
-        </ion-row>
-        <ion-row>
-          <ion-col size="12" style="display: flex; width: 100%; justify-content: center">
-            <ion-img src='assets/images/login.svg'/>
-          </ion-col>
-        </ion-row>
-        <ion-row>
-          <ion-col>
-            <ion-text color="light">
-              <p class="ion-text-center txt-1">{{ $t('Time to bust out your login moves! Ready to dive into the chat?') }}</p>
-              <p class="ion-text-center txt-15">{{ $t('Please Login to Start to Chat') }}</p>
-            </ion-text>
-          </ion-col>
-        </ion-row>
-        <ion-row>
-          <ion-col size="12" style="display: flex; width: 100%; justify-content: center;">
-            <ion-button class="btn-get-start button-1"  @click="doLogin">{{ $t('Log in or Sign up') }}</ion-button>
           </ion-col>
         </ion-row>
       </ion-grid>
@@ -57,7 +39,7 @@ export default defineComponent({
   components: {
     HeaderSection,
     FooterSection,
-    IonButton,
+    // IonButton,
     IonContent,
     IonPage,
     IonGrid,
