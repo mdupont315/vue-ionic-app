@@ -1,10 +1,10 @@
 <template>
   <ion-content class="ion-padding">
-    <ion-grid v-if="status == 1 || status == 3" style="display:flex; flex-flow: column; justify-content: center;">
+    <ion-grid v-if="status == 1 || status == 3" class="d-grid">
       <ion-row class="ion-padding-top">
         <ion-col size="12" class="d-flex">
           <ion-text color="dark1">
-            <p class="ion-text-center txt-15 ion-no-margin ion-margin-bottom">{{ $t('Log in or Sign up') }}</p>
+            <p class="ion-text-center txt-26 txt-bold ion-no-margin ion-margin-bottom">{{ $t('Log in or Sign up') }}</p>
           </ion-text>
         </ion-col>
       </ion-row>
@@ -27,27 +27,27 @@
       <ion-row>
         <ion-col>
           <ion-text color="medium">
-            <p class="ion-text-center txt-1">{{ $t('Where we can send you all the juicy information.') }}</p>
+            <p class="ion-text-center txt-20 color-2">{{ $t('Where we can send you all the juicy information.') }}</p>
           </ion-text>
         </ion-col>
       </ion-row>
       <ion-row>
         <ion-col size="12" class="d-flex">
-          <ion-button class="btn-get-start button-1" @click="confirmEmail">{{ $t('Continue') }}</ion-button>
+          <ion-button class="btn-get-start button-1 txt-20" @click="confirmEmail">{{ $t('Continue') }}</ion-button>
         </ion-col>
       </ion-row>
       <ion-row>
         <ion-col size="5" class="d-flex top-border ion-margin-top">
         </ion-col>
         <ion-col size="2" class="d-flex">
-          <ion-text color="medium"> {{ $t('or') }} </ion-text>
+          <ion-text color="medium" class="txt-20"> {{ $t('or') }} </ion-text>
         </ion-col>
         <ion-col size="5" class="d-flex top-border ion-margin-top">
         </ion-col>
       </ion-row>
       <ion-row>
         <ion-col size="12" class="d-flex">
-          <ion-button class="btn-get-start button-1" color="dark2" @click="googleSignIn" >
+          <ion-button class="btn-get-start button-1 txt-20" color="dark2" @click="googleSignIn" >
             <ion-img class="ion-margin-end" src='assets/images/icons/google.svg'/>{{ $t('Continue with Google') }}
           </ion-button>
         </ion-col>
@@ -72,7 +72,7 @@
         </ion-col>
         <ion-col size="12" class="d-flex">
           <ion-img src='assets/images/icons/mail.svg'/>
-          <ion-text color="dark1"><p class="ion-no-margin">admin@gmail.com</p></ion-text>
+          <ion-text color="dark1"><p class="ion-no-margin">{{ email }}</p></ion-text>
         </ion-col>
       </ion-row>
       <ion-row>
@@ -112,6 +112,7 @@
   import InputField from "@/components/InputField.vue";
   import {useFormErrorAlert} from "@/shared/userError";
   import {useRouter} from "vue-router";
+  import SignupModal from "@/components/modal/SignupModal.vue"
 
   export default defineComponent({
     name: 'LoginModal',
@@ -144,9 +145,11 @@
         showLoading();
         if (status.value == 1) {
           await checkAccount(email.value).then(res => {
-            console.log(res);
             if (res.has_account) {
-              status.value = 2;
+              if (res.login_with_google) status.value = 2;
+              else status.value = 3;
+            } else {
+              openModal();
             }
           }).finally(() => hideLoading());
         } else {
@@ -159,11 +162,22 @@
         }
       };
       const userAnother = () => {
-        status.value = 3;
+        status.value = 1;
         return false;
       };
       const googleSignIn = async () => {
         showLoading();
+      };
+      const openModal = async () => {
+        const modal = await modalController.create({
+          component: SignupModal,
+          componentProps: {
+            title:"Signup"
+          },
+          initialBreakpoint: 1.0,
+          breakpoints: [0, 1.0],
+        });
+        modal.present();
       };
       const changeInput = () => {
         if (email.value != '') {
@@ -189,6 +203,7 @@
         googleSignIn,
         userAnother,
         error,
+        openModal
       }
     },
   });

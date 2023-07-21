@@ -100,14 +100,14 @@ const routes: Array<RouteRecordRaw> = [
         component: () => import('../views/Profile/MyDocumentPage.vue'),
     },
     {
-        path: '/profile/main',
-        name: 'ProfileMain',
-        component: () => import('../views/Profile/ProfileMain.vue'),
-    },
-    {
         path: '/application',
         name: 'Application',
         component: () => import('../views/Application/index.vue'),
+    },
+    {
+        path: '/application/main',
+        name: 'ApplicationMain',
+        component: () => import('../views/Application/Main.vue'),
     },
     {
         path: '/application/login',
@@ -261,15 +261,11 @@ router.beforeEach((to) => {
     }
 
     if (authRequired && !isLoggedIn && to.path == '/application') {
-        return '/application/login';
+        return '/profile/login';
     }
 
     if (authRequired && !isLoggedIn && to.path == '/profile') {
         return '/profile/login';
-    }
-
-    if (authRequired && !isLoggedIn) {
-        return '/explore';
     }
 
     if (isLoggedIn && isVerified && (to.path.includes('user/update-') || to.path.includes('user/delete-'))) {
@@ -282,10 +278,6 @@ router.beforeEach((to) => {
 
     if (isLoggedIn && isVerified && roleId != ROLE_STUDENT && to.path != '/rep-home') {
         return '/rep-home';
-    }
-
-    if (!authRequired && isLoggedIn && isVerified) {
-        return '/explore';
     }
 
     if ((isLoggedIn && !isVerified) && to.path == '/update-email') {

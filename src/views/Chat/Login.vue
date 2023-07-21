@@ -2,30 +2,30 @@
   <ion-page>
     <header-section />
     <ion-content :fullscreen="true" class="ion-padding">
-      <ion-grid style="display:flex; flex-flow: column; justify-content: center;">
+      <ion-grid class="d-grid">
         <ion-row class="ion-padding-top">
-          <ion-col size="12" style="display: flex; width: 100%; justify-content: center">
+          <ion-col size="12" class="d-flex">
             <ion-text color="light">
               <p class="ion-text-center txt-37 txt-bold">{{ $t('WANT TO TALK!') }}</p>
             </ion-text>
           </ion-col>
         </ion-row>
         <ion-row>
-          <ion-col size="12" style="display: flex; width: 100%; justify-content: center">
+          <ion-col size="12" class="d-flex">
             <ion-img src='assets/images/login.svg'/>
           </ion-col>
         </ion-row>
         <ion-row>
           <ion-col>
             <ion-text color="light">
-              <p class="ion-text-center txt-1">{{ $t('Time to bust out your login moves! Ready to dive into the chat?') }}</p>
-              <p class="ion-text-center txt-15">{{ $t('Please Login to Start to Chat') }}</p>
+              <p class="ion-text-center txt-20 ion-no-margin ion-padding-horizontal">{{ $t('Time to bust out your login moves! Ready to dive into the chat?') }}</p>
+              <p class="ion-text-center txt-26 ion-no-margin ion-margin-bottom">{{ $t('Please Login to Start to Chat') }}</p>
             </ion-text>
           </ion-col>
         </ion-row>
         <ion-row>
-          <ion-col size="12" style="display: flex; width: 100%; justify-content: center;">
-            <ion-button class="btn-get-start button-1" @click="openModal">{{ $t('Log in or Sign up') }}</ion-button>
+          <ion-col size="12" class="d-flex ion-margin-top">
+            <ion-button class="btn-get-start button-1 txt-20" @click="openModal">{{ $t('Log in or Sign up') }}</ion-button>
           </ion-col>
         </ion-row>
       </ion-grid>
