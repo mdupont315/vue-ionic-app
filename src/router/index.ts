@@ -100,6 +100,16 @@ const routes: Array<RouteRecordRaw> = [
         component: () => import('../views/Profile/MyDocumentPage.vue'),
     },
     {
+        path: '/counselors',
+        name: 'CounselorMain',
+        component: () => import('../views/Counselor/CounselorMain.vue'),
+    },
+    {
+        path: '/counselors/chat',
+        name: 'CounselorChat',
+        component: () => import('../views/Counselor/CounselorChat.vue'),
+    },
+    {
         path: '/application',
         name: 'Application',
         component: () => import('../views/Application/index.vue'),
@@ -108,11 +118,6 @@ const routes: Array<RouteRecordRaw> = [
         path: '/application/main',
         name: 'ApplicationMain',
         component: () => import('../views/Application/Main.vue'),
-    },
-    {
-        path: '/application/login',
-        name: 'ApplicationLogin',
-        component: () => import('../views/Application/Login.vue'),
     },
     {
         path: '/home',
@@ -250,7 +255,6 @@ router.beforeEach((to) => {
         '/explore/searchdetailpage/:keyword',
         '/explore/toparticles',
         '/chat/login',
-        '/application/login',
         '/profile/login',
     ];
     const authRequired = !publicPages.includes(to.path);

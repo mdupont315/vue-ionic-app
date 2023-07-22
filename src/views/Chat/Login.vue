@@ -75,8 +75,8 @@ export default defineComponent({
     const openModal = async () => {
       const modal = await modalController.create({
         component: LoginModal,
-        initialBreakpoint: 0.5,
-        breakpoints: [0, 0.5, 0.6],
+        initialBreakpoint: 0.6,
+        breakpoints: [0, 0.6, 0.7],
       });
       modal.present();
     };
