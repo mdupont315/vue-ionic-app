@@ -5,11 +5,11 @@
           <ion-router-outlet></ion-router-outlet>
           <ion-tab-bar slot="bottom">
             <ion-button expand="block" style="width: 40%; margin-right: 15%;" class="white-button" @click="$emit('discard')">
-              <ion-text style="color: red;">{{ $t(`Cancel`) }}</ion-text>
+              <ion-text class="bt-text" style="color: red;">{{ $t(`${cancel}`) }}</ion-text>
             </ion-button>
 
             <ion-button expand="block" style="width: 40%;" class="blue-button" @click="$emit('save')">
-              <ion-text>{{ $t(`Confrim`) }}</ion-text>
+              <ion-text class="bt-text">{{ $t(`${confirm}`) }}</ion-text>
             </ion-button>
           </ion-tab-bar>
         </ion-tabs>
@@ -39,6 +39,10 @@
         IonText,
         IonButton 
     },
+    props: {
+      cancel:String,
+      confirm: String,
+    }
   });
   </script>
   
@@ -69,7 +73,13 @@
     --background: linear-gradient(-72deg, #436fb2 0.00%, #1c345a 100.00%);
     width: 100%;
     height: 50px;
-}
+  }
+  .bt-text {
+    font-size: 20px;
+    font-weight: normal;
+    font-style: normal;
+    text-align: center;
+  }
 .white-button {
     --border-radius: 15px;
     filter: drop-shadow(0px 3px 3px rgba(0,0,0,0.15 ));

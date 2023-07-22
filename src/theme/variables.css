@@ -298,6 +298,7 @@ ion-searchbar .searchbar-input-container {
 }
 ion-button {
   --box-shadow: 0;
+    text-transform: none;
 }
 
 ion-modal {
@@ -399,15 +400,14 @@ body.qrscanner .scanner-hide {
     --background: #00aeef;
     color: #fff;
     --border-radius: 15px;
-    width: 75%;
-    padding: 8px 0;
+    width: 85%;
 }
 
 .button-2 {
     --background: #fff;
     color: #203456;
     --border-radius: 5px;
-    width: 90%;
+    width: 85%;
     filter: drop-shadow(0px 3px 3px rgba(0,0,0,0.16 ));
 }
 

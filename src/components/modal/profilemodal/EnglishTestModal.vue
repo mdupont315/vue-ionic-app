@@ -50,7 +50,7 @@
                 </ion-datetime>
             </ion-modal>
         </ion-content>
-        <footer-section @save="postData" @discard="discardData"/>
+        <footer-section @save="postData" @discard="discardData" back="Discard" forward="Save"/>
     </ion-page>
 </template>
 <script>
@@ -63,6 +63,7 @@ import {
     IonCol,
     IonInput,
     IonButton,
+    IonModal,
     IonDatetime,
     modalController,
 } from "@ionic/vue";
@@ -91,6 +92,7 @@ export default defineComponent({
         IonDatetime,
         IonCol,
         IonInput,
+        IonModal,
         IonButton
     },
     props: {

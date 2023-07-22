@@ -1,7 +1,7 @@
 <template>
   <ion-content class="ion-padding">
     <ion-grid v-if="status == 1 || status == 3" class="d-grid">
-      <ion-row class="ion-padding-top">
+      <ion-row>
         <ion-col size="12" class="d-flex">
           <ion-text color="dark1">
             <p class="ion-text-center txt-26 txt-bold ion-no-margin ion-margin-bottom">{{ $t('Log in or Sign up') }}</p>
@@ -27,7 +27,7 @@
       <ion-row>
         <ion-col>
           <ion-text color="medium">
-            <p class="ion-text-center txt-20 color-2">{{ $t('Where we can send you all the juicy information.') }}</p>
+            <p class="ion-text-center ion-no-margin txt-20 color-2">{{ $t('Where we can send you all the juicy information.') }}</p>
           </ion-text>
         </ion-col>
       </ion-row>
@@ -77,8 +77,8 @@
       </ion-row>
       <ion-row>
         <ion-col size="12" class="d-flex">
-          <ion-button class="btn-get-start button-1" color="dark2" @click="googleSignIn" >
-            <ion-img class="ion-margin-end" src='assets/images/icons/google.svg'/>{{ $t('Continue with Google') }}
+          <ion-button class="btn-get-start button-1" expand="block" color="dark2" @click="googleSignIn" >
+            <p><ion-img class="ion-margin-end" src='./assets/images/icons/google.svg'/>{{ $t('Continue with Google') }}</p>
           </ion-button>
         </ion-col>
       </ion-row>

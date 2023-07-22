@@ -45,7 +45,7 @@
                 </ion-row>
             </ion-grid>
         </ion-content>
-        <footer-section  @save="postData" @discard="discardData"/>
+        <footer-section  @save="postData" @discard="discardData"  back="Discard" forward="Save"/>
 
         <ion-modal :is-open="isOpen" ref="modal" :keep-contents-mounted="true" @didDismiss="closeModel">
             <ion-datetime id="datetime" :locale="`${$root.$i18n.locale == 'ar'?'ar-ae': $root.$i18n.locale}`"

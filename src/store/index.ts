@@ -4,8 +4,9 @@ export * from './loading';
 export * from './restPassword';
 export * from  './commonData';
 export * from './translation';
-export * from './darkMode'
+export * from './darkMode';
 export * from './exploreData';
 export * from './document';
 export * from './profilemain';
 export * from './application';
+export * from './counselor';
