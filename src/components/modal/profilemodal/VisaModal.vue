@@ -29,7 +29,7 @@
                 </ion-row>
             </ion-grid>
         </ion-content>
-        <footer-section  @save="postData" @discard="discardData"/>
+        <footer-section  @save="postData" @discard="discardData"  back="Discard" forward="Save"/>
     </ion-page>
 </template>
 <script>
@@ -51,7 +51,7 @@ import {useToast} from "@/shared/toast";
 import {useLoadingStore} from "@/store/loading";
 
 export default defineComponent({
-    name:"HigherModal",
+    name:"VisamModal",
     components: {
         FooterSection,
         IonPage,
