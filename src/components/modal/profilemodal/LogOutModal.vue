@@ -10,7 +10,7 @@
                 </ion-row>
             </ion-grid>
         </ion-content>
-        <footer-section  @save="postData" @discard="discardData"/>
+        <footer-section  cancel="Cancel" confirm="Confirm" @save="postData" @discard="discardData"/>
     </ion-page>
 </template>
 <script>
@@ -30,7 +30,7 @@ import FooterSection from "@/components/modal/profilemodal/LogOutFooter.vue";
 import {useLoadingStore} from "@/store/loading";
 
 export default defineComponent({
-    name:"HigherModal",
+    name:"LogoutModal",
     components: {
         FooterSection,
         IonPage,

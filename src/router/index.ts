@@ -105,6 +105,17 @@ const routes: Array<RouteRecordRaw> = [
         component: () => import('../views/Profile/ProfileMain.vue'),
     },
     {
+        path: '/counselors',
+        name: 'CounselorMain',
+        component: () => import('../views/Counselor/CounselorMain.vue'),
+    },
+    
+    {
+        path: '/counselors/chat',
+        name: 'CounselorChat',
+        component: () => import('../views/Counselor/CounselorChat.vue'),
+    },
+    {
         path: '/application',
         name: 'Application',
         component: () => import('../views/Application/index.vue'),
