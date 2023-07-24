@@ -174,7 +174,7 @@
   import FooterSection from "@/components/explore/FooterSection.vue";
   
   export default defineComponent({
-    name: "ProfileLoginPage",
+    name: "QrMainPage",
     components: {
       HeaderSection,
       FooterSection,

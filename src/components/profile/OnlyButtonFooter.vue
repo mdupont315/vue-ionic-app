@@ -5,7 +5,7 @@
           <ion-router-outlet></ion-router-outlet>
           <ion-tab-bar slot="bottom" style="display: flex; flex-flow: row;">
             <!-- <ion-tab-button> -->
-                <ion-button @click="openSentModal">Email me The Leads</ion-button>
+                <ion-button @click="$emit('next')">{{ $t(`${title}`) }}</ion-button>
             <!-- </ion-tab-button> -->
         </ion-tab-bar>
         </ion-tabs>
@@ -21,9 +21,8 @@
     IonTabs, 
     IonRouterOutlet, 
     IonTabBar, 
-    modalController
+    IonButton
   } from '@ionic/vue';
-  import SentSuccessModal from "@/components/modal/SentSuccessModal.vue";
   
   export default defineComponent({
     components: {
@@ -31,20 +30,12 @@
       IonToolbar, 
       IonTabs, 
       IonRouterOutlet, 
-      IonTabBar, 
+      IonTabBar,  
+      IonButton
     },
-    setup() {
-      // console.log("Props", props.id)
-      const openSentModal = async () => {
-        const modal = await modalController.create({
-          component: SentSuccessModal,
-          initialBreakpoint: 0.35,
-          // breakpoints: [0, 0.5, 1],
-        });
-        modal.present();
-      }
-      return {openSentModal};
-    }
+    props: {
+      title:String
+    },
   });
   </script>
   
@@ -77,5 +68,11 @@ ion-button {
     --padding-bottom: 10px;
     width: 90%;
     height: 40px;
+    
+    font-size: 20px;
+    font-weight: normal;
+    font-style: normal;
+    text-align: center;
+    color: #ffffff;
   }
   </style>

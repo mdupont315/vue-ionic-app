@@ -40,7 +40,7 @@
         </ion-row>
       </ion-grid>
     </ion-content>
-    <footer-section />
+    <footer-section title="Email me The Leads" @next="openSentModal"/>
   </ion-page>
 </template>
   
@@ -61,6 +61,7 @@
   import { defineComponent } from "vue";
   import HeaderSection from "@/components/HeaderSection.vue";
   import FooterSection from "@/components/profile/OnlyButtonFooter.vue";
+  import SentSuccessModal from "@/components/modal/SentSuccessModal.vue";
   
   export default defineComponent({
     name: "QrScanned",
@@ -86,10 +87,19 @@
           "Oliver William", "Elijah Benjamin",
           "James Theodore", "William Lopez",
       ]
+      const openSentModal = async () => {
+        const modal = await modalController.create({
+          component: SentSuccessModal,
+          initialBreakpoint: 0.35,
+          // breakpoints: [0, 0.5, 1],
+        });
+        modal.present();
+      }
       return {
         userImgUrl,
         qrImgUrl,
         names,
+        openSentModal,
       };
     },
   });

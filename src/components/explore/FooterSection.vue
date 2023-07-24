@@ -62,6 +62,9 @@ export default defineComponent({
 </script>
 
 <style scoped>
+ion-footer {
+  background-color: #f5f5f5;
+}
 ion-toolbar {
   --background: #1c345a;
   border-top: 2px solid #1c345a;

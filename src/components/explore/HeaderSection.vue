@@ -40,12 +40,10 @@
       });
       const handleInput = (event:any) => {
         const url = window.location.href;
+        if(event.target.value.length)
+          changeSearchKeyword(event.target.value);
         if(!url.includes("searchpage"))
           router.push(`/explore/searchpage/${event.target.value}`);
-        else {
-          if(event.target.value.length)
-          changeSearchKeyword(event.target.value);
-        } 
       }
       return {imgUrl, handleInput, search_keyword};
     },
