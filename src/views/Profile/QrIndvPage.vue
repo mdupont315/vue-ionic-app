@@ -6,7 +6,7 @@
         <ion-row class="ion-padding-top" style="margin-top: 8%; margin-left: 18px;">
           <ion-col class="no-padding">
             <ion-card class="intro-card">
-              <ion-card-content style="justify-content: center;">
+              <ion-card-content style="justify-content: center; text-align: center;">
                 <div style="display: flex; flex-flow: column;">
                   <div style="display: flex; flex-flow: row;justify-content: center;">
                     <ion-img :src='userImgUrl' class="user-Img"/>
@@ -16,7 +16,7 @@
                     </div>
                   </div>
                 </div>
-                <ion-text class="intro-act" style="text-align: center;">{{$t(`Looking for Undergraduate Course`)}}</ion-text>
+                <ion-text class="intro-act">{{$t(`Looking for Undergraduate Course`)}}</ion-text>
               </ion-card-content>
             </ion-card>
           </ion-col>
@@ -43,6 +43,7 @@
     IonCard,
     IonCardContent,
     IonText,
+    IonImg,
     modalController
   } from "@ionic/vue";
   import { defineComponent } from "vue";
@@ -50,7 +51,7 @@
   import FooterSection from "@/components/profile/ProfileFooterSection.vue";
   
   export default defineComponent({
-    name: "ProfileLoginPage",
+    name: "QrIndvPage",
     components: {
       HeaderSection,
       FooterSection,
@@ -58,6 +59,7 @@
       IonContent,
       IonGrid,
       IonRow,
+      IonImg,
       IonCol,
       IonCard,
       IonCardContent,
@@ -133,6 +135,5 @@
     font-style: normal;
     text-align: center;
     color: #606060;
-    margin-left: 35%;
  } 
 </style>

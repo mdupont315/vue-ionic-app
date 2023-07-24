@@ -91,7 +91,7 @@
                 </ion-button>
             </div>            
         </ion-modal>
-    <footer-section back="Back" forward="My Sessions" @save="toCheckSession"/>
+    <footer-section back="Back" forward="My Sessions" @discard="toBack" @save="toCheckSession"/>
     </ion-page>
   </template>
     
@@ -182,6 +182,9 @@
         const toChatPage = () => {
             router.push('/counselors/chat')
         }
+        const toBack = () => {
+            router.push('/profile');
+        }
         const changeOpen = () => {
             isOpen.value = !isOpen.value;
         }
@@ -208,6 +211,7 @@
           toBookSession,
           changeOpen,
           toChatPage,
+          toBack,
           toCheckSession
         };
       },

@@ -115,6 +115,11 @@ const routes: Array<RouteRecordRaw> = [
         component: () => import('../views/Profile/MajorMatch.vue'),
     },
     {
+        path: '/bookmark/myqrcode',
+        name: 'MyQrScan',
+        component: () => import('../views/Bookmark/MyQrScan.vue'),
+    },
+    {
         path: '/application',
         name: 'Application',
         component: () => import('../views/Application/index.vue'),
