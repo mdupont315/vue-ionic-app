@@ -34,7 +34,7 @@
                         <div>
                             <ion-img src="assets/images/indv.png"></ion-img>
                         </div>
-                        </ion-col>
+                    </ion-col>
                     <ion-col size="12" class="flex-row" style="justify-content: left;">
                         <div>
                             <ion-img src="assets/images/indv.png" style="margin-right: 4px;"></ion-img>
@@ -44,8 +44,17 @@
                             <ion-text>{{ $t(`4:25 PM`) }}</ion-text>
                         </div>
                     </ion-col>
+                    
+                    <ion-col v-for="message in dialogs" :key="message.id" size="12" class="flex-row" style="justify-content: right;">
+                        <div  v-if="message.id" class="flex-col send-dialog" style="margin-right: 4px;">
+                            <ion-text>{{ $t(`${message.text}`) }}</ion-text>
+                            <ion-text>{{ $t(`4:25 PM`) }}</ion-text>
+                        </div>
+                        <div  v-if="message.id">
+                            <ion-img src="assets/images/indv.png"></ion-img>
+                        </div>
+                    </ion-col>
                 </ion-row>
-
             </ion-grid>
         </ion-content>
         <footer-section  @save="postData" @discard="discardData"/>
@@ -62,7 +71,8 @@ import {
     IonImg,
     IonIcon,
 } from "@ionic/vue";
-import { defineComponent } from "vue";
+import { defineComponent, computed } from "vue";
+import {useCounselorData} from '@/store';
 import {useRouter} from "vue-router";
 import HeaderSection from "@/components/counselor/ChatHeader.vue";
 import FooterSection from "@/components/counselor/ChatFooter.vue";
@@ -84,14 +94,16 @@ export default defineComponent({
     },
     setup() {
         const router = useRouter();
-
+        const store = useCounselorData();
+        const dialogs = computed(() => store.dialogs);
         const toPrev = () => {
             router.push("/counselors");
         }
 
         return {
             arrowBackOutline,
-            toPrev
+            toPrev,
+            dialogs
         };
     }
 })
