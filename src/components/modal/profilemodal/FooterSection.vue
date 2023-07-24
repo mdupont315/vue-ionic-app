@@ -5,11 +5,11 @@
           <ion-router-outlet></ion-router-outlet>
           <ion-tab-bar slot="bottom">
             <ion-button expand="block" style="width: 40%; margin-right: 15%;" class="white-button" @click="$emit('discard')">
-              <ion-text style="color: black;">{{ $t(`${back}`) }}</ion-text>
+              <ion-text style="color: black;font-size: 20px;">{{ $t(`${back}`) }}</ion-text>
             </ion-button>
 
             <ion-button expand="block" style="width: 40%;" class="blue-button" @click="$emit('save')">
-              <ion-text>{{ $t(`${forward}`) }}</ion-text>
+              <ion-text style="font-size: 20px;">{{ $t(`${forward}`) }}</ion-text>
             </ion-button>
           </ion-tab-bar>
         </ion-tabs>
@@ -57,15 +57,18 @@
     border-bottom-left-radius: 0px;
     background: #f5f5f5
   }
+  ion-footer {
+    background: #f5f5f5;
+  }
   ion-tab-bar {
-    --background: "white";
+    --background: #f5f5f5;
   }
   .tab-selected {
     color: #00aeef;
   }
   
   ion-tab-button {
-    color: #ffffff;
+    color: #f5f5f5;
   }
   .blue-button {
     --border-radius: 15px;

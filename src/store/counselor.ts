@@ -7,6 +7,7 @@ export const useCounselorData = defineStore({
     state: () => ({
         dataLoaded: false,
         counselors: [],
+        dialogs:[{}],
     }),
     actions: {
         async loadCounselors() {
@@ -24,6 +25,11 @@ export const useCounselorData = defineStore({
                 });
             return  Promise.resolve();
         },   
+        sendText(text="") {
+            const count = this.dialogs.length + 1;
+            const mess = {id: count, text: text }
+            this.dialogs.push(mess);
+        },
 
         changeFlag() {
             this.dataLoaded=false;

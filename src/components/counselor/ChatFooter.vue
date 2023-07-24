@@ -5,8 +5,8 @@
           <ion-router-outlet></ion-router-outlet>
           <ion-tab-bar slot="bottom" style="width: 100%;">
             <ion-icon :src="addOutline" style="width: 15%; font-size: 50px;" ></ion-icon>
-            <input-field label="Type a message" style="width: 70%;"></input-field>
-            <div style="width: 15%;">
+            <input-field v-model="me_text" label="Type a message" style="width: 70%;"></input-field>
+            <div style="width: 15%;"  @click="sendMeText">
                 <ion-img src="assets/images/Icon-material-send.svg" style="margin-left:9px; width: 65%;"></ion-img>
             </div>
           </ion-tab-bar>
@@ -16,7 +16,8 @@
   </template>
   
   <script lang="ts">
-    import {defineComponent} from 'vue';
+    import {defineComponent, ref} from 'vue';
+    import {useCounselorData} from '@/store';
     import InputField from "@/components/InputField.vue";
     import { 
         IonFooter, 
@@ -41,7 +42,14 @@
             IonIcon
         },
         setup() {
-            return {addOutline}
+            const store = useCounselorData()
+            const {sendText} = store
+            const me_text = ref("");
+            const sendMeText = () => {
+                sendText(me_text.value);
+                me_text.value="";
+            }
+            return {addOutline, me_text, sendMeText}
         }
     });
   </script>

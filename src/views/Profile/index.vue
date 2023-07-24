@@ -28,17 +28,17 @@
                   <ion-card class="three_sum">
                       <ion-card-content>
                           <ion-list>
-                              <ion-item lines="full">
+                              <ion-item lines="full" @click='toHigherSecondaryModal("Higher Secondary")'>
                                   <ion-icon :src="qrCodeOutline"></ion-icon>
                                   <ion-label class="card-label" style="float: left;">{{ $t("Higher Secondary") }}</ion-label>
                                   <ion-img src="assets/images/Chevron.svg" style="float: right;"></ion-img>
                               </ion-item>
-                              <ion-item v-if="detail_flag" lines="full" >
+                              <ion-item v-if="detail_flag" lines="full"  @click='toHigherSecondaryModal("Undergraduate")'>
                                   <ion-icon :src="scanOutline"></ion-icon>
                                   <ion-label class="card-label" style="float: left;">{{ $t("Undergraduate") }}</ion-label>
                                   <ion-img src="assets/images/Chevron.svg" style="float: right;"></ion-img>
                               </ion-item>
-                              <ion-item lines="none">
+                              <ion-item lines="none"  @click='toHigherSecondaryModal("Postgraduate")'>
                                   <ion-icon src="assets/images/Icon-material-event.svg"></ion-icon>
                                   <ion-label class="card-label" style="float: left;">{{ $t("Postgraduate") }}</ion-label>
                                   <ion-img src="assets/images/Chevron.svg" style="float: right;"></ion-img>
@@ -61,7 +61,7 @@
                                   <ion-label class="card-label" style="float: left;">{{ $t("Step by Step Profile") }}</ion-label>
                                   <ion-img src="assets/images/Chevron.svg" style="float: right;"></ion-img>
                               </ion-item>
-                              <ion-item lines="none">
+                              <ion-item lines="none" @click="toMajorMatch">
                                   <ion-icon :src="discOutline"></ion-icon>
                                   <ion-label class="card-label" style="float: left;">{{ $t("College Major Match Quiz") }}</ion-label>
                                   <ion-img src="assets/images/Chevron.svg" style="float: right;"></ion-img>
@@ -74,7 +74,7 @@
                   <ion-card class="three_sum">
                       <ion-card-content>
                           <ion-list>
-                              <ion-item lines="full">
+                              <ion-item lines="full" @click="toCounselor">
                                   <ion-icon :src="today"></ion-icon>
                                   <ion-label class="card-label" style="float: left;">{{ $t("Remote Counselling") }}</ion-label>
                                   <ion-img src="assets/images/Chevron.svg" style="float: right;"></ion-img>
@@ -174,31 +174,32 @@
 </template>
   
 <script>
-  import {useAuthStore} from "@/store";
-  import {
-    IonPage,
-    IonContent,
-    IonGrid,
-    IonRow,
-    IonCol,
-    IonCard,
-    IonCardContent,
-    IonText,
-    IonButton,
-    IonIcon,
-    modalController
-  } from "@ionic/vue";
-  import { defineComponent, ref } from "vue";
-  import {useRouter} from "vue-router";
-  import HeaderSection from "@/components/HeaderSection.vue";
-  import FooterSection from "@/components/explore/FooterSection.vue";
-  import { qrCodeOutline, scanOutline, searchOutline, document, playSkipForward, discOutline, today, settingsSharp, chevronUpSharp, notifications, chevronForward } from "ionicons/icons"
+    import {useAuthStore} from "@/store";
+    import {
+        IonPage,
+        IonContent,
+        IonGrid,
+        IonRow,
+        IonCol,
+        IonCard,
+        IonCardContent,
+        IonText,
+        IonButton,
+        IonIcon,
+        modalController
+    } from "@ionic/vue";
+    import { defineComponent, ref } from "vue";
+    import {useRouter} from "vue-router";
+    import HeaderSection from "@/components/HeaderSection.vue";
+    import FooterSection from "@/components/explore/FooterSection.vue";
+    import { qrCodeOutline, scanOutline, searchOutline, document, playSkipForward, discOutline, today, settingsSharp, chevronUpSharp, notifications, chevronForward } from "ionicons/icons"
 
-  import ProfileIntroModal from "@/components/modal/profilemodal/ProfileIntroModal.vue";
-  import ChangeCurrencyModal from "@/components/modal/profilemodal/ChangeCurrencyModal.vue";
-  import SettingModal from "@/components/modal/profilemodal/SettingModal.vue";
-  import SignupModal from "@/components/modal/SignupModal.vue";
-  import LogOutModal from "@/components/modal/profilemodal/LogOutModal.vue";
+    import ProfileIntroModal from "@/components/modal/profilemodal/ProfileIntroModal.vue";
+    import ChangeCurrencyModal from "@/components/modal/profilemodal/ChangeCurrencyModal.vue";
+    import SettingModal from "@/components/modal/profilemodal/SettingModal.vue";
+    import SignupModal from "@/components/modal/SignupModal.vue";
+    import LogOutModal from "@/components/modal/profilemodal/LogOutModal.vue";
+    import HigherSecondaryModal from "@/components/modal/profilemodal/HigherSecondaryModal.vue";
 
   export default defineComponent({
     name: "ProfileMain",
@@ -217,81 +218,100 @@
       IonIcon,
     },
     setup() {
-      const detail_flag = ref(true);
-      const router = useRouter();
-      const userImgUrl = '/assets/images/usr-radius.svg';
-      const qrImgUrl = '/assets/images/qrcodesample.svg';
-      const toDocument = () => {
-          router.push("/profile/mydocument");
-      }
-      const toProfileIntro = async () => {
-          const modal = await modalController.create({
-              component: ProfileIntroModal,
-              initialBreakpoint: 0.9,
-          });
-          modal.present();
-      }
-      const toChangeCurrency = async (title) => {
-          const modal = await modalController.create({
-              component: ChangeCurrencyModal,
-              componentProps: {
-                  title: title
-              },
-              initialBreakpoint: 0.6,
-          });
-          modal.present();
-      }
-      const toSetting = async () => {
-          const modal = await modalController.create({
-              component: SettingModal,
-              initialBreakpoint: 0.4,
-          });
-          modal.present();            
-      }
-      const toEditProfile = async () => {
-          const modal = await modalController.create({
-              component: SignupModal,
-              componentProps: {
-                  title: "edit"
-              },
-              initialBreakpoint: 0.9,
-          });
-          modal.present();            
-      }
-      const changeDetail = () => {
-          detail_flag.value = !detail_flag.value;
-      }
-      const toLogout = async () => {
-          const modal = await modalController.create({
-              component: LogOutModal,
-              initialBreakpoint: 0.6,
-          });
-          modal.present();    
-      }
-      return {
-        userImgUrl,
-        qrImgUrl,
-        qrCodeOutline,
-        scanOutline,
-        searchOutline,
-        document,
-        playSkipForward,
-        discOutline,
-        today,
-        settingsSharp,
-        chevronUpSharp,
-        notifications,
-        chevronForward,
+        const detail_flag = ref(true);
+        const router = useRouter();
+        const userImgUrl = '/assets/images/usr-radius.svg';
+        const qrImgUrl = '/assets/images/qrcodesample.svg';
+        const toHigherSecondaryModal = async(title) => {
+                const modal = await modalController.create({
+                    component: HigherSecondaryModal,
+                    componentProps: {
+                        title: title
+                    },
+                    initialBreakpoint: 0.9,
+                });
+                modal.present();
+            }
+        const toDocument = () => {
+            router.push("/profile/mydocument");
+        }
+        const toCounselor = () => {
+            router.push("/counselors");
+        }
+        const toMajorMatch = () => {
+            router.push("/profile/majormatch");
+        }
+        const toProfileIntro = async () => {
+            const modal = await modalController.create({
+                component: ProfileIntroModal,
+                initialBreakpoint: 0.9,
+            });
+            modal.present();
+        }
+        const toChangeCurrency = async (title) => {
+            const modal = await modalController.create({
+                component: ChangeCurrencyModal,
+                componentProps: {
+                    title: title
+                },
+                initialBreakpoint: 0.6,
+            });
+            modal.present();
+        }
+        const toSetting = async () => {
+            const modal = await modalController.create({
+                component: SettingModal,
+                initialBreakpoint: 0.4,
+            });
+            modal.present();            
+        }
+        const toEditProfile = async () => {
+            const modal = await modalController.create({
+                component: SignupModal,
+                componentProps: {
+                    title: "edit"
+                },
+                initialBreakpoint: 0.9,
+            });
+            modal.present();            
+        }
+        const changeDetail = () => {
+            detail_flag.value = !detail_flag.value;
+        }
+        const toLogout = async () => {
+            const modal = await modalController.create({
+                component: LogOutModal,
+                initialBreakpoint: 0.6,
+            });
+            modal.present();    
+        }
+        return {
+            userImgUrl,
+            qrImgUrl,
+            qrCodeOutline,
+            scanOutline,
+            searchOutline,
+            document,
+            playSkipForward,
+            discOutline,
+            today,
+            settingsSharp,
+            chevronUpSharp,
+            notifications,
+            chevronForward,
 
-        detail_flag,
-        changeDetail,
-        toProfileIntro,
-        toChangeCurrency,
-        toSetting,
-        toEditProfile,
-        toDocument,
-        toLogout
-      };
+            detail_flag,
+            changeDetail,
+            toProfileIntro,
+            toChangeCurrency,
+            toSetting,
+            toEditProfile,
+            toDocument,
+            toLogout,
+            toMajorMatch,
+            toCounselor,
+            toHigherSecondaryModal,
+        };
     },
   });
 </script>
