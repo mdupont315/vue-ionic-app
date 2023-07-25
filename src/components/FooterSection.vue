@@ -42,7 +42,6 @@ import {
   IonIcon 
 } from '@ionic/vue';
 import { searchOutline, logoWechat, appsSharp, person } from 'ionicons/icons';
-import {userDarkModeStore} from "@/store";
 
 export default defineComponent({
   components: {
@@ -56,11 +55,7 @@ export default defineComponent({
     IonIcon 
   },
   setup() {
-    const darkMode = userDarkModeStore();
-    const is_dark_mode = computed(() => darkMode.prefersDark);
-    const imgUrl = computed(() => {
-      return is_dark_mode.value ? 'assets/images/header.svg' : `assets/images/header.svg`;
-    });
+    const imgUrl = "assets/images/header.svg"
     return {imgUrl, searchOutline, logoWechat, appsSharp, person};
   }
 });

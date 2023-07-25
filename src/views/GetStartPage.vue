@@ -52,7 +52,6 @@ import {useComingSoonAlert} from "@/shared/comingSoonAlert";
 import SchoolMasterLogo from "@/components/SchoolMasterLogo.vue";
 import LanguageSwitch from "@/components/LanguageSwitch.vue";
 import {useI18n} from "vue-i18n";
-import {userDarkModeStore} from "@/store";
 
 export default defineComponent({
   name: "LoginPage",
@@ -74,12 +73,10 @@ export default defineComponent({
       router.replace('/explore');
     };
     const {locale} = useI18n();
-    const darkMode = userDarkModeStore();
-    const is_dark_mode = computed(() => darkMode.prefersDark);
     const lang = computed(()=>locale.value);
     const introUrl = computed(() => {
       let addLang = ['tr','ar'].includes(lang.value) ? `${lang.value}-` : '';
-      return is_dark_mode.value ? 'assets/logos/intro-light.svg' : `assets/logos/${addLang}Intro.svg`;
+      return `assets/logos/${addLang}Intro.svg`;
     });
     return {
       getStart,

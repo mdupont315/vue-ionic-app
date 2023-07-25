@@ -18,7 +18,7 @@
     IonImg,
     IonSearchbar,
   } from "@ionic/vue";
-  import {userDarkModeStore, useExploreDataStore} from "@/store";
+  import {useExploreDataStore} from "@/store";
   
   export default defineComponent({
     components: {
@@ -30,14 +30,10 @@
     },
     setup() {
       const router = useRouter();
-      const darkMode = userDarkModeStore();
       const store = useExploreDataStore();
       const {changeSearchKeyword} = store;
-      const is_dark_mode = computed(() => darkMode.prefersDark);
       const search_keyword = computed(() => store.search_keyword);
-      const imgUrl = computed(() => {
-        return is_dark_mode.value ? 'assets/images/header.svg' : `assets/images/header.svg`;
-      });
+      const imgUrl = "assets/images/header.svg";
       const handleInput = (event:any) => {
         const url = window.location.href;
         if(event.target.value.length)
