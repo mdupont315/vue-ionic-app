@@ -24,9 +24,7 @@
       IonImg
     },
     setup() {
-      const imgUrl = computed(() => {
-        return `assets/images/header.svg`;
-      });
+      const imgUrl = "assets/images/header.svg";
       return {imgUrl};
     }
   });
