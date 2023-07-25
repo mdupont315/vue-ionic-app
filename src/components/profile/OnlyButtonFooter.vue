@@ -5,7 +5,10 @@
           <ion-router-outlet></ion-router-outlet>
           <ion-tab-bar slot="bottom" style="display: flex; flex-flow: row;">
             <!-- <ion-tab-button> -->
-                <ion-button @click="$emit('next')">{{ $t(`${title}`) }}</ion-button>
+                <ion-button @click="$emit('next')">
+                  <ion-icon v-if="icon" :src="qrCodeOutline" style="margin-right: 5px;"></ion-icon>
+                  {{ $t(`${title}`) }}
+                </ion-button>
             <!-- </ion-tab-button> -->
         </ion-tab-bar>
         </ion-tabs>
@@ -23,6 +26,8 @@
     IonTabBar, 
     IonButton
   } from '@ionic/vue';
+  import { qrCodeOutline } from "ionicons/icons"
+
   
   export default defineComponent({
     components: {
@@ -34,8 +39,12 @@
       IonButton
     },
     props: {
-      title:String
+      title:String,
+      icon: String,
     },
+    setup() {
+      return {qrCodeOutline};
+    }
   });
   </script>
   

@@ -120,6 +120,16 @@ const routes: Array<RouteRecordRaw> = [
         component: () => import('../views/Bookmark/MyQrScan.vue'),
     },
     {
+        path: '/events',
+        name: 'EventList',
+        component: () => import('../views/Events/index.vue'),
+    },
+    {
+        path: '/events/detail',
+        name: 'EventDetail',
+        component: () => import('../views/Events/EventDetailPage.vue'),
+    },
+    {
         path: '/application',
         name: 'Application',
         component: () => import('../views/Application/index.vue'),

@@ -97,6 +97,9 @@ ion-searchbar input {
 ion-searchbar .searchbar-input-container {
     height: 100% !important;
 }
+ion-header {
+    --opacity-scale: 0 !important;
+}
 .c-search .c-back-icon {
     position: absolute;
     left: 22px;

@@ -31,7 +31,7 @@
                         </ion-text>
                     </ion-col>
                 </ion-row>
-                <ion-row style="margin-left: 8px;">
+                <ion-row >
                     <ion-col v-if="btpos === tabTitles[0] || btpos === tabTitles[2]" style="display: flex; flex-flow: column;">
                         <div v-if="!institute_detail_visible">                    
                             <ion-card v-for="institute in institutes.data" :key="institute.id" class="institute-card">
@@ -65,8 +65,8 @@
                                             </div>
                                             <p class="university-ranking">{{ $t(`Local #${institutes.data[0].local_position} | Global #${institutes.data[0].global_position} | Score ${institutes.data[0].score}`) }}</p>
                                             <div>
-                                                <p class="university-country" style="float: left;">{{ $t(`institutes.data[0].country`) }}</p>
-                                                <p class="university-status" style="float: right">{{ $t(`institutes.data[0].status`) }}</p>
+                                                <p class="university-country" style="float: left;">{{ $t(`${institutes.data[0].country}`) }}</p>
+                                                <p class="university-status" style="float: right">{{ $t(`${institutes.data[0].status}`) }}</p>
                                             </div>
                                         </div>
                                     </div>
@@ -285,9 +285,6 @@ ion-card {
 }
 ion-card-content {
     padding: 0;
-}
-div {
-  margin-right: 8px;  
 }
 .more-tab {
     width: max-content;

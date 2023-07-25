@@ -233,6 +233,7 @@
     } from "@ionic/vue";
     import {computed, defineComponent, ref, onBeforeMount, watch} from "vue";
     import {useRouter, useRoute} from "vue-router";
+    import {useAuthStore} from "@/store";
     import {useLoadingStore} from "@/store/loading";
     import {useComingSoonAlert} from "@/shared/comingSoonAlert";
     import HeaderSection from "@/components/explore/HeaderSection.vue";
@@ -265,6 +266,7 @@
         id:String
     },
     setup(props) {
+        const { isLoggedIn } = useAuthStore();
         const store = useExploreDataStore();
         const appStore = useApplicationStore();
         const route = useRoute();
@@ -301,10 +303,8 @@
                 initialBreakpoint: 0.4,
             });
             modal.present();
-            // console.log(applyData.value)
         }
         const nextStep = () => {
-            console.log(step.value);
             step.value += 1;
             if(step.value>1) {
                 firstStepC.value.img=checkmark;
@@ -348,8 +348,6 @@
             }
         }
         const backStep = () => {
-            console.log(step.value);
-            
             step.value -= 1;
             if(step.value==1) {
                 firstStepC.value.img=ellipse;
@@ -480,7 +478,6 @@
             modal.present();
         }
         onBeforeMount(() => {
-            console.log(props.id)
             if (!dataLoaded.value) {
                 showLoading();
                 Promise.all([programDetails(props.id)]).then(() => {
@@ -491,16 +488,16 @@
         });
         watch(intake_id, async (new_date) => {
             if (!new_date) return;
+            if(!isLoggedIn) {
+                window.location = '/profile/login';
+                return;
+            }
             const intakes = program_detail.value.upcoming_intakes;
-            console.log(intakes)
-            console.log(intakes.length)
             let intake = {};
             for (const key in intakes) {
-                console.log(intakes[key]);
                 if(intakes[key].id == new_date)
                 intake = intakes[key];
             }
-            console.log(intake)
             const modal = await modalController.create({
                 component: IntakeModal,
                 componentProps: {
