@@ -3,9 +3,9 @@
     <header-section />
     <ion-content :fullscreen="true" class="no-padding">
       <ion-grid  class="no-padding" style="display:flex; flex-flow: column; justify-content: center;">
-        <ion-row class="ion-padding-top">
+        <ion-row class="ion-padding-top" style="margin-top: 5%;">
           <ion-col class="no-padding"  style="justify-content: center;">
-            <ion-card class="intro-card">
+            <ion-card class="intro-card" style="width: 95%;">
               <ion-card-content class="unique-content" style="display:flex; flex-flow: column;justify-content: center;">
                 <div style="display: flex; flex-flow: row; justify-content: center;">
                   <ion-img :src='userImgUrl' class="user-Img"/>
