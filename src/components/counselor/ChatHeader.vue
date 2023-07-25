@@ -4,8 +4,6 @@
             <ion-title class="ion-text-center" color="primary"></ion-title>
             <ion-img :src='imgUrl'/>
         </ion-toolbar>
-        
-       
     </ion-header>
 </template>
   
@@ -18,7 +16,6 @@
         IonImg,
         IonIcon
     } from "@ionic/vue";
-    import {userDarkModeStore} from "@/store";
 
     export default defineComponent({
     components: {
@@ -29,10 +26,8 @@
         // IonIcon
     },
     setup() {
-        const darkMode = userDarkModeStore();
-        const is_dark_mode = computed(() => darkMode.prefersDark);
         const imgUrl = computed(() => {
-        return is_dark_mode.value ? 'assets/images/header.svg' : `assets/images/header.svg`;
+        return `assets/images/header.svg`;
         });
         return {
             imgUrl
