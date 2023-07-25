@@ -74,6 +74,27 @@ export const useAuthStore = defineStore({
                 }
             })
         },
+        async google_login(formData:any) {
+            this.resetErrors();
+            const response = await fetchWrapper.post(`${BASE_URL}/user/login-with-google`, formData);
+            if (!response.ok) {
+                return response.json().then((res) => {
+                    this.error = res;
+                    return false;
+                });
+            }
+            return response.json().then(data => {
+                try {
+                    this.setUserData(data);
+                    this.updateCanSendCodeIn(60);
+                    //TODO: get can send verification in time
+                    return true;
+                } catch (e: any) {
+                    //showToast({message: 'Something Went Wrong!', color: 'danger'});
+                    return false;
+                }
+            })
+        },
         async requestOtp(email: string) {
             this.resetErrors();
             const response = await fetchWrapper.post(`${BASE_URL}/request-otp`, {email});
