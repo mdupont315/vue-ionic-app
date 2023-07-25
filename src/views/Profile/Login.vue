@@ -6,7 +6,7 @@
         <ion-row class="ion-padding-top">
           <ion-col size="12" class="d-flex">
             <ion-text color="light">
-              <p class="ion-text-center txt-37 txt-bold">{{ $t('HOP ON BOARD!') }}</p>
+              <p class="ion-text-center txt-37 txt-bold" style="margin-bottom: 10px;">{{ $t('HOP ON BOARD!') }}</p>
             </ion-text>
           </ion-col>
         </ion-row>
@@ -18,7 +18,7 @@
         <ion-row>
           <ion-col>
             <ion-text color="light">
-              <p class="ion-text-center txt-16">{{ $t("We'd love to have you join our community. Just sign up and polish up your profile, so we can hook you up with an awesome study option experience.") }}</p>
+              <p class="ion-text-center txt-16" style="margin: 5px 0;">{{ $t("We'd love to have you join our community. Just sign up and polish up your profile, so we can hook you up with an awesome study option experience.") }}</p>
             </ion-text>
           </ion-col>
         </ion-row>
@@ -98,8 +98,8 @@ export default defineComponent({
     const openModal = async () => {
       const modal = await modalController.create({
         component: LoginModal,
-        initialBreakpoint: 0.5,
-        breakpoints: [0, 0.5, 0.6],
+        initialBreakpoint: 0.6,
+        breakpoints: [0, 0.6, 0.7],
       });
       modal.present();
     };
