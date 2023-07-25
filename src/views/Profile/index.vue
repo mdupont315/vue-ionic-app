@@ -28,19 +28,19 @@
                   <ion-card class="three_sum">
                       <ion-card-content>
                           <ion-list>
-                              <ion-item lines="full" @click='toHigherSecondaryModal("Higher Secondary")'>
+                              <ion-item lines="full" @click='toQrMain'>
                                   <ion-icon :src="qrCodeOutline"></ion-icon>
-                                  <ion-label class="card-label" style="float: left;">{{ $t("Higher Secondary") }}</ion-label>
+                                  <ion-label class="card-label" style="float: left;">{{ $t("My QR Code") }}</ion-label>
                                   <ion-img src="assets/images/Chevron.svg" style="float: right;"></ion-img>
                               </ion-item>
-                              <ion-item v-if="detail_flag" lines="full"  @click='toHigherSecondaryModal("Undergraduate")'>
+                              <ion-item v-if="detail_flag" lines="full">
                                   <ion-icon :src="scanOutline"></ion-icon>
-                                  <ion-label class="card-label" style="float: left;">{{ $t("Undergraduate") }}</ion-label>
+                                  <ion-label class="card-label" style="float: left;">{{ $t("Scan University QR Code") }}</ion-label>
                                   <ion-img src="assets/images/Chevron.svg" style="float: right;"></ion-img>
                               </ion-item>
-                              <ion-item lines="none"  @click='toHigherSecondaryModal("Postgraduate")'>
+                              <ion-item lines="none" @click="toEvents">
                                   <ion-icon src="assets/images/Icon-material-event.svg"></ion-icon>
-                                  <ion-label class="card-label" style="float: left;">{{ $t("Postgraduate") }}</ion-label>
+                                  <ion-label class="card-label" style="float: left;">{{ $t("Events") }}</ion-label>
                                   <ion-img src="assets/images/Chevron.svg" style="float: right;"></ion-img>
                               </ion-item>
                           </ion-list>
@@ -84,7 +84,7 @@
                                   <ion-label class="card-label" style="float: left;">{{ $t("Documents") }}</ion-label>
                                   <ion-img src="assets/images/Chevron.svg" style="float: right;"></ion-img>
                               </ion-item>
-                              <ion-item lines="none">
+                              <ion-item lines="none"  @click='toMyQrCode'>
                                   <ion-icon src="assets/images/bookmark.svg"></ion-icon>
                                   <ion-label class="card-label" style="float: left;">{{ $t("Bookmark") }}</ion-label>
                                   <ion-img src="assets/images/Chevron.svg" style="float: right;"></ion-img>
@@ -97,12 +97,12 @@
                   <ion-card class="three_sum">
                       <ion-card-content>
                           <ion-list>
-                              <ion-item lines="full">
+                              <ion-item lines="full" @click="toFeedback">
                                   <ion-icon src="assets/images/feedback.svg"></ion-icon>
                                   <ion-label class="card-label" style="float: left;">{{ $t("Give us a feedback") }}</ion-label>
                                   <ion-img src="assets/images/Chevron.svg" style="float: right;"></ion-img>
                               </ion-item>
-                              <ion-item lines="full" >
+                              <ion-item lines="full" @click="toUniversityRev">
                                   <ion-icon src="assets/images/university.svg"></ion-icon>
                                   <ion-label class="card-label" style="float: left;">{{ $t("Rate an institution") }}</ion-label>
                                   <ion-img src="assets/images/Chevron.svg" style="float: right;"></ion-img>
@@ -130,7 +130,7 @@
                                   <ion-label class="card-label" style="float: left;">{{ $t("Change Currency") }}</ion-label>
                                   <ion-img src="assets/images/Chevron.svg" style="float: right;"></ion-img>
                               </ion-item>
-                              <ion-item v-if="!detail_flag" lines="full" @click='toHigherSecondaryModal("Settings")'>
+                              <ion-item v-if="!detail_flag" lines="full">
                                   <ion-icon :src="notifications"></ion-icon>
                                   <ion-label class="card-label" style="float: left;">{{ $t("Notifications") }}</ion-label>
                                   <ion-img src="assets/images/Chevron.svg" style="float: right;"></ion-img>
@@ -196,10 +196,11 @@
 
     import ProfileIntroModal from "@/components/modal/profilemodal/ProfileIntroModal.vue";
     import ChangeCurrencyModal from "@/components/modal/profilemodal/ChangeCurrencyModal.vue";
+    import FeedbackModal from "@/components/modal/rating/FeedbackModal.vue";
+    import UniversityReviewModal from "@/components/modal/rating/UniversityReviewModal.vue";
     import SettingModal from "@/components/modal/profilemodal/SettingModal.vue";
     import SignupModal from "@/components/modal/SignupModal.vue";
     import LogOutModal from "@/components/modal/profilemodal/LogOutModal.vue";
-    import HigherSecondaryModal from "@/components/modal/profilemodal/HigherSecondaryModal.vue";
 
   export default defineComponent({
     name: "ProfileMain",
@@ -222,16 +223,17 @@
         const router = useRouter();
         const userImgUrl = '/assets/images/usr-radius.svg';
         const qrImgUrl = '/assets/images/qrcodesample.svg';
-        const toHigherSecondaryModal = async(title) => {
-                const modal = await modalController.create({
-                    component: HigherSecondaryModal,
-                    componentProps: {
-                        title: title
-                    },
-                    initialBreakpoint: 0.9,
-                });
-                modal.present();
-            }
+        
+        const toQrMain = () => {
+            router.push("profile/qrmain");
+        }
+        const toMyQrCode = () => {
+            router.push("/bookmark/myqrcode");
+        }
+        const toEvents = () => {
+            router.push("/events");
+        }
+        
         const toDocument = () => {
             router.push("/profile/mydocument");
         }
@@ -278,6 +280,20 @@
         const changeDetail = () => {
             detail_flag.value = !detail_flag.value;
         }
+        const toFeedback = async () => {
+            const modal = await modalController.create({
+                component: FeedbackModal,
+                initialBreakpoint: 0.6,
+            });
+            modal.present();
+        }
+        const toUniversityRev = async () => {
+            const modal = await modalController.create({
+                component: UniversityReviewModal,
+                initialBreakpoint: 0.95,
+            });
+            modal.present();
+        }
         const toLogout = async () => {
             const modal = await modalController.create({
                 component: LogOutModal,
@@ -310,7 +326,11 @@
             toLogout,
             toMajorMatch,
             toCounselor,
-            toHigherSecondaryModal,
+            toMyQrCode,
+            toQrMain,
+            toEvents,
+            toFeedback,
+            toUniversityRev,
         };
     },
   });
