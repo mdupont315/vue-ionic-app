@@ -175,6 +175,14 @@ body.qrscanner .scanner-hide {
     visibility: hidden;
 }
 
+.float-left {
+    float: left;
+}
+
+.float-right {
+    float: right;
+}
+
 .txt-09 {
     font-size: 0.9rem;
 }
@@ -188,19 +196,19 @@ body.qrscanner .scanner-hide {
 }
 
 .txt-16 {
-    font-size: 16px;
+    font-size: 16px !important;
 }
 
 .txt-20 {
-    font-size: 20px;
+    font-size: 20px !important;
 }
 
 .txt-26 {
-    font-size: 26px;
+    font-size: 26px !important;
 }
 
 .txt-37 {
-    font-size: 37px;
+    font-size: 37px !important;
 }
 
 .color-1 {
