@@ -14,8 +14,8 @@
                       <p style="margin:0px">{{ $t(`${university_detail_datas.country}`) }}</p>
                   </ion-text>
                   
-                  <hr style="border-top: 1px solid gray; width: 250px;">
-                  <p class="gradient-text" style="margin-left: 8px; margin-right: 20px;">{{ $t(`Located in Ann Arbor, Michigan, the University of Michigan is a renowned institution known for its academic excellence, innovative research, and vibrant campus community. As one of the top public universities in the United States, Michigan offers a wide range of programs and opportunities for students to pursue their passions and achieve their academic and professional goals.`) }}</p>
+                  <hr class="under_line">
+                  <p class="gradient-text" v-if="university_detail_datas.description" style="margin-left: 8px; margin-right: 20px;">{{ university_detail_datas.description }}</p>
 
               </ion-row>
               <ion-row style="display:flex; flex-flow: column; ">
@@ -29,7 +29,7 @@
                           <ion-img :src='userImgUrl' class="list-item-img"/>
                           <div style="display: flex; flex-flow: column; margin-bottom: 5px;">
                             <ion-text>
-                                <p  class="list-item-title">{{ $t(`Approx. 13,000`) }}</p>
+                                <p  class="list-item-title">{{ $t(`Approx. `) }}{{ university_detail_datas.number_of_students }}</p>
                             </ion-text>
                             <ion-text>
                                 <p  class="list-item-content">{{ $t(`Number of international students`) }}</p>
@@ -40,7 +40,7 @@
                           <ion-img :src='moneyUrl' class="list-item-img"/>
                           <div style="display: flex; flex-flow: column;">
                             <ion-text>
-                                <p class="list-item-title">{{ $t(`Approx. $32,760`) }}</p>
+                                <p class="list-item-title">{{ $t(`Approx. `) }}{{ university_detail_datas.avg_annual_fee }}</p>
                             </ion-text>
                             <ion-text>
                                 <p class="list-item-content">{{ $t(`Annual fees`) }}</p>
@@ -63,12 +63,12 @@
               <ion-row>
                 <ion-col  style="display: flex; flex-flow: column;">
                   <ion-card style="border-radius: 6px;">
-                    <ion-card-content style="padding-top: 0;">
-                      <div style="display: flex; flex-flow: row;">
-                        <ion-text>
+                    <ion-card-content style="padding-top: 0;" class="flex-col">
+                      <div>
+                        <ion-text class="float-left">
                           <p class="list-item-title">{{ $t(`${university_detail_datas.is_elite?"Listed as an Elite University":"Not Listed as an Elite University"}`)}}</p>
                         </ion-text>
-                        <ion-img :src='urImgUrl' style=" width: 50.8px;height: 32.6px; padding-top:0; margin-left:85px"/>
+                        <ion-img  class="float-right" :src='urImgUrl' />
                       </div>
                       <ion-text style="font-size: 12px;">{{$t(`Only ${university_detail_datas.total_elite} Elite universities listed in UNIRANKS®`)}}</ion-text>
                     </ion-card-content>

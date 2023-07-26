@@ -11,7 +11,7 @@
                 </ion-col>
               </ion-row>
               <ion-row class="ion-padding-top">
-                <ion-col size="12" style="display: flex; flex-flow: row;"  @click="toUniversityMore">
+                <ion-col size="12" class="flex-row"  @click="toUniversityMore">
                     <ion-img :src='uniImgUrl' class="leftImg"/>
                     <ion-text class="mid-title">
                         <p class="ion-text-left" style="margin:0px">{{ $t(`University Rankings | ${total_universities}`) }}</p>
@@ -22,19 +22,19 @@
                   <div v-for="university in universities" :key="university.id">
                     <ion-card @click="toUniversityDetailModal(university.id)">
                         <ion-card-content>
-                            <div style="display: flex; flex-flow: row;">
+                            <div class="flex-row">
                               <ion-img :src='university.logo_url' class="leftImg"/>
                               <div style="display: flex; flex-flow: column;" class="university-header">
                                 <ion-text>{{`Local #${university.local_position} | Global #${university.global_position}`}}</ion-text>
                                 <ion-text>Top University</ion-text>
                               </div>
                             </div>
-                            <hr style="border-top: 1px solid #606060;"/>
+                            <hr class="under_line" style="width: 100%;"/>
                             <div style="display: flex; flex-flow: column;">
                               <ion-text class="university-name">{{ short_name(university.university_name) }}</ion-text>
                               <ion-text class="university-country-name">{{ university.country }}</ion-text>
                             </div>
-                            <hr style="border-top: 1px solid #606060;"/>
+                            <hr class="under_line" style="width: 100%;"/>
                             <ion-text class="university-status">{{ university.status }}</ion-text>
                         </ion-card-content>
                     </ion-card>
@@ -42,7 +42,7 @@
                 </ion-col>
               </ion-row>
               <ion-row class="ion-padding-top">
-                <ion-col size="12" style="display: flex; flex-flow: row;">
+                <ion-col size="12" class="flex-row">
                     <ion-img :src='stuImgUrl' class="leftImg"/>
                     <ion-text class="mid-title">
                         <p class="ion-text-left" style="margin:0px">{{ $t(`Programs | ${total_programs}`) }}</p>
@@ -54,12 +54,12 @@
                     <ion-card @click="toProgramDetail(program.id)">
                         <ion-card-content style="height: max-content;">
                             <ion-text class="program-name" style="height:30%">{{ short_name(program.title) }}</ion-text>
-                            <hr style="border-top: 1px solid #606060;"/>
-                            <div style="display: flex; flex-flow: row;">
-                              <ion-img :src="uni_url" class="leftImg"/>                                
+                            <hr class="under_line" style="width: 100%;"/>
+                            <div class="flex-row">
+                              <ion-img :src="program.university.logo_url" class="leftImg"/>                                
                               <ion-text class="program-university-name">{{ short_name(program.university.university_name) }}</ion-text>
                             </div>
-                            <hr style="border-top: 1px solid #606060;"/>
+                            <hr class="under_line" style="width: 100%;"/>
                             <ion-text style="display: inline; margin-right: 60%;" class="program-fee">UK</ion-text>
                             <ion-text style="display: inline;" class="program-fee">$500</ion-text>
                         </ion-card-content>
@@ -254,7 +254,6 @@ export default defineComponent({
             id:id
         },
         initialBreakpoint: 0.95,
-        // breakpoints: [0, 0.95],
       });
       modal.present();
     }
@@ -262,9 +261,6 @@ export default defineComponent({
       if (!dataLoaded.value) {
         showLoading();
         Promise.all([loadData()]).then(() => {
-            // console.log(programs.value);
-            // console.log(dataLoaded.value);
-            // console.log(universities.value[0]);
             hideLoading();
             changeLoadedVal();
         })
@@ -328,35 +324,12 @@ ion-text {
   text-align: left;
   color: #1c345a;
 }
-
-ion-toolbar {
-  position: absolute;
-  background: #1c345a;
-  text-align: center;
-  border-bottom-left-radius: 25px;
-  border-bottom-right-radius: 25px;
-}
-
-ion-searchbar {
-  width: 346px;
-  height: 49.6px;
-  border-color: #7fc4fd;
-  border-width: 1px;
-  border-style: solid;
-  border-radius: 15px;
-  background: #ffffff;
-  margin-left: 10px;
-  margin-top: 15px;
-  margin-bottom: 15px;
-  text-align: center;
-  padding-top: 15px;
-}
 ion-card {
   width: 189px;
   height: 169px;
   border-radius: 15px;
   filter: drop-shadow(0px 3px 3px rgba(0,0,0,0.16 ));
-  margin: 0 10px 0 0;
+  margin: 0 20px 0 0;
   background: #ffffff
 }
 ion-card-header {

@@ -1,8 +1,8 @@
 <template>
   <ion-page style="height:96%">
-    <ion-content :fullscreen="false" class="ion-padding-top">
+    <ion-content :fullscreen="false">
       <ion-grid style="display:flex; flex-flow: column; justify-content: center;">
-        <ion-row class="ion-padding-top">
+        <ion-row>
           <ion-col size="12" style=" width: 100%; justify-content: center">
             <ion-text class="big-title">
                 <p class="ion-text-center" style="margin-bottom: 0;">{{ $t(`${country_detail_data?.data?.country_name}`) }}</p>
@@ -10,8 +10,8 @@
             <ion-text class="few-title">
                 <p class="ion-text-center" style="margin:0px">{{ $t(`${country_detail_data?.data?.number_of_universities} Universities`) }}</p>
             </ion-text>
-            <img :src='country_detail_data?.data?.flag_url' class="main-img"/>
-            <p class="gradient-text">Located in Ann Arbor, Michigan, the University of Michigan is a renowned institution known for its academic excellence, innovative research, and vibrant campus community. As one of the top public universities in the United States, Michigan offers a wide range of programs and opportunities for students to pursue their passions and achieve their academic and professional goals.</p>
+            <ion-img :src='country_detail_data?.data?.thumbnail_url' class="main-img"/>
+            <p class="gradient-text" v-if="country_detail_data?.data?.description">{{ country_detail_data?.data?.description }}</p>
             <ion-text class="mid-title">
                 <p class="ion-text-left" style="margin:0px">Read more</p>
             </ion-text>
@@ -23,7 +23,7 @@
             </ion-text>
             <ion-img :src='nextImgUrl' class="rightImg"/>
           </ion-col>
-          <ion-col class="scrolling" style="display: flex; flex-flow: row;">
+          <ion-col class="scrolling flex-row" style="margin-bottom: 10%;">
             <div v-for="university in country_detail_data.universities" :key="university.id">
               <ion-card @click="toUniversityDetailModal(university.id)">
                 <ion-card-content>
@@ -34,13 +34,13 @@
                       <p>Top University</p>
                     </div>
                   </div>
-                  <hr style="border-top: 1px solid #606060;"/>
+                  <hr class="under_line" style="width: 90%;"/>
                   <div style="display: flex; flex-flow: column;">
-                    <p class="university-name">{{ $t(`university.university_name`) }}</p>
-                    <p class="university-country-name">{{ $t(`university.country`) }}</p>
+                    <p class="university-name">{{ short_name(university.university_name) }}</p>
+                    <p class="university-country-name">{{ university.country }}</p>
                   </div>
-                  <hr style="border-top: 1px solid #606060;"/>
-                  <p class="university-status">{{ $t(`university.status`) }}</p>
+                  <hr class="under_line" style="width: 90%;"/>
+                  <p class="university-status">{{ university.status }}</p>
                 </ion-card-content>
               </ion-card>
             </div>
@@ -111,9 +111,16 @@ export default defineComponent({
             id:id
         },
         initialBreakpoint: 0.95,
-        breakpoints: [0, 0.95],
       });
       modal.present();
+    }
+    const short_name = (name) => {
+      let newname = name;
+      if (name.length>19) {
+        newname = name.substring(0, 20);
+        newname = `${newname}...`;
+      }
+      return newname;
     }
     onBeforeMount(() => {
       if (!dataLoaded.value) {
@@ -129,6 +136,7 @@ export default defineComponent({
       imgUrl,
       uniImgUrl,
       nextImgUrl,
+      short_name,
       country_detail_data,
       toUniversityDetailModal
     };
@@ -138,6 +146,9 @@ export default defineComponent({
 <style scoped>
 ion-content {
   --background: #ffffff;
+}
+ion-grid {
+  padding: 0 10px 0 10px;
 }
 ion-text {
   padding:0%;
@@ -161,20 +172,13 @@ ion-text {
 ion-card {
   width: 189px;
   height: 169px;
-
   border-radius: 15px;
-
   filter: drop-shadow(0px 3px 3px rgba(0,0,0,0.16 ));
-  margin: 0 10px 0 0;
+  margin: 0 25px 0 0;
   background: #ffffff
 }
-ion-card-header {
-  padding-left: 10px;
-  padding-top:0px;
-  padding-bottom: 0;
-}
 ion-card-content {
-  padding: 5px;
+  padding: 8px;
 }
 .leftImg {
   width: 25px;
@@ -224,11 +228,12 @@ ion-card-content {
   text-align: left;
   color: #606060;
 }
+ion-img::part(image) {
+  border-radius: 15px;
+}
 .main-img {
   width: 100%;
   height: auto;
-  border-radius: 15px !important;
-  filter: drop-shadow(0px 3px 3px rgba(0,0,0,0.16 ));
 }
 .gradient-text {
   font-size: 16px;
