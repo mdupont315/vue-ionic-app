@@ -13,10 +13,10 @@
             <ion-img :src='country_detail_data?.data?.thumbnail_url' class="main-img"/>
             <p class="gradient-text" v-if="country_detail_data?.data?.description">{{ country_detail_data?.data?.description }}</p>
             <ion-text class="mid-title">
-                <p class="ion-text-left" style="margin:0px">Read more</p>
+                <p class="ion-text-left" style="margin-bottom:0px">{{ $t("Read more") }}</p>
             </ion-text>
           </ion-col>
-          <ion-col size="12" style="display: flex; flex-flow: row;">
+          <ion-col size="12" class="flex-row">
             <ion-img :src='uniImgUrl' class="leftImg"/>
             <ion-text class="mid-title">
                 <p class="ion-text-left" style="margin:0px">{{ $t(`University Rankings | ${country_detail_data?.data?.number_of_universities}`) }}</p>
@@ -27,15 +27,15 @@
             <div v-for="university in country_detail_data.universities" :key="university.id">
               <ion-card @click="toUniversityDetailModal(university.id)">
                 <ion-card-content>
-                  <div style="display: flex; flex-flow: row;">
+                  <div class="flex-row">
                     <ion-img :src='university.logo_url' class="leftImg"/>
-                    <div style="display: flex; flex-flow: column;" class="university-header">
+                    <div class="university-header flex-col">
                       <p>{{$t(`Local #${university.local_position} | Global #${university.global_position}`)}}</p>
-                      <p>Top University</p>
+                      <p>{{ $t("Top University") }}</p>
                     </div>
                   </div>
                   <hr class="under_line" style="width: 90%;"/>
-                  <div style="display: flex; flex-flow: column;">
+                  <div>
                     <p class="university-name">{{ short_name(university.university_name) }}</p>
                     <p class="university-country-name">{{ university.country }}</p>
                   </div>
@@ -233,7 +233,8 @@ ion-img::part(image) {
 }
 .main-img {
   width: 100%;
-  height: auto;
+  height: 40vw;
+  object-fit: fill;
 }
 .gradient-text {
   font-size: 16px;
