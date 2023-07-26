@@ -332,6 +332,7 @@ ion-card-content {
   background: #ffffff;
   padding-left: 5px;
   margin-top: 0px;
+  margin-left: 0px;
 }
 .program-title {
   font-family: "Calibri";
@@ -421,7 +422,8 @@ ion-card-content {
     height: auto;
     border-radius: 6px;
     filter: drop-shadow(0px 3px 3px rgba(0,0,0,0.16 ));
-    background: #ffffff
+    background: #ffffff;
+    margin: 0 0 10px 0;
 }
 .program-title-name {
     font-family: "Calibri";

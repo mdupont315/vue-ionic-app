@@ -2,7 +2,7 @@
     <ion-page>
         <header-section />
         <ion-content :fullscreen="true" class="ion-padding-top">
-            <ion-grid style="display:flex; flex-flow: column; justify-content: center; margin-top: 12%;">
+            <ion-grid style="display:flex; flex-flow: column; justify-content: center; margin-top: 15%;">
                 <ion-row class="ion-padding-top">
                     <ion-col class="scrolling">
                         <div v-for="tabTitle in tabTitles" :key="tabTitle">
@@ -142,7 +142,6 @@ export default defineComponent({
               id:id
           },
           initialBreakpoint: 0.95,
-          breakpoints: [0, 0.95],
         });
         modal.present();
     }
