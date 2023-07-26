@@ -92,7 +92,6 @@ export default defineComponent({
             id: id,
         },
         initialBreakpoint: 0.96,
-        breakpoints: [0, 0.96],
       });
       modal.present();
     }
