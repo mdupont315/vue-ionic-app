@@ -207,7 +207,6 @@ ion-col {
   margin-right:18px;
 }
 .mid-title {
-  font-family: "Calibri";
   font-size: 20px;
   font-weight: normal;
   font-style: normal;
@@ -217,7 +216,6 @@ ion-col {
   margin-right: auto;
 }
 .mid-small-title {
-  font-family: "Calibri";
   font-size: 16px;
   font-weight: normal;
   font-style: normal;
@@ -227,7 +225,6 @@ ion-col {
   margin-right: 18px;
 }
 .center-title {
-  font-family: "Calibri";
   font-size: 37px;
   font-weight: bold;
   font-style: normal;
@@ -264,7 +261,6 @@ ion-col {
   margin-top: 0px;
 }
 .program-title {
-  font-family: "Calibri";
   font-size: 16px;
   font-weight: bold;
   font-style: normal;
@@ -273,7 +269,6 @@ ion-col {
 }
 
 .program-count {
-  font-family: "Calibri";
   font-size: 16px;
   font-weight: normal;
   font-style: normal;
@@ -281,7 +276,6 @@ ion-col {
   color: #203456;
 }
 .university-name {
-  font-family: "Calibri";
   font-size: 16px;
   font-weight: normal;
   font-style: normal;
@@ -290,7 +284,6 @@ ion-col {
   margin-right: 10%;
 }
 .university-ranking {
-  font-family: "Calibri";
   font-size: 12px;
   font-weight: 300;
   font-style: normal;
@@ -298,14 +291,12 @@ ion-col {
   color: #203456;
 }
 .university-country{
-  font-family: "Calibri";
   font-size: 12px;
   font-weight: normal;
   font-style: normal;
   color: #606060;
 }
 .university-status {
-  font-family: "Calibri";
   font-size: 12px;
   font-weight: normal;
   font-style: normal;
@@ -319,7 +310,6 @@ ion-col {
   padding-right: 5px;
 }
 .nomatch-title {
-  font-family: "Calibri";
   font-size: 20px;
   font-weight: normal;
   font-style: normal;
