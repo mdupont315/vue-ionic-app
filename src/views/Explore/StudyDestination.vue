@@ -22,12 +22,12 @@
                 </ion-col>
               </ion-row>
               <ion-row>
-                <ion-col  class=" scrolling">
+                <ion-col  class="scrolling">
                   <div v-for="country in study_dest_data.countries" :key="country.id">
                       <div class="div-size" @click="()=>toDetailCountry(country.id)">
-                          <ion-img :src='country.flag_url' class="leftImg"/>
+                          <ion-img :src='country.thumbnail_url' class="leftImg"/>
                           <p class="country-name" style="margin-top: 0px; margin-bottom: 0px;">{{ country.country_name }}</p>
-                          <p class="university-count" style="margin-top: 0px; margin-bottom: 0px;">150 Universities</p>
+                          <p class="university-count" style="margin-top: 0px; margin-bottom: 0px;">{{country.number_of_universities}} {{ $t(`Universities`) }}</p>
                       </div>
                   </div>
                 </ion-col>
@@ -126,6 +126,9 @@ ion-content {
 ion-text {
   padding:0%;
 }
+ion-img::part(image) {
+  border-radius: 50%;
+}
 .big-title {
   font-family: "Calibri";
   font-size: 30px;
@@ -143,13 +146,11 @@ ion-text {
   color: #1c345a;
 }
 .div-size {
-  width: 120px;
-  height: auto;
+  margin: 0 10px;
 }
 .leftImg {
   width: 110px;
   height: 110px;
-  border-radius: 50%;
 }
 .rightImg {
   width: 7.7px;

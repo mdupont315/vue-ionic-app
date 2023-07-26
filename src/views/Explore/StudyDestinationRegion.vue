@@ -10,11 +10,11 @@
                     </ion-text>
                 </ion-col>
               </ion-row>
-              <ion-row class="ion-padding-top">
+              <ion-row class="ion-padding-top" v-if="region_detail_data.description">
                 <ion-col>
                   <ion-card>
                       <ion-card-content>
-                        <p>{{ $t(`Unlock a world of educational opportunities in North America. Experience top-quality education, vibrant campus life, and diverse cultural experiences. Embark on a transformative journey that will shape your future. Start your study abroad adventure today!`) }}</p>
+                        <p class="txt-16 color-2">{{ region_detail_data.description }}</p>
                       </ion-card-content>
                     </ion-card>
                 </ion-col>
@@ -28,16 +28,30 @@
                   <ion-img :src='nextImgUrl' class="rightImg"/>
                 </ion-col>
                 <ion-col  style="display: flex; flex-flow: column;">
-                  <ion-card style="border-radius: 6px;">
+                  <ion-card>
                     <ion-card-content style="padding-top: 0;">
-                      <p style="float:left; margin-top: 7px;">{{ $t(`${region_detail_data.number_of_elite_universities} Listed as an Elite University`)}}</p>
-                      <ion-img :src='uniImgUrl' style="float: right; width: 50.8px;height: 32.6px; padding-top:0"/>
+                      <p class="txt-20 color-3 float-left">
+                        {{region_detail_data.number_of_elite_universities}}
+                        {{ $t(`Listed as an `)}}
+                        <b>{{ $t(`Elite `)}}</b>
+                        {{ $t(`University`)}}
+                      </p>
+                      <div class="float-right rank-img">
+                        <ion-img :src='uniImgUrl'/>
+                      </div>
                     </ion-card-content>
                   </ion-card>
-                  <ion-card style="border-radius: 6px;">
+                  <ion-card>
                     <ion-card-content style="padding-top: 0;">
-                      <p style="float:left; margin-top: 7px;">{{ $t(`${region_detail_data.number_of_top_universities} Listed as Top universities`) }}</p>
-                      <ion-img :src='unlock_sec' style="float: right; width: 50.8px;height: 32.6px; padding-top:0"/>
+                      <p class="txt-20 color-3 float-left">
+                        {{region_detail_data.number_of_top_universities}}
+                        {{ $t(`Listed as `)}}
+                        <b>{{ $t(`Top `)}}</b>
+                        {{ $t(`universities`)}}
+                      </p>
+                      <div class="float-right rank-img">
+                        <ion-img :src='unlock_sec' class=""/>
+                      </div>
                     </ion-card-content>
                   </ion-card>
                 </ion-col>
@@ -49,24 +63,13 @@
                     </ion-text>
                 </ion-col>
               </ion-row>
-              <ion-row class="ion-padding-top" style="display: flex;flex-flow: row;">  
-                <ion-col size="6" style="margin-right:30px">
-                  <div v-for="country in firstHalf" :key="country.id">
+              <ion-row class="ion-padding-top d-flex-start">  
+                <ion-col size="6" class="ion-padding" v-for="country in region_detail_data.countries" :key="country.id">
                     <div class="div-size" @click="()=>toDetailCountry(country.id)">
-                      <ion-img :src='country.flag_url' class="flag-img"/>
-                      <p class="country-name" style="margin-top: 0px; margin-bottom: 0px;">{{ $t(`country.country_name`) }}</p>
-                      <p class="university-count" style="margin-top: 0px; margin-bottom: 0px;">{{$t(`${country.number_of_universities} Universities`)}}</p>
+                      <ion-img :src='country.thumbnail_url' class="flag-img ion-padding"/>
+                      <p class="country-name txt-26 color-3 ion-no-margin">{{ $t(`${country.country_name}`) }}</p>
+                      <p class="university-count txt-20 color-3 ion-no-margin">{{$t(`${country.number_of_universities} Universities`)}}</p>
                     </div>
-                  </div>
-                </ion-col>
-                <ion-col size="6" >
-                  <div v-for="country in secondHalf" :key="country.id">
-                    <div class="div-size" @click="()=>toDetailCountry(country.id)">
-                      <ion-img :src='country.flag_url' class="flag-img"/>
-                      <p class="country-name" style="margin-top: 0px; margin-bottom: 0px;">{{ $t(`country.country_name`) }}</p>
-                      <p class="university-count" style="margin-top: 0px; margin-bottom: 0px;">{{$t(`${country.number_of_universities} Universities`) }}</p>
-                    </div>
-                  </div>
                 </ion-col>
               </ion-row>
             </ion-grid>
@@ -124,8 +127,6 @@ export default defineComponent({
     const nextImgUrl = 'assets/images/uniranks.svg';
     const cupImgUrl = 'assets/images/cup.svg';
     const unlock_sec = 'assets/images/Icon-awesome-globe-a.svg';
-    const firstHalf = ref([]);
-    const secondHalf = ref([]);
     const toDetailCountry = async (id) => {
       const modal = await modalController.create({
         component: StudyDestinationCountryModal,
@@ -143,9 +144,6 @@ export default defineComponent({
       if (!dataLoaded.value) {
         showLoading();
         Promise.all([loadStudyDestDataDetail(id)]).then(() => {
-            let items = region_detail_data.value.countries;
-            secondHalf.value = items.slice(0, Math.floor(items.length / 2));
-            firstHalf.value = items.slice(Math.floor(items.length/2));
             changeLoadedVal()
             hideLoading();
         })
@@ -158,11 +156,7 @@ export default defineComponent({
       nextImgUrl,
       unlock_sec,
       cupImgUrl,
-
       region_detail_data,
-      firstHalf,
-      secondHalf,
-
       toDetailCountry
     };
   },
@@ -174,6 +168,9 @@ ion-content {
 }
 ion-text {
   padding:0%;
+}
+ion-img.flag-img::part(image) {
+  border-radius: 50%;
 }
 .big-title {
   font-family: "Calibri";
@@ -194,14 +191,10 @@ ion-text {
 ion-card {
   width: 100%;
   height: auto;
-  border-radius: 15px;
+  border-radius: 6px;
   filter: drop-shadow(0px 3px 3px rgba(0,0,0,0.16 ));
-  padding-top:5px;
-  padding-bottom: 5px;
-  margin-bottom: 5px;
-  margin-left:0px;
-  margin-top:0px;
-  margin-right:0px;
+  margin: 10px 0 5px;
+  padding: 10px 0;
   background: #ffffff
 }
 ion-card-header {
@@ -239,10 +232,18 @@ ion-card-header {
 .div-size {
   width: 100%;
   height: auto;
-  margin-bottom: 13px;
 }
 .flag-img {
   width: 100%;
   height: auto;  
+}
+.rank-img {
+  width: 60px;
+  text-align: center;
+}
+.rank-img ion-img::part(image) {
+  width: auto;
+  height: auto;
+  margin: auto;
 }
 </style>
