@@ -107,7 +107,7 @@
                                   <ion-label class="card-label" style="float: left;">{{ $t("Rate an institution") }}</ion-label>
                                   <ion-img src="assets/images/Chevron.svg" style="float: right;"></ion-img>
                               </ion-item>
-                              <ion-item lines="none">
+                              <ion-item lines="none" @click="toIdpRev">
                                   <ion-icon src="assets/images/rate-agent.svg"></ion-icon>
                                   <ion-label class="card-label" style="float: left;">{{ $t("Rate an Agent") }}</ion-label>
                                   <ion-img src="assets/images/Chevron.svg" style="float: right;"></ion-img>
@@ -198,6 +198,7 @@
     import ChangeCurrencyModal from "@/components/modal/profilemodal/ChangeCurrencyModal.vue";
     import FeedbackModal from "@/components/modal/rating/FeedbackModal.vue";
     import UniversityReviewModal from "@/components/modal/rating/UniversityReviewModal.vue";
+    import IdpReviewModal from "@/components/modal/rating/IdpReviewModal.vue";
     import SettingModal from "@/components/modal/profilemodal/SettingModal.vue";
     import SignupModal from "@/components/modal/SignupModal.vue";
     import LogOutModal from "@/components/modal/profilemodal/LogOutModal.vue";
@@ -294,6 +295,13 @@
             });
             modal.present();
         }
+        const toIdpRev = async () => {
+            const modal = await modalController.create({
+                component: IdpReviewModal,
+                initialBreakpoint: 0.95,
+            });
+            modal.present();
+        }
         const toLogout = async () => {
             const modal = await modalController.create({
                 component: LogOutModal,
@@ -331,6 +339,7 @@
             toEvents,
             toFeedback,
             toUniversityRev,
+            toIdpRev,
         };
     },
   });

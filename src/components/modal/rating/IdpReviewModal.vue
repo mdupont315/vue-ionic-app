@@ -8,21 +8,21 @@
                     </ion-col>
                     <ion-col size="12" class="flex-row">
                         <ion-img :src="uni_url" style="width: 50px;"></ion-img>
-                        <ion-text class="university-name ion-margin" style="margin-left: 9px;">{{ $t("University of Michigan") }}</ion-text>
+                        <ion-text class="university-name ion-margin" style="margin-left: 9px;">{{ $t("idp International Education Specialists") }}</ion-text>
                     </ion-col>
                     <ion-col size="12" class="flex-row">
                         <ion-text class="txt-16 color-5">
                             {{ $t("Share your feedback and rate the")}}
-                            <b>{{ $t("University of Michigan") }}</b>
+                            <b>{{ $t("idp International Education Specialists") }}</b>
                         </ion-text>
                     </ion-col>
                     <hr class="under_line" style="width: 90%;"/>
                     <ion-col size="12" class="flex-col">
                         <ion-text class="txt-19 color-3">
-                            {{ $t("Campus")}}
+                            {{ $t("Reputation and Experience")}}
                         </ion-text>
                         <ion-text class="txt-16 color-2 txt-bold-300">
-                            {{ $t("Evaluate the campus environment, extracurricular activities, clubs, organizations, and student life.")}}
+                            {{ $t("Reputation and experience of the education agent, expertise, knowledge of the education system, and relationships with universities or institutions.")}}
                         </ion-text>
                         <div class="flex-row" style="margin-top: 9px;">
                             <div :class="number.id>7?'circle-number-white':'circle-number-black'" v-for="number in numbers" :key="number.id"
@@ -32,10 +32,10 @@
                     </ion-col>
                     <ion-col size="12" class="flex-col">
                         <ion-text class="txt-19 color-3">
-                            {{ $t("Student Satisfaction and Support")}}
+                            {{ $t("Knowledge of Study Destinations")}}
                         </ion-text>
                         <ion-text class="txt-16 color-2 txt-bold-300">
-                            {{ $t("Student satisfaction, support services, counseling, career guidance, and mentoring. Positive student experiences and support systems.")}}
+                            {{ $t("agent's familiarity with the study destinations you are interested in. information about universities, programs, entry requirements, and visa regulations.")}}
                         </ion-text>
                         <div class="flex-row" style="margin-top: 9px;">
                             <div :class="number.id>7?'circle-number-white':'circle-number-black'" v-for="number in numbers" :key="number.id"
@@ -45,10 +45,10 @@
                     </ion-col>
                     <ion-col size="12" class="flex-col">
                         <ion-text class="txt-19 color-3">
-                            {{ $t("Program Offerings")}}
+                            {{ $t("Services and Support")}}
                         </ion-text>
                         <ion-text class="txt-16 color-2 txt-bold-300">
-                            {{ $t("Assess the range and quality of programs offered by the university. Consider whether they align with your academic and career goals.")}}
+                            {{ $t("Range of services provided by the agent, assistance with university selection, application process, document preparation, visa application.")}}
                         </ion-text>
                         <div class="flex-row" style="margin-top: 9px;">
                             <div :class="number.id>7?'circle-number-white':'circle-number-black'" v-for="number in numbers" :key="number.id"
@@ -58,10 +58,10 @@
                     </ion-col>
                     <ion-col size="12" class="flex-col">
                         <ion-text class="txt-19 color-3">
-                            {{ $t("Enrolment Process")}}
+                            {{ $t("Ethical Practices")}}
                         </ion-text>
                         <ion-text class="txt-16 color-2 txt-bold-300">
-                            {{ $t("Clear and Transparent Information, Efficient Communication, Streamlined Application Process, Supportive Staff, Application Tracking and Updates.")}}
+                            {{ $t("Ethically and follows professional standards, Prioritize your best interests, provide unbiased advice, and disclose any potential conflicts.")}}
                         </ion-text>
                         <div class="flex-row" style="margin-top: 9px;">
                             <div :class="number.id>7?'circle-number-white':'circle-number-black'" v-for="number in numbers" :key="number.id"
@@ -71,10 +71,10 @@
                     </ion-col>
                     <ion-col size="12" class="flex-col">
                         <ion-text class="txt-19 color-3">
-                            {{ $t("Recognition Reputation")}}
+                            {{ $t("Transparency and Communication")}}
                         </ion-text>
                         <ion-text class="txt-16 color-2 txt-bold-300">
-                            {{ $t("The ease of using the university certificate after graduation, did you find this university well known and recognized? rate your experience.")}}
+                            {{ $t("Clearly explain their services, fees, and any contractual obligations, Responsive and timely communication, keep you informed about process.")}}
                         </ion-text>
                         <div class="flex-row" style="margin-top: 9px;">
                             <div :class="number.id>7?'circle-number-white':'circle-number-black'" v-for="number in numbers" :key="number.id"
@@ -84,10 +84,10 @@
                     </ion-col>
                     <ion-col size="12" class="flex-col">
                         <ion-text class="txt-19 color-3">
-                            {{ $t("Quality Digitalization")}}
+                            {{ $t("Knowledge of Scholarships and Funding")}}
                         </ion-text>
                         <ion-text class="txt-16 color-2 txt-bold-300">
-                            {{ $t("Robust Online Learning Platform, Technological Infrastructure, Virtual Classroom Experience, Online Course Content, Digital Library, User Experience.")}}
+                            {{ $t("Ability to provide guidance on available scholarships and assist you in applying for financial support.")}}
                         </ion-text>
                         <div class="flex-row" style="margin-top: 9px;">
                             <div :class="number.id>7?'circle-number-white':'circle-number-black'" v-for="number in numbers" :key="number.id"
@@ -97,10 +97,10 @@
                     </ion-col>
                     <ion-col size="12" class="flex-col">
                         <ion-text class="txt-19 color-3">
-                            {{ $t("Career Services and Internship")}}
+                            {{ $t("Transparency and Communication")}}
                         </ion-text>
                         <ion-text class="txt-16 color-2 txt-bold-300">
-                            {{ $t("The availability and effectiveness of career services, internship programs, and connections with industry partners.")}}
+                            {{ $t("Clearly explain their services, fees, and any contractual obligations, Responsive and timely communication, keep you informed about process.")}}
                         </ion-text>
                         <div class="flex-row" style="margin-top: 9px;">
                             <div :class="number.id>7?'circle-number-white':'circle-number-black'" v-for="number in numbers" :key="number.id"
@@ -110,10 +110,10 @@
                     </ion-col>
                     <ion-col size="12" class="flex-col">
                         <ion-text class="txt-19 color-3">
-                            {{ $t("Financial Aid and Scholarships")}}
+                            {{ $t("Compliance with Laws and Regulations")}}
                         </ion-text>
                         <ion-text class="txt-16 color-2 txt-bold-300">
-                            {{ $t("The availability of financial aid packages, scholarships, and grants. Consider the university's commitment to supporting students financially.")}}
+                            {{ $t("awareness of visa regulations, privacy laws, and other legal requirements to protect your interests.")}}
                         </ion-text>
                         <div class="flex-row" style="margin-top: 9px;">
                             <div :class="number.id>7?'circle-number-white':'circle-number-black'" v-for="number in numbers" :key="number.id"
