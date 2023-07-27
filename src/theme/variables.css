@@ -195,6 +195,10 @@ body.qrscanner .scanner-hide {
     font-size: 1.5rem;
 }
 
+.txt-14 {
+    font-size: 14px !important;
+}
+
 .txt-16 {
     font-size: 16px !important;
 }

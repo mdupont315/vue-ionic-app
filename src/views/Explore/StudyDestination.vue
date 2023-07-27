@@ -191,7 +191,7 @@ ion-img::part(image) {
 }
 .under_line {
   width:80%;
-  border-top: 1px solid #606060;
+  border-top: 1px solid #bcbcbc;
   margin-top:0px;
   margin-bottom:0px;
 }
