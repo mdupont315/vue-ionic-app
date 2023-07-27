@@ -227,6 +227,10 @@ body.qrscanner .scanner-hide {
     color: #1c345a;
 }
 
+.color-4 {
+    color:#007A00
+}
+
 .txt-bold {
     font-weight: bold;
 }
