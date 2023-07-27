@@ -206,6 +206,10 @@ body.qrscanner .scanner-hide {
     font-size: 16px !important;
 }
 
+.txt-19 {
+    font-size: 19px !important;
+}
+
 .txt-20 {
     font-size: 20px !important;
 }
@@ -238,8 +242,19 @@ body.qrscanner .scanner-hide {
     color:#00aeef !important;
 }
 
+.color-5 {
+    color:#4b4b4b
+}
+
+.color-6 {
+    color:#393e46
+}
+
 .txt-bold {
     font-weight: bold;
+}
+.txt-bold-300 {
+    font-weight: 300;
 }
 
 .txt-step {
@@ -332,4 +347,11 @@ body.qrscanner .scanner-hide {
 
 .modal-wrapper{
     background: transparent !important;
+}
+
+.margin-y-9 {
+    margin:9px 0 9px 0;
+}
+ion-range {
+    --height: 18px !important;
 }
