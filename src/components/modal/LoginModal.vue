@@ -108,6 +108,7 @@
   import { defineComponent, ref, computed, onMounted } from 'vue';
   import {useI18n} from "vue-i18n";
   import {useLoadingStore} from "@/store/loading";
+  import { GoogleAuth } from '@codetrix-studio/capacitor-google-auth';
   import InputPassword from "@/components/InputPassword.vue";
   import InputField from "@/components/InputField.vue";
   import {useFormErrorAlert} from "@/shared/userError";
@@ -166,7 +167,21 @@
         return false;
       };
       const googleSignIn = async () => {
-        return;
+        try {
+          const userResponse = await GoogleAuth.signIn()
+          const token = userResponse.authentication.accessToken;
+          if(token) {
+            let formData = new FormData();
+            formData.append("access_token", token);
+            showLoading();
+            await google_login(formData);
+            hideLoading();
+            modalController.dismiss(null, 'cancel');
+            router.push('/profile');
+          }
+        } catch (error) {
+          console.error(error)
+        }
       };
       const openModal = async () => {
         const modal = await modalController.create({
@@ -191,6 +206,13 @@
           return;
         }
       };
+      onMounted(() => {
+        GoogleAuth.initialize({
+          clientId: '710490860507-68q3akbkpcd5h5pngbr1c50b7prfamci.apps.googleusercontent.com',
+          grantOfflineAccess: true,
+          scopes: ['profile', 'email'],
+        });
+      });
       return {
         email,
         errorEmail,
