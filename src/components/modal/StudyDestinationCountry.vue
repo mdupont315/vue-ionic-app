@@ -145,7 +145,7 @@ export default defineComponent({
 </script>
 <style scoped>
 ion-content {
-  --background: #ffffff;
+  --background: #f5f5f5;
 }
 ion-grid {
   padding: 0 10px 0 10px;
