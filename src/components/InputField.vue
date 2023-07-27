@@ -2,7 +2,7 @@
   <ion-item lines="full" :fill="fill" :mode="mode" @click="$emit('clickItem')">
     <ion-label :position="labelPosition" :color="labelColor">{{ $t(label) }}</ion-label>
     <ion-icon v-if="iconStart" slot="start" :icon="iconStart" @click="$emit('clickIconStart')"></ion-icon>
-    <ion-icon v-if="iconEnd" slot="end" :icon="iconEnd" @click="$emit('clickIconEnd')"></ion-icon>
+    <ion-icon v-if="iconEnd" slot="end" :icon="iconEnd" @click="$emit('clickIconEnd')" class="color-3"></ion-icon>
     <ion-input v-model="myValue" :type="type" :required="required" :placeholder="placeholder" :autofocus="autofocus" :readonly="readonly" />
   </ion-item>
 </template>
@@ -104,6 +104,7 @@ ion-item {
   width: 100%;
   --border-color: #029ae4;
   --ion-color-base: #029ae4 !important;
+  --ion-background-color: white;
 }
 ion-item::part(native) {
   border-radius: 15px;

@@ -153,6 +153,7 @@ export default defineComponent({
 <style scoped>
 ion-item {
   width: 100%;
+  --ion-background-color: white;
 }
 ion-item::part(native) {
   border-radius: 15px;

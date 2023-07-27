@@ -6,7 +6,7 @@
 
 <script lang="ts">
 import {computed, defineComponent, ref} from 'vue';
-import {eyeOffOutline, eyeOutline, personOutline} from "ionicons/icons";
+import {eyeOff, eye, personOutline} from "ionicons/icons";
 import InputField from "@/components/InputField.vue";
 
 export default defineComponent({
@@ -27,7 +27,7 @@ export default defineComponent({
   setup(props, {emit}) {
     const showPassword = ref(false);
     const showPassIcon = computed(() => {
-      return showPassword.value ? eyeOffOutline : eyeOutline;
+      return showPassword.value ? eyeOff : eye;
     })
     const passwordInputType = computed(() => {
       return showPassword.value ? 'text' : 'password';
