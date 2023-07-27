@@ -18,7 +18,6 @@ dependencies {
     implementation project(':capacitor-network')
     implementation project(':capacitor-splash-screen')
     implementation project(':capacitor-status-bar')
-    implementation project(':codetrix-studio-capacitor-google-auth')
 
 }
 apply from: "../../node_modules/cordova-plugin-ionic/src/android/cordovapluginionic.gradle"

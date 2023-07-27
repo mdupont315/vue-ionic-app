@@ -11,13 +11,7 @@ const config: CapacitorConfig = {
       showSpinner: true,
       spinnerColor:"#039be5",
       androidSpinnerStyle:"large",
-    },
-    GoogleAuth: {
-      clientId: '',
-      scopes: ['profile', 'email'],
-      serverClientId: '710490860507-68q3akbkpcd5h5pngbr1c50b7prfamci.apps.googleusercontent.com',
-      forceCodeForRefreshToken: true,
-    },
+    }
   }
 };
 
