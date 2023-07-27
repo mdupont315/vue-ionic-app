@@ -11,9 +11,9 @@
                 <p class="ion-text-center" style="margin:0px">{{ $t(`${country_detail_data?.data?.number_of_universities} Universities`) }}</p>
             </ion-text>
             <ion-img :src='country_detail_data?.data?.thumbnail_url' class="main-img"/>
-            <p class="gradient-text" v-if="country_detail_data?.data?.description">{{ country_detail_data?.data?.description }}</p>
-            <ion-text class="mid-title">
-                <p class="ion-text-left" style="margin-bottom:0px">{{ $t("Read more") }}</p>
+            <p :class="!flag?'gradient-text':'plain-text'" v-if="country_detail_data?.data?.description">{{ country_detail_data?.data?.description }}</p>
+            <ion-text class="mid-title" v-if="country_detail_data?.data?.description">
+                <p class="ion-text-left" style="margin-bottom:0px"  @click="readMore">{{ $t("Read more") }}</p>
             </ion-text>
           </ion-col>
           <ion-col size="12" class="flex-row">
@@ -99,6 +99,7 @@ export default defineComponent({
     const country_detail_data = computed(() => store.country_detail_data);
     const {showLoading, hideLoading} = useLoadingStore();
     const router = useRouter();
+    const flag=ref(false);
     
     const imgUrl = '/assets/images/header.svg';
     const uniImgUrl = 'assets/images/university.svg';
@@ -132,13 +133,18 @@ export default defineComponent({
       }
     });
 
+    const readMore = () => {
+      flag.value=!flag.value
+    }
     return {
       imgUrl,
       uniImgUrl,
       nextImgUrl,
       short_name,
       country_detail_data,
-      toUniversityDetailModal
+      toUniversityDetailModal,
+      readMore,
+      flag
     };
   },
 });
@@ -243,6 +249,10 @@ ion-img::part(image) {
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
+}
+.plain-text {
+  font-size: 16px;
+  font-weight: normal;
 }
 .scrolling {
   display: flex; 
