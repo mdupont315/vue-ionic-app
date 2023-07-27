@@ -326,3 +326,7 @@ body.qrscanner .scanner-hide {
 .modal-wrapper{
     background: transparent !important;
 }
+
+.margin-y-9 {
+    margin:9px 0 9px 0;
+}
