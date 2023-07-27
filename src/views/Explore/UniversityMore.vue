@@ -2,7 +2,7 @@
     <ion-page>
         <header-section />
         <ion-content :fullscreen="true" class="ion-padding-top">
-            <ion-grid style="display:flex; flex-flow: column; justify-content: center; margin-top: 15%;">
+            <ion-grid style="display:flex; flex-flow: column; justify-content: center; margin-top: 17.5%;">
                 <ion-row class="ion-padding-top">
                     <ion-col class="scrolling">
                         <div v-for="tabTitle in tabTitles" :key="tabTitle">
