@@ -63,12 +63,14 @@
                   <ion-card class="rank-card">
                     <ion-card-content style="padding-top: 0;" class="flex-col">
                       <div>
-                        <ion-text class="float-left">
-                          <p class="list-item-title">{{ $t(`${university_detail_datas.is_elite?"Listed as an Elite University":"Not Listed as an Elite University"}`)}}</p>
-                        </ion-text>
-                        <ion-img   class="global-img" :src='urImgUrl' />
+                        <div class="flex-col float-left">
+                          <ion-text>
+                            <p class="txt-20 color-3">{{ $t(`${university_detail_datas.is_elite?"Listed as an Elite University":"Not Listed as an Elite University"}`)}}</p>
+                          </ion-text>
+                          <ion-text class="txt-14 color-2" style="font-size: 12px;">{{$t(`Only ${university_detail_datas.total_elite} Elite universities listed in UNIRANKS®`)}}</ion-text>
+                        </div>
+                        <ion-img :src='urImgUrl'  class="global-img"/>
                       </div>
-                      <ion-text style="font-size: 12px;">{{$t(`Only ${university_detail_datas.total_elite} Elite universities listed in UNIRANKS®`)}}</ion-text>
                     </ion-card-content>
                   </ion-card>
                   <ion-card class="rank-card ion-margin-bottom">
@@ -76,9 +78,9 @@
                       <div>
                         <div class="flex-col float-left">
                           <ion-text>
-                            <p class="list-item-title">{{ $t(`Rank #7 as Top 10 Universities`)}}</p>
+                            <p class="txt-20 color-3">{{ $t(`Rank #7 as Top 10 Universities`)}}</p>
                           </ion-text>
-                          <ion-text style="font-size: 12px;">{{$t(`List as one of the TOP 10 in UNIRANKS®`)}}</ion-text>
+                          <ion-text class="txt-14 color-2" style="font-size: 12px;">{{$t(`List as one of the TOP 10 in UNIRANKS®`)}}</ion-text>
                         </div>
                         <ion-img :src='globalUrl'  class="global-img"/>
                       </div>
@@ -89,9 +91,9 @@
                         <div>
                             <div class="flex-col float-left">
                               <ion-text>
-                                  <p class="list-item-title">{{ $t(`Rank #${university_detail_datas.global_position} Globally`)}}</p>
+                                  <p class="txt-20 color-3">{{ $t(`Rank #${university_detail_datas.global_position} Globally`)}}</p>
                               </ion-text>
-                              <ion-text style="font-size: 11px;">{{$t(`${university_detail_datas.global_position} out of ${university_detail_datas.number_of_universities_listed} universities in UNIRANKS®`)}}</ion-text>
+                              <ion-text class="txt-14 color-2" style="font-size: 11px;">{{$t(`${university_detail_datas.global_position} out of ${university_detail_datas.number_of_universities_listed} universities in UNIRANKS®`)}}</ion-text>
                             </div>
                             <ion-img :src='globalUrl'  class="global-img" />
                         </div>
@@ -102,9 +104,9 @@
                       <div>
                         <div style="display: flex; flex-flow: column; float: left;">
                           <ion-text>
-                              <p class="list-item-title">{{ $t(`Rank #${university_detail_datas.local_position} In ${university_detail_datas.country}`)}}</p>
+                              <p class="txt-20 color-3">{{ $t(`Rank #${university_detail_datas.local_position} In ${university_detail_datas.country}`)}}</p>
                           </ion-text>
-                          <ion-text style="font-size: 10px;">{{$t(`${university_detail_datas.local_position} out of ${university_detail_datas.number_of_universities_in_country} universities listed in the UNIRANKS`)}}</ion-text>
+                          <ion-text class="txt-14 color-2" style="font-size: 10px;">{{$t(`${university_detail_datas.local_position} out of ${university_detail_datas.number_of_universities_in_country} universities listed in the UNIRANKS`)}}</ion-text>
                         </div>
                         <ion-img :src='globalUrl'  class="global-img"/>
                       </div>
@@ -115,9 +117,9 @@
                       <div>
                         <div style="display: flex; flex-flow: column; float: left;">
                           <ion-text>
-                              <p class="list-item-title">{{ $t(`${university_detail_datas.verified}`)}}</p>
+                              <p class="txt-20 color-3">{{ $t(`${university_detail_datas.verified}`)}}</p>
                           </ion-text>
-                          <ion-text style="font-size: 11px;">{{ $t(`${university_detail_datas.status}`) }}</ion-text>
+                          <ion-text class="txt-14 color-2" style="font-size: 11px;">{{ $t(`${university_detail_datas.status}`) }}</ion-text>
                         </div>
                         <ion-img :src='globalUrl' class="global-img"/>
                       </div>
@@ -406,7 +408,8 @@ ion-card-content {
 }
 .rank-card {
   border-radius: 6px;
-  margin-bottom: 8px;
+  margin: 5px 0 10px;
+  padding: 5px;
 }
 .mid-title {
   font-size: 26px;
@@ -423,9 +426,10 @@ ion-card-content {
   color: #ffffff;
 }
 .global-img {
-  width: 50.8px;
-  height: 32.6px; 
-  margin-top: 7px; 
-  float:right;
+  width: 50px;
+  height: 32px;
+  margin-top: 7px;
+  position: absolute;
+  right: 0;
 }
 </style>
