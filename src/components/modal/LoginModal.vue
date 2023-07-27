@@ -107,7 +107,6 @@
   } from '@ionic/vue';
   import { defineComponent, ref, computed, onMounted } from 'vue';
   import {useI18n} from "vue-i18n";
-  import { GoogleAuth } from '@codetrix-studio/capacitor-google-auth'
   import {useLoadingStore} from "@/store/loading";
   import InputPassword from "@/components/InputPassword.vue";
   import InputField from "@/components/InputField.vue";
@@ -167,25 +166,7 @@
         return false;
       };
       const googleSignIn = async () => {
-        try {
-
-          const userResponse = await GoogleAuth.signIn()
-          // console.log(userResponse);
-          const token = userResponse.authentication.accessToken;
-          console.log(token)
-          if(token) {
-            let formData = new FormData();
-            formData.append("access_token", token);
-            showLoading();
-            await google_login(formData);
-            hideLoading();
-            modalController.dismiss(null, 'cancel');
-            router.push('/profile');
-          }
-        } catch (error) {
-          console.error(error)
-        }
-
+        return;
       };
       const openModal = async () => {
         const modal = await modalController.create({
@@ -210,13 +191,6 @@
           return;
         }
       };
-      onMounted(() => {
-        GoogleAuth.initialize({
-          clientId: '710490860507-68q3akbkpcd5h5pngbr1c50b7prfamci.apps.googleusercontent.com',
-          grantOfflineAccess: true,
-          scopes: ['profile', 'email'],
-        });
-      });
       return {
         email,
         errorEmail,
