@@ -3,7 +3,7 @@
     <ion-toolbar>
       <ion-title class="ion-text-center" color="primary"></ion-title>
       <ion-img :src='imgUrl'/>
-      <ion-searchbar  :debounce="1000" @ionInput="handleInput($event)" :value="search_keyword" ></ion-searchbar>
+      <ion-searchbar :placeholder="content"  :debounce="1000" @ionInput="handleInput($event)" :value="search_keyword" ></ion-searchbar>
     </ion-toolbar>
   </ion-header>
 </template>
@@ -27,6 +27,9 @@
       IonToolbar,
       IonImg,
       IonSearchbar,
+    },
+    props: {
+      content: String
     },
     setup() {
       const router = useRouter();

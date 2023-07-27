@@ -1,6 +1,6 @@
 <template>
     <ion-page>
-        <header-section />
+        <header-section content="Find Course and Institutions"/>
         <ion-content :fullscreen="true" class="ion-padding-top">
             <ion-grid style="display:flex; flex-flow: column; justify-content: center;">
               <ion-row class="ion-padding-top">

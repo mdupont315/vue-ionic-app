@@ -77,13 +77,13 @@
                       </div>
                     </ion-card-content>
                   </ion-card>
-                  <ion-card class="rank-card ion-margin-bottom">
+                  <ion-card v-if="university_detail_datas.in_top_10" class="rank-card ion-margin-bottom">
                     <ion-card-content style="padding-top: 0;">
                       <div>
                         <div class="flex-col float-left">
                           <ion-text  class="txt-20 color-3">
                             {{ $t(`Rank`) }} 
-                            <b>{{ $t(`#7`) }}</b>
+                            <b>{{ `#${university_detail_datas.in_position_in_top_10}` }}</b>
                             {{ $t(` as Top 10 Universities`)}}
                           </ion-text>
                           <ion-text class="txt-14 color-2">
@@ -125,7 +125,7 @@
                           <ion-text class="txt-14 color-2" style="font-size: 10px;">
                             {{$t(`${university_detail_datas.local_position} out of ${university_detail_datas.number_of_universities_in_country} universities listed in the UNIRANKS`)}}</ion-text>
                         </div>
-                        <ion-img :src='globalUrl'  class="global-img"/>
+                        <ion-img :src='university_detail_datas.country_flag_url'  class="global-img"/>
                       </div>
                     </ion-card-content>
                   </ion-card>

@@ -1,6 +1,6 @@
 <template>
     <ion-page>
-        <header-section />
+        <header-section content="Search for Education Agent"/>
         <ion-content :fullscreen="true" class="ion-padding-top">
             <ion-grid style="margin-top: 20%;">
                 <ion-row>
