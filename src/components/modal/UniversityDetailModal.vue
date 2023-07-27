@@ -137,11 +137,7 @@
                               <p class="txt-20 color-3">{{ `${university_detail_datas.verified != 'Under Review'?'Verified & Recognized': `Under Review`}` }}</p>
                           </ion-text>
                           <ion-text class="txt-14 color-2" >
-                            {{ $t(`University is`) }}
-                            <span :class="university_detail_datas.verified != 'Under Review'?'color-4':'color-3'">
-                              {{ `${university_detail_datas.verified != 'Under Review'?'Verified & Recognized': `Under Review`}` }}
-                            </span>
-                            <b>{{ ` in ${university_detail_datas.country}` }}</b>
+                            {{ university_detail_datas.status }}
                           </ion-text>
                         </div>
                         <ion-img :src='verified' class="global-img"/>
