@@ -14,10 +14,10 @@
                 </ion-text>
                 
                 <hr class="under_line">
-                <p class="gradient-text" v-if="university_detail_datas.description" style="margin-left: 8px; margin-right: 20px;">{{ university_detail_datas.description }}</p>
+                <p :class="!flag?'gradient-text':'plain-text'" v-if="university_detail_datas.description" style="margin-left: 8px; margin-right: 20px;">{{ university_detail_datas.description }}</p>
               </ion-row>
               <ion-row style="display:flex; flex-flow: column; ">
-                <ion-text class="read-more-title" style="font-size: 20px;">
+                <ion-text class="read-more-title" v-if="university_detail_datas.description" style="font-size: 20px;" @click="readMore">
                   {{ $t(`Read more`) }}
                 </ion-text>
                 <ion-card class="detail_card">
@@ -245,6 +245,7 @@ export default defineComponent({
     const university_detail_datas = computed(() => store.university_detail_datas);
     const {showLoading, hideLoading} = useLoadingStore();
     const router = useRouter();
+    const flag=ref(false);
     
     const imgUrl = '/assets/images/header.svg';
     const uniImgUrl = 'assets/images/university.svg';
@@ -269,6 +270,9 @@ export default defineComponent({
           })
       }
     });
+    const readMore = () => {
+      flag.value=!flag.value
+    }
   
     return {
       imgUrl,
@@ -287,6 +291,8 @@ export default defineComponent({
       star,
       verified,
       university_detail_datas,
+      readMore,
+      flag
     };
   },
 });
@@ -384,6 +390,10 @@ ion-card-content {
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
+}
+.plain-text {
+  font-size: 16px;
+  font-weight: normal;
 }
 .uni-name {
   font-family: "Calibri";
