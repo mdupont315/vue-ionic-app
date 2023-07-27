@@ -4,7 +4,7 @@
     <ion-icon v-if="iconStart" slot="start" :icon="iconStart" @click="$emit('clickIconStart')"></ion-icon>
     <ion-icon v-if="iconEnd" slot="end" :icon="iconEnd" @click="$emit('clickIconEnd')"></ion-icon>
     <ion-text v-if="selectedItem">
-      <p style="margin-top: .25em; margin-bottom: .5em">
+      <p class="txt-20 color-3" style="margin-top: .25em; margin-bottom: .5em">
         {{selectedItem[localeProperty] || selectedItem[textProperty]}}
       </p>
     </ion-text>
@@ -13,21 +13,23 @@
 
   <ion-modal :is-open="isOpen" :initial-breakpoint="0.95" >
     <ion-header mode="ios">
-      <ion-toolbar mode="ios">
-        <ion-title>{{ $t(stitle) }}</ion-title>
+      <ion-toolbar mode="ios" class="ion-margin-vertical">
+        <ion-title class="txt-26 color-3">{{ $t(stitle) }}</ion-title>
       </ion-toolbar>
-      <ion-toolbar class="c-search">
+      <ion-toolbar class="c-search ion-margin-bottom">
         <ion-icon class="c-back-icon" :icon="chevronBackOutline" mode="ios" @click="setIsOpen(false)" />
         <ion-searchbar mode="ios" v-model="search" show-clear-button="focus"
-                       :placeholder="$t('Search')" :search-icon="chevronBackOutline"/>
+                       :placeholder="$t('start typing')" :search-icon="chevronBackOutline"/>
       </ion-toolbar>
+      <ion-toolbar mode="ios" class="ion-margin-vertical" v-if="selectionValue" style="--border-width: 0;">
+        <ion-label class="txt-20 color-3">{{ (currentValue[localeProperty] || currentValue[textProperty]) }}</ion-label>
+      </ion-toolbar>
+      <hr class="under_line" style="width: 75%;" v-if="selectionValue"/>
     </ion-header>
     <ion-content>
       <ion-list>
-        <ion-item class="c-item" lines="full" mode="ios" v-for="item in filteredItems" :key="item[valueProperty]"
-                  :disabled="selectionValue == item[valueProperty]" @click="selectItem(item[valueProperty])">
-          <ion-label>{{ (item[localeProperty] || item[textProperty]) }}</ion-label>
-          <ion-icon v-if="selectionValue == item[valueProperty]" slot="end" :icon="checkmark" color="success"/>
+        <ion-item class="c-item" lines="full" mode="ios" v-for="item in filteredItems" :key="item[valueProperty]" @click="selectItem(item[valueProperty])">
+          <ion-label class="txt-20 color-3">{{ (item[localeProperty] || item[textProperty]) }}</ion-label>
         </ion-item>
       </ion-list>
     </ion-content>
@@ -176,6 +178,10 @@ export default defineComponent({
         search.value = '';
       }
     }
+    const currentValue = computed(() => {
+      if (!selectionValue.value) return {};
+      return props.items.find((item) => item[props.valueProperty] == selectionValue.value);
+    })
     const selectedItem = computed(() => {
       if (!selectionValue.value) return {};
       return props.items.find((item) => item[props.valueProperty] == selectionValue.value);
@@ -205,7 +211,8 @@ export default defineComponent({
       selectedItem,
       filteredItems,
       selectItem,
-      setIsOpen
+      setIsOpen,
+      currentValue
     }
   }
 })
@@ -215,6 +222,8 @@ export default defineComponent({
 <style scoped>
   ion-item {
     width: 100%;
+    --background: white;
+    /* --border-width: 0 !important; */
     /* --border-color: #029ae4;
     --ion-color-base: #029ae4 !important; */
   }
@@ -232,6 +241,19 @@ export default defineComponent({
   }
   ion-item.c-item::part(native) {
     border-radius: 0;
+  }
+  ion-searchbar {
+    border: 2px solid #7fc4fd;
+    border-radius: 15px;
+    padding: 0;
+    --background: white;
+  }
+  ion-modal {
+    --ion-background-color: #F5F5F5;
+  }
+  ion-modal ion-list ion-item {
+    --background: #F5F5F5;
+    --border-width: 0 !important;
   }
   .item-fill-outline.item-has-value .label-floating.sc-ion-label-md-h,
   .item-fill-outline.item-has-focus .label-floating.sc-ion-label-md-h {

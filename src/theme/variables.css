@@ -116,10 +116,13 @@ ion-searchbar .searchbar-input-container {
 ion-header {
     --opacity-scale: 0 !important;
 }
+.c-search {
+    --border-width: 0 !important;
+}
 .c-search .c-back-icon {
     position: absolute;
-    left: 22px;
-    top: 10px;
+    left: 14px;
+    top: 18px;
     z-index: 1;
 }
 .c-search .searchbar-search-icon {
@@ -216,19 +219,23 @@ body.qrscanner .scanner-hide {
 }
 
 .color-1 {
-    color: #203456;
+    color: #203456 !important;
 }
 
 .color-2 {
-    color: #606060;
+    color: #606060 !important;
 }
 
 .color-3 {
-    color: #1c345a;
+    color: #1c345a !important;
 }
 
 .color-4 {
-    color:#007A00
+    color:#007A00 !important;
+}
+
+.color-5 {
+    color:#00aeef !important;
 }
 
 .txt-bold {

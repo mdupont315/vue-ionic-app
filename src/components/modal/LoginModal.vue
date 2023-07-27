@@ -235,10 +235,12 @@
   });
 </script>
 <style scoped>
+  ion-content{
+    --ion-background-color:#f5f5f5;
+  }
   ion-input {
     border: 2px solid #7fc4fd;
     border-radius: 15px;
     --padding-start: 15px !important;
   }
-  
 </style>

@@ -5,7 +5,7 @@
         <ion-row>
           <ion-col size="12" class="d-flex">
             <ion-text  v-if="title !='edit'" color="dark1">
-              <p class="ion-text-center txt-15 ion-no-margin ion-margin-bottom">{{ $t('Signing up') }}</p>
+              <p class="ion-text-center txt-26 ion-no-margin ion-margin-bottom txt-bold color-3">{{ $t('Signing up') }}</p>
             </ion-text>
             <div v-else style="text-align: left; width: 100%;">
                 <ion-img :src='userImgUrl' class="user-Img" style="float: left;" />
@@ -44,8 +44,8 @@
         </ion-row>
         <ion-row>
           <ion-col class="ion-no-padding">
-            <ion-text color="medium">
-              <p class="txt-09">{{ $t("Time to spill the beans on your country of residence! Don't worry, we'll use it to connect you with a super-smart counselor who knows the ins and outs of your geography.") }}</p>
+            <ion-text>
+              <p class="txt-16 color-2">{{ $t("Time to spill the beans on your country of residence! Don't worry, we'll use it to connect you with a super-smart counselor who knows the ins and outs of your geography.") }}</p>
             </ion-text>
           </ion-col>
         </ion-row>
@@ -71,23 +71,24 @@
         </ion-row>
         <ion-row v-if="title !='edit'">
           <ion-col size="12" class="d-flex ion-no-padding">
-            <ion-text color="medium">
-              <p class="txt-09">
+            <ion-text>
+              <p class="txt-16 color-2">
                 {{ $t("By selecting Continue, Agree and continue, I agree to UNIRANKS' ") }}
-                <a href="/login" class="ion-color-secondary">{{ $t("Terms of Services, Privacy Policy.") }} </a>
+                <a href="/login" class="ion-color-secondary color-5">{{ $t("Terms of Services") }} </a>, 
+                <a href="/login" class="ion-color-secondary color-5">{{ $t("Privacy Policy") }} </a>.
               </p>
             </ion-text>
           </ion-col>
-          <ion-col size="12" class="d-flex">
-            <ion-text color="medium">
-              <ion-checkbox v-model="agreed" mode="md" color="primary"></ion-checkbox>
+          <ion-col size="12" class="d-flex-start">
+            <ion-checkbox v-model="agreed" mode="md" color="primary"></ion-checkbox>
+            <ion-text class="txt-16 color-2" style="margin-left: 5px;">
               {{ $t("I don't want to receive marketing messages.") }}
             </ion-text>
           </ion-col>
         </ion-row>
         <ion-row  v-if="title !='edit'">
           <ion-col size="12" class="d-flex">
-            <ion-button class="btn-get-start button-1" color="dark2" @click="confirmRegister">{{ $t('Continue') }}</ion-button>
+            <ion-button class="btn-get-start button-1 txt-20" color="dark2" @click="confirmRegister">{{ $t('Continue') }}</ion-button>
           </ion-col>
         </ion-row>
       </ion-grid>
@@ -240,6 +241,9 @@
   });
 </script>
 <style scoped>
+  ion-content{
+    --ion-background-color:#f5f5f5;
+  }
   .edit-content {
     --ion-background-color: #F5F5F5 !important;
   }
