@@ -2,7 +2,7 @@
   <ion-list>
     <ion-item lines="full" mode="ios" v-for="item in filteredItems" :key="item[valueProperty]"
               :class="selectionValue == item[valueProperty] ? 'selected' : ''" @click="selectItem(item[valueProperty])">
-      <ion-label>{{ item[textProperty] }}</ion-label>
+      <ion-label class="txt-20 color-3">{{ item[textProperty] }}</ion-label>
     </ion-item>
   </ion-list>
 </template>

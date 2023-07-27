@@ -94,7 +94,7 @@ ion-header {
     --opacity-scale: 0 !important;
 }
 ion-content {
-    --background: #ffffff;
+    --background: #f5f5f5;
 }
 ion-text {
     padding:0%;

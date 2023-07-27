@@ -3,66 +3,66 @@
         <ion-content :fullscreen="false" class="ion-padding-top">
             <ion-grid style="display:flex; flex-flow: column; justify-content: center;">
                 <ion-row class="ion-padding-top">
-                    <ion-col size="12" style=" width: 100%; justify-content: center">
-                        <ion-text class="big-title">
-                            <p class="ion-text-center" style="margin-bottom: 0;">{{ $t(`${program_detail.title}`) }}</p>
+                    <ion-col size="12" class="ion-text-center" style=" width: 100%;">
+                        <ion-text class="big-title" style="margin-bottom: 0;">
+                            {{ $t(`${program_detail.title}`) }}
                         </ion-text>
                     </ion-col>
                 </ion-row>
-                <hr v-if="step == 0" style="border-top: 1px solid gray; width: 250px;">
+                <hr v-if="step == 0" class="under_line">
                 <ion-row style="justify-content: center;">
                     <ion-img :src='program_detail?.university?.logo_url' class="leftImg" style="width: 15%;"/>
                     <ion-text class="uni-name">
-                        <p>{{ $t(`${program_detail?.university?.university_name}`) }}</p>
+                        {{ $t(`${program_detail?.university?.university_name}`) }}
                     </ion-text>
                 </ion-row>
-                <ion-row  v-if="step == 0">
+                <ion-row v-if="step == 0" class="margin-y-9">
                     <ion-card class="detail_card">
-                        <ion-card-content>
+                        <ion-card-content style="padding: 0;">
                         <ion-list>
-                            <ion-item style="display: flex; flex-flow: row; padding-top: 5px;">
+                            <ion-item lines="full" class="flex-row" style="padding-top: 5px; width: 100vw;">
                                 <ion-img :src='moneyUrl' class="list-item-img"/>
-                                <div style="display: flex; flex-flow: column; margin-bottom: 5px;">
+                                <div class="flex-col" style=" margin-bottom: 5px; width: 100%;">
                                     <ion-text class="list-item-title">
-                                        <p>{{ $t(`${program_detail?.currency?.toUpperCase()} ${program_detail.fee} ${program_detail.fee_term}`)}}</p>
+                                        {{ $t(`${program_detail?.currency?.toUpperCase()} ${program_detail.fee} ${program_detail.fee_term}`)}}
                                     </ion-text>
                                     <ion-text class="list-item-content">
-                                        <p>{{ $t(`International student tuition fee`)}}</p>
+                                        {{ $t(`International student tuition fee`)}}
                                     </ion-text>
                                 </div>
                             </ion-item>
-                            <ion-item style="display: flex; flex-flow: row; padding-top: 5px;">
+                            <ion-item lines="full" class="flex-row" style="padding-top: 5px; width: 100vw;">
                                 <ion-img :src='calenderUrl' class="list-item-img"/>
-                                <div style="display: flex; flex-flow: column; margin-bottom: 5px;">
+                                <div class="flex-col" style=" margin-bottom: 5px;">
                                     <ion-text class="list-item-title">
-                                        <p>{{ $t(`August 2023`)}}</p>
+                                        {{ $t(`August 2023`)}}
                                     </ion-text>
                                     <ion-text class="list-item-content">
-                                        <p>{{ $t(`Start date`)}}</p>
+                                        {{ $t(`Start date`)}}
                                     </ion-text>
                                 </div>
                             </ion-item>
 
-                            <ion-item style="display: flex; flex-flow: row; padding-top: 5px;" >
+                            <ion-item lines="full" class="flex-row" style="padding-top: 5px; width: 100vw;" >
                                 <ion-img :src='hourglaUrl' class="list-item-img"/>
-                                <div style="display: flex; flex-flow: column; margin-bottom: 5px;">
+                                <div class="flex-col" style=" margin-bottom: 5px;">
                                     <ion-text class="list-item-title">
-                                        <p>{{ $t(`Jul 2023`)}}</p>
+                                        {{ $t(`Jul 2023`)}}
                                     </ion-text>
                                     <ion-text class="list-item-content">
-                                        <p>{{ $t(`Application deadline`)}}</p>
+                                        {{ $t(`Application deadline`)}}
                                     </ion-text>
                                 </div>
                             </ion-item>
 
-                            <ion-item lines="none"  style="display: flex; flex-flow: row; padding-top: 5px; padding-bottom: 5px;">
+                            <ion-item lines="none"  class="flex-row" style="padding-top: 5px; padding-bottom: 5px;">
                                 <ion-img :src='uniImgUrl' class="list-item-img"/>
-                                <div style="display: flex; flex-flow: column;">
+                                <div class="flex-col" style="">
                                     <ion-text class="list-item-title">
-                                        <p>{{ $t(`${program_detail.duration}`)}}</p>
+                                        {{ $t(`${program_detail.duration}`)}}
                                     </ion-text>
                                     <ion-text class="list-item-content">
-                                        <p>{{ $t(`Duration`)}}</p>
+                                        {{ $t(`Duration`)}}
                                     </ion-text>
                                 </div>
                             </ion-item>
@@ -73,13 +73,13 @@
                 <ion-row  v-if="step == 0">
                     <ion-col size="12" style="display: flex; flex-flow: row;margin-top: 5px;">
                         <ion-img :src='calenderUrl' class="leftImg"/>
-                        <ion-text class="mid-title">
-                            <p class="ion-text-left" style="margin:0px">{{ $t(`Upcoming Intakes`) }}</p>
+                        <ion-text class="big-title txt-26 ion-text-left" style="margin:0px">
+                            {{ $t(`Upcoming Intakes`) }}
                         </ion-text>
                     </ion-col>
                 </ion-row>
                 <ion-row  v-if="step == 0">
-                    <ion-col size="12">
+                    <ion-col size="12" style="margin-left: 10px;">
                     <select-item v-model="intake_id" :items="program_detail.upcoming_intakes"
                         text-property="title" value-property="id"/>
                     </ion-col>
@@ -541,15 +541,18 @@
 </script>
 <style scoped>
 ion-content {
-    --background: #ffffff;
+    --background: #f5f5f5;
 }
 ion-text {
     padding:0%;
 }
-ion-col, ion-row {
-    margin:0px;
+ion-col {
+    margin-bottom:9px;
     padding-top:0px;
     padding-bottom:0px;
+}
+no-padding {
+    padding: 0;
 }
 .big-title {
     font-family: "Calibri";
@@ -674,6 +677,7 @@ ion-card-content {
     font-style: normal;
     text-align: left;
     color: #1c345a;
+    margin: auto 0 auto 0;
 }
 .title-step {
     font-size: 20px;
