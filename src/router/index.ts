@@ -130,6 +130,11 @@ const routes: Array<RouteRecordRaw> = [
         component: () => import('../views/Events/EventDetailPage.vue'),
     },
     {
+        path: '/profile/agents',
+        name: 'EducationAgent',
+        component: () => import('../views/Profile/EducationAgent.vue'),
+    },
+    {
         path: '/application',
         name: 'Application',
         component: () => import('../views/Application/index.vue'),
