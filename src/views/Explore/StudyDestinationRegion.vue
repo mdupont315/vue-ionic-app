@@ -12,8 +12,8 @@
               </ion-row>
               <ion-row v-if="region_detail_data.description">
                 <ion-col>
-                  <ion-card>
-                      <ion-card-content>
+                  <ion-card style="padding: 0;">
+                      <ion-card-content class="ion-padding">
                         <p class="txt-16 color-2">{{ region_detail_data.description }}</p>
                       </ion-card-content>
                     </ion-card>
