@@ -296,14 +296,6 @@ export default defineComponent({
     }
     const toDetailCountry = async(id) => {
       await modalController.dismiss(null, 'cancel');
-      const modal = await modalController.create({
-        component: StudyDestinationCountryModal,
-        componentProps: {
-            id: id,
-        },
-        initialBreakpoint: 0.96,
-      });
-      modal.present();
     }
   
     return {
