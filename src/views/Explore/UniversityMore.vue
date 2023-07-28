@@ -2,8 +2,8 @@
     <ion-page>
         <header-section />
         <ion-content :fullscreen="true" class="ion-padding-top">
-            <ion-grid style="display:flex; flex-flow: column; justify-content: center; margin-top: 17.5%;">
-                <ion-row class="ion-padding-top">
+            <ion-grid style="display:flex; flex-flow: column; justify-content: center; margin-top: 19.5%;">
+                <ion-row v-if="flag">
                     <ion-col class="scrolling">
                         <div v-for="tabTitle in tabTitles" :key="tabTitle">
                             <ion-card :class="btpos === tabTitle? 'selected-tab' : 'more-tab'" @click="changeTabColor(tabTitle)">
@@ -12,7 +12,7 @@
                         </div>
                     </ion-col>
                 </ion-row>
-                <ion-row style="padding-left: 3px;">
+                <ion-row v-if="flag" style="padding-left: 3px;">
                     <ion-col style=" display: flex; flex-flow: row; ">
                         <ion-text>
                             <p class="title-name" style="margin:0px">{{ $t(`${btpos} ${datas.length}`) }}</p>
@@ -31,8 +31,8 @@
                                     </div>
                                     <p class="university-ranking">{{ $t(`Local #${data.local_position} | Global #${data.global_position} | Score ${data.score}`) }}</p>
                                     <div>
-                                        <p class="university-country" style="float: left;">{{ $t(`data.country`) }}</p>
-                                        <p class="university-status" style="float: right">{{ $t(`data.status`) }}</p>
+                                        <p class="university-country" style="float: left;">{{ data.country }}</p>
+                                        <p class="university-status" style="float: right">{{ data.status }}</p>
                                     </div>
                                 </div>
                             </div>
@@ -60,7 +60,7 @@ import {
     modalController,
 } from "@ionic/vue";
 import {computed, defineComponent, ref, onBeforeMount} from "vue";
-import {useRouter} from "vue-router";
+import {useRouter, useRoute} from "vue-router";
 import {useLoadingStore} from "@/store/loading";
 import HeaderSection from "@/components/explore/HeaderSection.vue";
 import FilterFooterSection from "@/components/explore/FilterFooterSection.vue";
@@ -83,6 +83,7 @@ export default defineComponent({
   },
   setup() {
     const store = useExploreDataStore();
+    const route = useRoute();
     const {loadEliteData, changeLoadedVal} = store;
     const dataLoaded = computed(() => store.elite_dataLoaded);
     const elite_datas = computed(() => store.elite_datas);
@@ -90,8 +91,10 @@ export default defineComponent({
     const region_top_datas = computed(() => store.region_top_datas);
     const country_top_datas = computed(() => store.country_top_datas);
     const verified_datas = computed(() => store.verified_datas);
+    const country_detail_data = computed(() => store.country_detail_data);
     const {showLoading, hideLoading} = useLoadingStore();
     const router = useRouter();
+    const flag = ref(true)
 
     const tabTitles = ['Elite Institues', 'World Top Institutes', ' Top Region Institutes', 'Top Country Institutes', 'Verified Institutes'];
     const imgUrl = '/assets/images/header.svg';
@@ -101,14 +104,24 @@ export default defineComponent({
     const datas = ref([]);
 
     onBeforeMount(() => {
-      if (!dataLoaded.value) {
-        showLoading();
-        Promise.all([loadEliteData()]).then(() => {
-            datas.value = elite_datas.value;
-            hideLoading();
-            changeLoadedVal();
-        })
-      }
+        const id = route.params.id;
+        // console.log(id)
+        if(id == 'start') {
+            flag.value = true;
+            if (!dataLoaded.value) {
+                showLoading();
+                Promise.all([loadEliteData()]).then(() => {
+                    datas.value = elite_datas.value;
+                    hideLoading();
+                    changeLoadedVal();
+                })
+            }
+        }
+        else {
+            flag.value = false;
+            datas.value = country_detail_data.value.universities;
+            console.log(datas.value)
+        }
     });
 
     const short_name = (name) => {
@@ -149,12 +162,11 @@ export default defineComponent({
     return {
         imgUrl,
         nextImgUrl,
-
         tabTitles,
         dataLoaded,
         datas,
         btpos,
-
+        flag,
         short_name,
         changeTabColor,
         toUniversityDetailModal,
