@@ -238,8 +238,10 @@ ion-card-header {
   height: auto;  
 }
 .rank-img {
-  width: 60px;
-  text-align: center;
+  width: 50px;
+  height: 32px;
+  position: absolute;
+  right: 8px;
 }
 .rank-img ion-img::part(image) {
   width: auto;

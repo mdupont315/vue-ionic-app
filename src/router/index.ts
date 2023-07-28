@@ -40,7 +40,7 @@ const routes: Array<RouteRecordRaw> = [
         component: () => import('../views/Explore/index.vue'),
     },
     {
-        path: '/explore/universitymore',
+        path: '/explore/universitymore/:id',
         name: 'UniversityMore',
         component: () => import('../views/Explore/UniversityMore.vue'),
     },
@@ -271,7 +271,7 @@ router.beforeEach((to) => {
         '/rest-password',
         '/get-start',
         '/explore',
-        '/explore/universitymore',
+        '/explore/universitymore/:id',
         '/explore/studydestination',
         '/explore/studydestination/:id',
         '/explore/getinspired',

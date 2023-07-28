@@ -11,12 +11,12 @@
                 <p class="ion-text-center" style="margin:0px">{{ $t(`${country_detail_data?.data?.number_of_universities} Universities`) }}</p>
             </ion-text>
             <ion-img :src='country_detail_data?.data?.thumbnail_url' class="main-img"/>
-            <p :class="!flag?'gradient-text':'plain-text'" v-if="country_detail_data?.data?.description">{{ country_detail_data?.data?.description }}</p>
-            <ion-text class="mid-title" v-if="country_detail_data?.data?.description">
-                <p class="ion-text-left" style="margin-bottom:0px"  @click="readMore">{{ $t("Read more") }}</p>
+            <p class="plain-text" style="margin-bottom: 5px;" v-if="country_detail_data?.data?.description">{{ description }}</p>
+            <ion-text class="mid-title" v-if="flag">
+                <p class="ion-text-left" style="margin-top:0px"  @click="readMore">{{ $t(`${txt_more}`) }}</p>
             </ion-text>
           </ion-col>
-          <ion-col size="12" class="flex-row">
+          <ion-col size="12" class="flex-row" @click="toUniversityMore()">
             <ion-img :src='uniImgUrl' class="leftImg"/>
             <ion-text class="mid-title">
                 <p class="ion-text-left" style="margin:0px">{{ $t(`University Rankings | ${country_detail_data?.data?.number_of_universities}`) }}</p>
@@ -100,6 +100,8 @@ export default defineComponent({
     const {showLoading, hideLoading} = useLoadingStore();
     const router = useRouter();
     const flag=ref(false);
+    const description = ref("");
+    const txt_more = ref("Read more");
     
     const imgUrl = '/assets/images/header.svg';
     const uniImgUrl = 'assets/images/university.svg';
@@ -123,19 +125,44 @@ export default defineComponent({
       }
       return newname;
     }
+    const readMore = () => {
+      const desc_str = country_detail_data.value.data.description;
+      if(txt_more.value == "Read more") {
+        description.value = desc_str;
+        txt_more.value="Read less";
+      }
+      else {
+        description.value = desc_str.substring(0,250);
+        txt_more.value="Read more";
+      }
+    }
+    const toUniversityMore = () => {
+      modalController.dismiss({
+        'dismissed': false
+      })
+      router.push(`/explore/universitymore/${country_detail_data.value.data.id}`);
+    }
     onBeforeMount(() => {
       if (!dataLoaded.value) {
         showLoading();
         Promise.all([loadStudyDestCountry(props.id)]).then(() => {
           changeLoadedVal();
+          const data=country_detail_data.value.data;
+          if(data.description.length>250){
+            flag.value = true;
+            description.value = data.description.substring(0,250);
+          }
+          else {
+            description.value = data.description;
+          }
           hideLoading();
         })
       }
     });
 
-    const readMore = () => {
-      flag.value=!flag.value
-    }
+    // const readMore = () => {
+    //   flag.value=!flag.value
+    // }
     return {
       imgUrl,
       uniImgUrl,
@@ -144,7 +171,10 @@ export default defineComponent({
       country_detail_data,
       toUniversityDetailModal,
       readMore,
-      flag
+      flag,
+      description,
+      txt_more,
+      toUniversityMore
     };
   },
 });
