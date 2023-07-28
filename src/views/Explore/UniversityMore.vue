@@ -1,7 +1,7 @@
 <template>
     <ion-page>
         <header-section />
-        <ion-content :fullscreen="true" class="ion-padding-top">
+        <ion-content :fullscreen="true" class="ion-padding-top" :scroll-events="true" @ionScrollEnd="handleScrollingEnd" ref="content">
             <ion-grid style="display:flex; flex-flow: column; justify-content: center; margin-top: 19.5%;">
                 <ion-row v-if="flag">
                     <ion-col class="scrolling">
@@ -23,7 +23,7 @@
                     <ion-card style="margin:10px 8px 0 10px;" @click="toUniversityDetailModal(data.id)">
                         <ion-card-content>
                             <div style="display: flex; flex-flow: row;">
-                                <ion-img :src='data.logo_url' class="leftImg" style="width: 15%;"/>
+                                <ion-img :src='data.logo_url' class="leftImg" style="width: 15%;margin-right: 9px;"/>
                                 <div style="display: flex; flex-flow: column; margin-top: 3%; margin-left:1px; width: 85%;">
                                     <div>
                                         <p class="university-name" style="float:left;">{{ short_name(data.university_name) }}</p>
@@ -40,6 +40,9 @@
                     </ion-card>
                 </ion-row>
             </ion-grid>
+            <ion-infinite-scroll @ionInfinite="ionInfinite">
+                <ion-infinite-scroll-content></ion-infinite-scroll-content>
+            </ion-infinite-scroll>
         </ion-content>
         <filter-footer-section />
     </ion-page>
@@ -57,6 +60,8 @@ import {
     IonCardContent,
     IonText,
     IonImg,
+    IonInfiniteScroll,
+    IonInfiniteScrollContent,
     modalController,
 } from "@ionic/vue";
 import {computed, defineComponent, ref, onBeforeMount} from "vue";
@@ -78,13 +83,15 @@ export default defineComponent({
     IonCol,
     IonCard,
     IonCardContent,
+    IonInfiniteScroll,
+    IonInfiniteScrollContent,
     IonText,
     IonImg,
   },
   setup() {
     const store = useExploreDataStore();
     const route = useRoute();
-    const {loadEliteData, changeLoadedVal} = store;
+    const {loadEliteData, changeLoadedVal, loadMore} = store;
     const dataLoaded = computed(() => store.elite_dataLoaded);
     const elite_datas = computed(() => store.elite_datas);
     const world_top_datas = computed(() => store.world_top_datas);
@@ -95,6 +102,7 @@ export default defineComponent({
     const {showLoading, hideLoading} = useLoadingStore();
     const router = useRouter();
     const flag = ref(true)
+    const content = ref(null);
 
     const tabTitles = ['Elite Institues', 'World Top Institutes', ' Top Region Institutes', 'Top Country Institutes', 'Verified Institutes'];
     const imgUrl = '/assets/images/header.svg';
@@ -145,8 +153,6 @@ export default defineComponent({
             datas.value = country_top_datas.value
         if(title === tabTitles[4])
             datas.value = verified_datas.value
-
-        console.log(datas.value);
     }    
     const toUniversityDetailModal = async(id) => {
       const modal = await modalController.create({
@@ -157,6 +163,22 @@ export default defineComponent({
           initialBreakpoint: 0.95,
         });
         modal.present();
+    }
+    const ionInfinite = async (ev) => {
+        console.log(tabTitles.indexOf(btpos.value))
+        await loadMore(tabTitles.indexOf(btpos.value));
+        ev.target.complete();
+        if(btpos.value === tabTitles[0])
+            datas.value = elite_datas.value
+        if(btpos.value === tabTitles[1])
+            datas.value = world_top_datas.value
+        if(btpos.value === tabTitles[2])
+            datas.value = region_top_datas.value
+        if(btpos.value === tabTitles[3])
+            datas.value = country_top_datas.value
+        if(btpos.value === tabTitles[4])
+            datas.value = verified_datas.value
+        content.value.$el.scrollToTop(500);
     }
 
     return {
@@ -170,6 +192,8 @@ export default defineComponent({
         short_name,
         changeTabColor,
         toUniversityDetailModal,
+        content,
+        ionInfinite,
     };
   },
 });

@@ -17,7 +17,7 @@
         <hr style="border-top: 1px solid gray; width: 250px;">
         <ion-row>
         <ion-col  style="display: flex; flex-flow: column;">
-          <ion-card v-for="program in unipro_detail_datas.programs" :key="program.id" style="border-radius: 6px;">
+          <ion-card v-for="program in unipro_detail_datas.programs" :key="program.id" style="border-radius: 6px;" @click="toProgramDetail(program.id)">
             <ion-card-content style="padding-top: 0;">
               <div style="display: flex; flex-flow: column;">
                 <ion-text>
@@ -34,7 +34,7 @@
         </ion-row>
       </ion-grid>
     </ion-content>
-    <country-detail-footer-section/>
+    <country-detail-footer-section text="View all programs"/>
   </ion-page>
 </template>
   
@@ -58,6 +58,7 @@
   import {useComingSoonAlert} from "@/shared/comingSoonAlert";
   import HeaderSection from "@/components/explore/HeaderSection.vue";
   import CountryDetailFooterSection from "@/components/explore/CountryDetailFooterSection.vue";
+  import ProgramDetailModal from "@/components/modal/ProgramDetailModal.vue";
   
   export default defineComponent({
     name: "UniversityDetailModal",
@@ -94,9 +95,20 @@
             })
         }
       });
+      const toProgramDetail = async(id) => {
+        const modal = await modalController.create({
+          component: ProgramDetailModal,
+          componentProps: {
+              id: id
+          },
+          initialBreakpoint: 0.9,
+        });
+        modal.present();
+      }
     
       return {
         unipro_detail_datas,
+        toProgramDetail,
       };
     },
   });

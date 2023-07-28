@@ -14,11 +14,12 @@ export const useExploreDataStore = defineStore({
         programs:[],
 
         elite_dataLoaded:false,
-        elite_datas:[],
+        elite_datas:{},
         world_top_datas:[],
         region_top_datas:[],
         country_top_datas:[],
         verified_datas:[],
+        links:[""],
 
         study_dest_datas:[],
         study_dest_dataLoaded:false,
@@ -75,7 +76,10 @@ export const useExploreDataStore = defineStore({
                     }
                     return response.json()
                 }).then((data) => {
+                    this.links.pop();
+                    this.links.push(data.links.next);
                     this.elite_datas = data["data"];
+                    console.log(this.elite_datas)
                     // this.elite_dataLoaded = true;
                 }).catch(()=>{
                     return;
@@ -87,6 +91,7 @@ export const useExploreDataStore = defineStore({
                     }
                     return response.json()
                 }).then((data) => {
+                    this.links.push(data.links.next);
                     this.world_top_datas = data["data"];
                     // this.world_top_data_dataLoaded = true;
                 }).catch(()=>{
@@ -99,6 +104,7 @@ export const useExploreDataStore = defineStore({
                     }
                     return response.json()
                 }).then((data) => {
+                    this.links.push(data.links.next);
                     this.region_top_datas = data["data"];
                     // this.world_top_data_dataLoaded = true;
                 }).catch(()=>{
@@ -111,6 +117,7 @@ export const useExploreDataStore = defineStore({
                     }
                     return response.json()
                 }).then((data) => {
+                    this.links.push(data.links.next);
                     this.country_top_datas = data["data"];
                     // this.world_top_data_dataLoaded = true;
                 }).catch(()=>{
@@ -123,12 +130,39 @@ export const useExploreDataStore = defineStore({
                     }
                     return response.json()
                 }).then((data) => {
+                    this.links.push(data.links.next);
                     this.verified_datas = data["data"];
                     this.elite_dataLoaded = true;
                 }).catch(()=>{
                     return;
                 })
            return  Promise.resolve();
+        },
+
+        async loadMore(id=0) {
+            console.log(this.links[id])
+            await fetchWrapper.get(this.links[id])
+                .then((response) => {
+                    if (!response.ok){
+                        return Promise.reject();
+                    }
+                    return response.json()
+                }).then((data) => {
+                    if(id == 0)
+                        this.elite_datas=data["data"];
+                    if(id == 1)
+                        this.world_top_datas=data["data"];
+                    if(id == 2)
+                        this.region_top_datas=data["data"];
+                    if(id == 3)
+                        this.country_top_datas=data["data"];
+                    if(id == 4)
+                        this.verified_datas=data["data"];
+                    this.links[id] = data.links.next;
+                }).catch(()=>{
+                    return;
+                })
+           return  Promise.resolve();            
         },
 
         async loadStudyDestDatas(loadWithoutCheck = false) {
