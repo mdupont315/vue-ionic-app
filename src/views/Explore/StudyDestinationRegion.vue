@@ -10,7 +10,7 @@
                     </ion-text>
                 </ion-col>
               </ion-row>
-              <ion-row class="ion-padding-top" v-if="region_detail_data.description">
+              <ion-row v-if="region_detail_data.description">
                 <ion-col>
                   <ion-card>
                       <ion-card-content>
@@ -191,7 +191,7 @@ ion-img.flag-img::part(image) {
 ion-card {
   width: 100%;
   height: auto;
-  border-radius: 6px;
+  border-radius: 15px;
   filter: drop-shadow(0px 3px 3px rgba(0,0,0,0.16 ));
   margin: 10px 0 5px;
   padding: 10px 0;
