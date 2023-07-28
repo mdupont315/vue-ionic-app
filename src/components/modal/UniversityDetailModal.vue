@@ -9,18 +9,18 @@
                     <p>{{ $t(`${university_detail_datas.university_name}`) }}</p>
                   </ion-text>
                 </div>
-                <ion-text class="uni-country-name">
+                <ion-text class="uni-country-name" @click="toDetailCountry(university_detail_datas.country_id)">
                     <p style="margin:0px">{{ $t(`${university_detail_datas.country}`) }}</p>
                 </ion-text>
                 
                 <hr class="under_line">
-                <p :class="!flag?'gradient-text':'plain-text'" v-if="university_detail_datas.description" style="margin-left: 8px; margin-right: 20px;">{{ university_detail_datas.description }}</p>
-              </ion-row>
-              <ion-row style="display:flex; flex-flow: column; ">
-                <ion-text class="read-more-title" v-if="university_detail_datas.description" style="font-size: 20px;" @click="readMore">
-                  {{ $t(`Read more`) }}
+                <p class="plain-text" style="margin-bottom: 2px;">{{ description }}</p>
+                <ion-text class="read-more-title" v-if="flag" style="font-size: 20px;" @click="readMore">
+                  {{ $t(`${txt_more}`) }}
                 </ion-text>
-                <ion-card class="detail_card">
+              </ion-row>
+              <ion-row>
+                <ion-card class="detail_card ion-margin-top">
                     <ion-card-content>
                       <ion-list>
                         <ion-item style="display: flex; flex-flow: row; padding-top: 5px;">
@@ -210,12 +210,14 @@ import {
   IonCard,
   IonIcon,
   IonCardContent,
+  modalController,
 } from "@ionic/vue";
 import {computed, defineComponent, ref, onBeforeMount} from "vue";
 import {useRouter, useRoute} from "vue-router";
 import {useLoadingStore} from "@/store/loading";
 import HeaderSection from "@/components/explore/HeaderSection.vue";
 import CountryDetailFooterSection from "@/components/explore/CountryDetailFooterSection.vue";
+import StudyDestinationCountryModal from "@/components/modal/StudyDestinationCountry.vue"
 import { star } from 'ionicons/icons'
 
 export default defineComponent({
@@ -246,6 +248,8 @@ export default defineComponent({
     const {showLoading, hideLoading} = useLoadingStore();
     const router = useRouter();
     const flag=ref(false);
+    const description = ref("");
+    const txt_more = ref("Read more");
     
     const imgUrl = '/assets/images/header.svg';
     const uniImgUrl = 'assets/images/university.svg';
@@ -260,18 +264,46 @@ export default defineComponent({
     const urImgUrl = 'assets/images/urstar5.svg';
     const userImgUrl = 'assets/images/awesome-user-al.svg';
     const rateUniImg = 'assets/images/rateUni.svg';
-    const verified = 'assets/images/verified.png'
+    const verified = 'assets/images/verified.png';
+
     onBeforeMount(() => {
       if (!dataLoaded.value) {
           showLoading();
           Promise.all([loadUniversityDetailSearch(props.id)]).then(() => {
             changeLoadedVal();
+            const data=university_detail_datas.value;
+            if(data.description.length>250){
+              flag.value = true;
+              description.value = data.description.substring(0,250);
+            }
+            else {
+              description.value = data.description;
+            }
             hideLoading();
           })
       }
     });
     const readMore = () => {
-      flag.value=!flag.value
+      const desc_str = university_detail_datas.value.description;
+      if(txt_more.value == "Read more") {
+        description.value = desc_str;
+        txt_more.value="Read less";
+      }
+      else {
+        description.value = desc_str.substring(0,250);
+        txt_more.value="Read more";
+      }
+    }
+    const toDetailCountry = async(id) => {
+      await modalController.dismiss(null, 'cancel');
+      const modal = await modalController.create({
+        component: StudyDestinationCountryModal,
+        componentProps: {
+            id: id,
+        },
+        initialBreakpoint: 0.96,
+      });
+      modal.present();
     }
   
     return {
@@ -292,7 +324,10 @@ export default defineComponent({
       verified,
       university_detail_datas,
       readMore,
-      flag
+      flag,
+      description,
+      txt_more,
+      toDetailCountry
     };
   },
 });
@@ -381,7 +416,7 @@ ion-card-content {
   font-style: normal;
   text-align: left;
   color: #1c345a;
-  margin-bottom: 8px;
+  margin-bottom: 18px;
 }
 .gradient-text {
   font-size: 16px;

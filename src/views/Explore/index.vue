@@ -223,7 +223,7 @@ export default defineComponent({
       router.push("/explore/unlockingsec");
     }
     const toUniversityMore = () => {
-      router.push('/explore/universitymore');
+      router.push('/explore/universitymore/start');
     }
     const handleInput = (event) => {
       router.push(`/explore/searchpage/${event.target.value}`);

@@ -76,7 +76,6 @@ export const useExploreDataStore = defineStore({
                     return response.json()
                 }).then((data) => {
                     this.elite_datas = data["data"];
-                    console.log(data["data"])
                     // this.elite_dataLoaded = true;
                 }).catch(()=>{
                     return;
@@ -89,7 +88,6 @@ export const useExploreDataStore = defineStore({
                     return response.json()
                 }).then((data) => {
                     this.world_top_datas = data["data"];
-                    console.log(data["data"])
                     // this.world_top_data_dataLoaded = true;
                 }).catch(()=>{
                     return;
@@ -102,7 +100,6 @@ export const useExploreDataStore = defineStore({
                     return response.json()
                 }).then((data) => {
                     this.region_top_datas = data["data"];
-                    console.log(data["data"])
                     // this.world_top_data_dataLoaded = true;
                 }).catch(()=>{
                     return;
@@ -115,7 +112,6 @@ export const useExploreDataStore = defineStore({
                     return response.json()
                 }).then((data) => {
                     this.country_top_datas = data["data"];
-                    console.log(data["data"])
                     // this.world_top_data_dataLoaded = true;
                 }).catch(()=>{
                     return;
@@ -128,7 +124,6 @@ export const useExploreDataStore = defineStore({
                     return response.json()
                 }).then((data) => {
                     this.verified_datas = data["data"];
-                    console.log(data["data"])
                     this.elite_dataLoaded = true;
                 }).catch(()=>{
                     return;
