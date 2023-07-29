@@ -208,7 +208,7 @@
       };
       onMounted(() => {
         GoogleAuth.initialize({
-          clientId: '492252738509-qh1pmnn3rjjhsfjh0bv5uk36jbgq8hdk.apps.googleusercontent.com',
+          clientId: '52312955002-nn81gk4mhi9hq548e3t0ufliej4h5gt7.apps.googleusercontent.com',
           grantOfflineAccess: true,
           scopes: ['profile', 'email'],
         });
