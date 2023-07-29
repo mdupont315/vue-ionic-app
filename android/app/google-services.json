@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "52312955002",
+    "project_id": "uniranks-e6ca7",
+    "storage_bucket": "uniranks-e6ca7.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:52312955002:android:bd3eafed2bcf470cc443c3",
+        "android_client_info": {
+          "package_name": "com.uniranks.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "52312955002-dso5qosdq5r9q1rkt2nao4cg4b67v1po.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.uniranks.app",
+            "certificate_hash": "74d5a40ca79c26dda731f4bd5eb1a472b773bf8c"
+          }
+        },
+        {
+          "client_id": "52312955002-mmpg7o4qrodhj42jk0q40sbbamjj26ub.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDaBfQDO3FgiB16Pv3Z8PU2nPzXEvEwa6I"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "52312955002-mmpg7o4qrodhj42jk0q40sbbamjj26ub.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
