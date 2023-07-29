@@ -19,7 +19,7 @@
                   {{ $t(`${txt_more}`) }}
                 </ion-text>
               </ion-row>
-              <ion-row>
+              <ion-row v-if="university_detail_datas.number_of_students!='N/A'">
                 <ion-card class="detail_card ion-margin-top">
                     <ion-card-content>
                       <ion-list>
@@ -147,7 +147,7 @@
                 </ion-col>
               </ion-row>
               <ion-row>
-                <ion-col size="12" style="display: flex; flex-flow: row;">
+                <ion-col size="12" style="display: flex; flex-flow: row;" @click="openModal">
                     <ion-img :src='stuImgUrl' class="leftImg"/>
                     <ion-text class="mid-title">
                         {{ $t(`Programs | ${university_detail_datas.number_of_programs}`) }}
@@ -157,19 +157,21 @@
               </ion-row>
               <ion-row>
                 <ion-col class="scrolling">
-                  <div v-for="program in university_detail_datas.programs" :key="program.id">
-                    <ion-card @click="toProgramDetail(university_detail_datas.logo_url, program.university.university_name)">
-                      <ion-card-content>
+                  <div v-for="program in university_detail_datas.programs" :key="program.id" style="height: max-content; margin-right: 18px;">
+                    <ion-card @click="toProgramDetail(program.id)" 
+                    class="program-card ion-padding-left ion-padding-right">
+                      <ion-card-content style="height: max-content;">
+
                           <!-- <ion-label>{universities.value}</ion-label> -->
-                          <p class="program-name" style="height:42px">{{ $t(`program.title`) }}</p>
-                          <hr style="border-top: 1px solid #606060;"/>
+                          <p class="program-name">{{ program.title }}</p>
+                          <hr class="under_line" style="width: 90%"/>
                           <div style="display: flex; flex-flow: row;">
                             <ion-img :src="university_detail_datas.logo_url" class="leftImg"/>                                
-                            <p class="program-university-name">{{ $t(`program.university.university_name`) }}</p>
+                            <p class="program-university-name">{{ university_detail_datas.university_name }}</p>
                           </div>
-                          <hr style="border-top: 1px solid #606060;"/>
-                          <p style="display: inline; margin-right: 60%;" class="program-fee">UK</p>
-                          <p style="display: inline;" class="program-fee">$500</p>
+                          <hr class="under_line" style="width: 90%"/>
+                          <p class="program-fee float-left">{{ program.currency.toUpperCase() }}</p>
+                          <p class="program-fee float-right">{{ `$${program.fee}` }}</p>
                       </ion-card-content>
                     </ion-card>
                   </div>
@@ -192,7 +194,7 @@
               </ion-row>
           </ion-grid>
       </ion-content>
-      <country-detail-footer-section :id="id"/>
+      <country-detail-footer-section text="View all Programs" @openModal="openModal"/>
   </ion-page>
 </template>
 
@@ -213,12 +215,15 @@ import {
   modalController,
 } from "@ionic/vue";
 import {computed, defineComponent, ref, onBeforeMount} from "vue";
+import {useToast} from "@/shared/toast";
 import {useRouter, useRoute} from "vue-router";
 import {useLoadingStore} from "@/store/loading";
 import HeaderSection from "@/components/explore/HeaderSection.vue";
 import CountryDetailFooterSection from "@/components/explore/CountryDetailFooterSection.vue";
 import StudyDestinationCountryModal from "@/components/modal/StudyDestinationCountry.vue"
-import { star } from 'ionicons/icons'
+import { star } from 'ionicons/icons';
+import ProgramDetailModal from "@/components/modal/ProgramDetailModal.vue";
+import UniProDetailModal from "@/components/modal/UniProDetailModal.vue";
 
 export default defineComponent({
   name: "UniversityDetailModal",
@@ -242,6 +247,7 @@ export default defineComponent({
   setup(props) {
     const store = useExploreDataStore();
     const route = useRoute();
+    const {showToast} = useToast();
     const {loadUniversityDetailSearch, changeLoadedVal} = store;
     const dataLoaded = computed(() => store.university_detail_dataLoaded);
     const university_detail_datas = computed(() => store.university_detail_datas);
@@ -283,6 +289,16 @@ export default defineComponent({
           })
       }
     });
+    const toProgramDetail = async(id) => {
+      const modal = await modalController.create({
+        component: ProgramDetailModal,
+        componentProps: {
+            id: id
+        },
+        initialBreakpoint: 0.9,
+      });
+      modal.present();
+    }
     const readMore = () => {
       const desc_str = university_detail_datas.value.description;
       if(txt_more.value == "Read more") {
@@ -296,6 +312,21 @@ export default defineComponent({
     }
     const toDetailCountry = async(id) => {
       await modalController.dismiss(null, 'cancel');
+    }
+    const openModal = async () => {
+      if(university_detail_datas.value.number_of_programs == 0) {
+        showToast({message: "There is no programs now", color:'warning'});
+        return;
+      }
+      const modal = await modalController.create({
+        component: UniProDetailModal,
+        componentProps: {
+            id:university_detail_datas.value.id
+        },
+        initialBreakpoint: 0.95,
+        breakpoints: [0, 0.95],
+      });
+      modal.present();
     }
   
     return {
@@ -319,7 +350,9 @@ export default defineComponent({
       flag,
       description,
       txt_more,
-      toDetailCountry
+      toDetailCountry,
+      toProgramDetail,
+      openModal
     };
   },
 });
@@ -489,5 +522,36 @@ ion-card-content {
   margin-top: 7px;
   position: absolute;
   right: 0;
+}
+.program-name {
+  font-family: "Calibri";
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  text-align: left;
+  color: #203456;
+}
+.program-university-name {
+  font-family: "Calibri";
+  font-size: 12px;
+  font-weight: normal;
+  font-style: normal;
+  text-align: left;
+  color: #203456;
+}
+.program-fee {
+  font-family: "Calibri";
+  font-size: 18px;
+  font-weight: normal;
+  font-style: normal;
+  text-align: left;
+  color: #606060;
+}
+.program-card {
+  width: 189px;
+  height: 135px;
+  border-radius: 15px;
+  filter: drop-shadow(0px 3px 3px rgba(0,0,0,0.16 ));
+  background: #ffffff
 }
 </style>
