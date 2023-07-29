@@ -48,7 +48,7 @@
         </ion-row>
       </ion-grid>
     </ion-content>
-    <country-detail-footer-section />
+    <country-detail-footer-section text="View all Universities" @openModal="toUniversityMore"/>
   </ion-page>
 </template>
 

@@ -14,8 +14,8 @@
               <ion-label>{{ $t("Chat") }}</ion-label>
             </ion-tab-button>
 
-            <ion-button @click="openModal" class="ion-margin-horizontal" expand="block" style="width: 50%;">
-              <p>{{ $t(`View All Programs`) }}</p>
+            <ion-button @click="$emit('openModal')" class="ion-margin-horizontal" expand="block" style="width: 50%;">
+              <p>{{ $t(`${text}`) }}</p>
             </ion-button>
           </ion-tab-bar>
         </ion-tabs>
@@ -35,10 +35,8 @@
     IonLabel, 
     IonIcon,
     IonButton, 
-    modalController
   } from '@ionic/vue';
   import { logoWechat } from 'ionicons/icons';
-  import UniProDetailModal from "@/components/modal/UniProDetailModal.vue";
   
   export default defineComponent({
     components: {
@@ -53,23 +51,12 @@
       IonButton 
     },
     props: {
-      id: Number
+      text: String
     },
     setup(props) {
       const bookmark = 'assets/images/bookmarg.svg';
       const imgUrl = 'assets/images/header.svg'
-      const openModal = async () => {
-        const modal = await modalController.create({
-          component: UniProDetailModal,
-          componentProps: {
-              id:props.id
-          },
-          initialBreakpoint: 0.95,
-          breakpoints: [0, 0.95],
-        });
-        modal.present();
-      }
-      return {imgUrl, bookmark, logoWechat, openModal};
+      return {imgUrl, bookmark, logoWechat};
     }
   });
   </script>
