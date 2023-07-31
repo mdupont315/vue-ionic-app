@@ -211,7 +211,7 @@
         <footer-section v-if="step==4" title="Proof of Payment" @back="backStep" @save="nextStep"/>
         <footer-section v-if="step==5" title="Upload Study Visa" @back="backStep" @save="nextStep"/>
         <footer-section v-if="step>5" title="Enrollment Confirmation" @back="backStep" @save="nextStep"/>
-        <country-detail-footer-section v-if="step==0" />
+        <country-detail-footer-section v-if="step==0"  text="View All Programs" @openModal="openModal"/>
     </ion-page>
   </template>
   
@@ -242,6 +242,7 @@
     import HigherModal from "@/components/modal/application/HigherModal.vue";
     import FooterSection from "@/components/modal/profilemodal/PrevSaveFooter.vue";
     import { checkmark, ellipse, cloudUpload } from 'ionicons/icons';
+    import UniProDetailModal from "@/components/modal/UniProDetailModal.vue";
     import SelectItem from "@/components/SelectItem.vue";
    
     export default defineComponent({
@@ -290,7 +291,17 @@
         const calenderUrl = 'assets/images/awesome-calenda.svg';
         const hourglaUrl = 'assets/images/awesome-hourgla.svg';
         const moneyUrl = 'assets/images/awesome-money-c.svg';
-        
+        const openModal = async () => {
+            const modal = await modalController.create({
+                component: UniProDetailModal,
+                componentProps: {
+                    id:program_detail.value.university.id
+                },
+                initialBreakpoint: 0.95,
+                breakpoints: [0, 0.95],
+            });
+            modal.present();
+        }
         const toIntakeModal = async(intake) => {
             step.value +=1;
             const modal = await modalController.create({
@@ -534,7 +545,8 @@
             cloudUpload,
             toHigherModal,
             intake_id,
-            backStep
+            backStep,
+            openModal
         };
     },
     });

@@ -78,8 +78,7 @@ export const useExploreDataStore = defineStore({
                 }).then((data) => {
                     this.links.pop();
                     this.links.push(data.links.next);
-                    this.elite_datas = data["data"];
-                    console.log(this.elite_datas)
+                    this.elite_datas = data;
                     // this.elite_dataLoaded = true;
                 }).catch(()=>{
                     return;
@@ -92,7 +91,7 @@ export const useExploreDataStore = defineStore({
                     return response.json()
                 }).then((data) => {
                     this.links.push(data.links.next);
-                    this.world_top_datas = data["data"];
+                    this.world_top_datas = data;
                     // this.world_top_data_dataLoaded = true;
                 }).catch(()=>{
                     return;
@@ -105,7 +104,7 @@ export const useExploreDataStore = defineStore({
                     return response.json()
                 }).then((data) => {
                     this.links.push(data.links.next);
-                    this.region_top_datas = data["data"];
+                    this.region_top_datas = data;
                     // this.world_top_data_dataLoaded = true;
                 }).catch(()=>{
                     return;
@@ -118,7 +117,7 @@ export const useExploreDataStore = defineStore({
                     return response.json()
                 }).then((data) => {
                     this.links.push(data.links.next);
-                    this.country_top_datas = data["data"];
+                    this.country_top_datas = data;
                     // this.world_top_data_dataLoaded = true;
                 }).catch(()=>{
                     return;
@@ -131,7 +130,7 @@ export const useExploreDataStore = defineStore({
                     return response.json()
                 }).then((data) => {
                     this.links.push(data.links.next);
-                    this.verified_datas = data["data"];
+                    this.verified_datas = data;
                     this.elite_dataLoaded = true;
                 }).catch(()=>{
                     return;
@@ -149,15 +148,15 @@ export const useExploreDataStore = defineStore({
                     return response.json()
                 }).then((data) => {
                     if(id == 0)
-                        this.elite_datas=data["data"];
+                        this.elite_datas=data;
                     if(id == 1)
-                        this.world_top_datas=data["data"];
+                        this.world_top_datas=data;
                     if(id == 2)
-                        this.region_top_datas=data["data"];
+                        this.region_top_datas=data;
                     if(id == 3)
-                        this.country_top_datas=data["data"];
+                        this.country_top_datas=data;
                     if(id == 4)
-                        this.verified_datas=data["data"];
+                        this.verified_datas=data;
                     this.links[id] = data.links.next;
                 }).catch(()=>{
                     return;
