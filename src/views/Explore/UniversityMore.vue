@@ -15,11 +15,11 @@
                 <ion-row v-if="flag" style="padding-left: 3px;">
                     <ion-col style=" display: flex; flex-flow: row; ">
                         <ion-text>
-                            <p class="title-name" style="margin:0px">{{ $t(`${btpos} ${datas.length}`) }}</p>
+                            <p class="title-name" style="margin:0px">{{ $t(`${btpos} ${datas?.meta?.total}`) }}</p>
                         </ion-text>
                     </ion-col>
                 </ion-row>
-                <ion-row v-for="data in datas" :key="data.id">
+                <ion-row v-for="data in datas.data" :key="data.id">
                     <ion-card style="margin:10px 8px 0 10px;" @click="toUniversityDetailModal(data.id)">
                         <ion-card-content>
                             <div style="display: flex; flex-flow: row;">
@@ -120,6 +120,7 @@ export default defineComponent({
                 showLoading();
                 Promise.all([loadEliteData()]).then(() => {
                     datas.value = elite_datas.value;
+                    console.log(datas.value)
                     hideLoading();
                     changeLoadedVal();
                 })
