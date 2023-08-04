@@ -14,10 +14,10 @@ public class MainActivity extends BridgeActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        this.registerPlugin(GoogleAuth.class);
-        this.init(savedInstanceState, new ArrayList<Class<? extends Plugin>>() {{
-            // Additional plugins you've installed go here
-            add(GoogleAuth.class);
-        }});
+       this.registerPlugin(GoogleAuth.class);
+        // this.init(savedInstanceState, new ArrayList<Class<? extends Plugin>>() {{
+        //     // Additional plugins you've installed go here
+        //     add(GoogleAuth.class);
+        // }});
     }
 }
