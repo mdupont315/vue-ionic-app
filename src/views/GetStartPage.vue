@@ -97,6 +97,6 @@ ion-content {
   --background: #fff;
   --border-radius: 12.5px;
   height: 3.2rem;
-  width: 13rem;
+  width: auto;
 }
 </style>
